@@ -1,11 +1,8 @@
 import "./App.css";
+import "./../src/assets/styles/_variables.css";
 
 function App() {
-  return (
-    <>
-      <h1>InnovPrint3D</h1>
-    </>
-  );
+  return <></>;
 }
 
 export default App;

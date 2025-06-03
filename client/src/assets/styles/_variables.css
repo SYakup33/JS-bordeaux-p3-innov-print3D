@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./../fonts/Inter.ttf");
+}
+
+:root {
+  --primary-color: #011847;
+  --secondary-color: #ae9b86;
+  --tertiary-color: #f4ede4;
+
+  --btn-cta-primary-color: #df3030;
+  --btn-cta-secondary-color: #fff;
+  --btn-cta-home-color: var(--primary-color);
+
+  --font-primary-color: #000;
+  --font-secondary-color: #fff;
+  --font-cta-btn-primary: var(--btn-cta-secondary-color);
+  --font-cta-btn-secondary: var(--btn-cta-primary-color);
+
+  --linear-gradient-right: #503c44;
+  --linear-gradient: linear-gradient(
+    var(--primary-color),
+    var(--linear-gradient-right)
+  );
+
+  --font-family: "Inter";
+
+  --font-size-h1: 3rem;
+  --font-size-h2: 2rem;
+  --font-size-paragraph: 1.5rem;
+  --font-size-paragraph-small: 1rem;
+}
