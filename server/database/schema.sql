@@ -14,7 +14,7 @@ CREATE TABLE address (
   street VARCHAR(150) NOT NULL,
   city VARCHAR(150) NOT NULL,
   zip_code VARCHAR(25) NOT NULL,
-  country VARCHAR(45) NOT NULL,
+  country VARCHAR(100) NOT NULL,
   user_id INT NOT NULL,   
   CONSTRAINT fk_address_user 
     FOREIGN KEY (user_id) 
@@ -23,18 +23,27 @@ CREATE TABLE address (
 
 CREATE TABLE category (
  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
- name VARCHAR(45) NOT NULL);
+ name VARCHAR(45) NOT NULL
+);
 
 CREATE TABLE product (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   description VARCHAR(255) NOT NULL,
   price DECIMAL(10,2) NOT NULL,
-  image VARCHAR(255) NOT NULL,
-  category_id INT NOT NULL,
-  CONSTRAINT fk_product_category FOREIGN KEY (category_id) REFERENCES category (id)
+  category_id INT NOT NULL
 );
 
+SELECT product.id, product.name as product, product.description, product.price, category.name as category
+FROM product
+JOIN category ON product.category_id = category.id;
+
+CREATE TABLE image (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  path VARCHAR(255) NOT NULL,
+  product_id INT NOT NULL,
+  CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id)
+  );
 CREATE TABLE cart (
   user_id INT NOT NULL,
   product_id INT NOT NULL,
@@ -57,11 +66,7 @@ CREATE TABLE favorite (
   CONSTRAINT fk_favorite_user FOREIGN KEY (user_id) REFERENCES user (id),
   CONSTRAINT fk_favorite_product FOREIGN KEY (product_id) REFERENCES product (id));
 
-CREATE TABLE image (
-  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  product_id INT NOT NULL,
-  path VARCHAR(255) NOT NULL,
-  CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id));
+
 
 CREATE TABLE orders (
   order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
