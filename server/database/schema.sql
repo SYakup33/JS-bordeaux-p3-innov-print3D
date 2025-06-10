@@ -1,25 +1,22 @@
 CREATE TABLE user (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  firstname VARCHAR(45) NOT NULL,
-  lastname VARCHAR(50) NOT NULL,
+  firstname VARCHAR(100) NOT NULL,
+  lastname VARCHAR(100) NOT NULL,
+  street VARCHAR(150) NOT NULL,
+  city VARCHAR(150) NOT NULL,
+  zip_code VARCHAR(25) NOT NULL,
+  country VARCHAR(100) NOT NULL,
   email VARCHAR(150) NOT NULL,
   phone VARCHAR(30) NOT NULL,
   password VARCHAR(255) NOT NULL,
   role ENUM('client', 'admin') NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  );
-
-CREATE TABLE address (
-  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  street VARCHAR(150) NOT NULL,
-  city VARCHAR(150) NOT NULL,
-  zip_code VARCHAR(25) NOT NULL,
-  country VARCHAR(100) NOT NULL,
-  user_id INT NOT NULL,   
-  CONSTRAINT fk_address_user 
-    FOREIGN KEY (user_id) 
-    REFERENCES user (id)
 );
+
+INSERT INTO user (id, firstname, lastname, street, city, zip_code, country, email, phone, password, role)
+VALUES 
+(1, 'Jérôme', 'Doe', 'rue Lucien Faure', 'Bordeaux', '33300', 'France', 'innovprint3d@outlook.fr', '+33 612345678', '12345678', 'admin'),
+(2, 'Cynthia', 'M', '1 rue Lucien Faure', 'Bordeaux', '33300', 'France', 'cm@outlook.fr', '+33 687654321', '87654321', 'client');
 
 CREATE TABLE category (
  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -28,29 +25,27 @@ CREATE TABLE category (
 
 CREATE TABLE product (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name VARCHAR(45) NOT NULL,
+  name VARCHAR(100) NOT NULL,
   description VARCHAR(255) NOT NULL,
   price DECIMAL(10,2) NOT NULL,
   category_id INT NOT NULL
 );
-
-SELECT product.id, product.name as product, product.description, product.price, category.name as category
-FROM product
-JOIN category ON product.category_id = category.id;
 
 CREATE TABLE image (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   path VARCHAR(255) NOT NULL,
   product_id INT NOT NULL,
   CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id)
-  );
+);
+
 CREATE TABLE cart (
   user_id INT NOT NULL,
   product_id INT NOT NULL,
-    quantity INT NOT NULL,
+  quantity INT NOT NULL,
   PRIMARY KEY (user_id, product_id),
   CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES user (id),
-  CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES product (id));
+  CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES product (id)
+);
 
 CREATE TABLE category_product (
   product_id INT NOT NULL,
@@ -64,16 +59,16 @@ CREATE TABLE favorite (
   product_id INT NOT  NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_favorite_user FOREIGN KEY (user_id) REFERENCES user (id),
-  CONSTRAINT fk_favorite_product FOREIGN KEY (product_id) REFERENCES product (id));
-
-
+  CONSTRAINT fk_favorite_product FOREIGN KEY (product_id) REFERENCES product (id)
+);
 
 CREATE TABLE orders (
-  order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  status VARCHAR(50) NOT NULL,
-  user_id INT NOT NULL ,
-  CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id));
+  status ENUM ('en préparation', 'expédiée', 'livrée', 'annulée') NOT NULL,
+  user_id INT NOT NULL,
+  CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id)
+);
 
 CREATE TABLE order_product (
   order_id INT NOT NULL,
@@ -81,15 +76,17 @@ CREATE TABLE order_product (
   quantity INT NOT NULL,
   unit_price DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (order_id, product_id),
-  CONSTRAINT fk_order_product_order FOREIGN KEY (order_id) REFERENCES orders (order_id),
-  CONSTRAINT fk_order_product_product FOREIGN KEY (product_id) REFERENCES product (id));
+  CONSTRAINT fk_order_product_order FOREIGN KEY (order_id) REFERENCES orders (id),
+  CONSTRAINT fk_order_product_product FOREIGN KEY (product_id) REFERENCES product (id)
+);
 
 CREATE TABLE review (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  user_id INT NOT NULL ,
+  user_id INT NOT NULL,
   product_id INT NOT NULL,
   rating INT NOT NULL,
   comment TEXT NULL DEFAULT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_review_user FOREIGN KEY (user_id) REFERENCES user (id),
-  CONSTRAINT fk_review_product FOREIGN KEY (product_id) REFERENCES product (id));
+  CONSTRAINT fk_review_product FOREIGN KEY (product_id) REFERENCES product (id)
+);
