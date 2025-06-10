@@ -13,7 +13,7 @@ class CartSeeder extends AbstractSeeder {
   run() {
     for (let i = 0; i < 10; i++) {
       const userRef = this.getRef(`user_${i}`);
-      const nbProducts = this.faker.number.int({ min: 1, max: 10 });
+      const nbProducts = Math.floor(Math.random() * 10 + 1);
 
       for (let j = 0; j < nbProducts; j++) {
         const productRef = this.getRef(`product_${j}`);

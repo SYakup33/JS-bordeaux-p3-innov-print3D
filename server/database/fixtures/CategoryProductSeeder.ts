@@ -7,23 +7,24 @@ class CategoryProductSeeder extends AbstractSeeder {
     super({
       table: "category_product",
       truncate: true,
-      dependencies: [ProductSeeder, CategorySeeder],
+      dependencies: [CategorySeeder, ProductSeeder],
     });
   }
   run() {
+    const nbrCategory = 4;
+
     for (let i = 0; i < 10; i++) {
       const productRef = this.getRef(`product_${i}`);
-      const categoryRef = this.getRef(`category_${i}`);
+      const firstCategoryId = this.getRef(
+        `category_${Math.floor(Math.random() * nbrCategory)}`,
+      );
 
-      if (productRef && categoryRef) {
-        const fakeCategoryProduct = {
-          product_id: productRef.insertId,
-          category_id: categoryRef.insertId,
-        };
-        this.insert(fakeCategoryProduct);
-      }
+      const fakeCategoryProduct = {
+        product_id: productRef.insertId,
+        category_id: firstCategoryId.insertId,
+      };
+      this.insert(fakeCategoryProduct);
     }
   }
 }
-
 export default CategoryProductSeeder;

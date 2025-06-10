@@ -17,7 +17,7 @@ class FavoriteSeeder extends AbstractSeeder {
       if (userRef) {
         for (let j = 0; j < 10; j++) {
           const productRef = this.getRef(`product_${j}`);
-          if (productRef && this.faker.datatype.boolean()) {
+          if (productRef) {
             const fakeFavorite = {
               user_id: userRef.insertId,
               product_id: productRef.insertId,
