@@ -1,14 +1,7 @@
 import databaseClient from "../../../database/client";
 
-import type { Result, Rows } from "../../../database/client";
-
-type ProductList = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category_id: number;
-};
+import type { Rows } from "../../../database/client";
+import type { ProductList } from "../../types/express/index";
 
 class ProductListRepository {
   async readAll() {
