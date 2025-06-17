@@ -1,9 +1,9 @@
-export type { ProductList, Image, Category };
+export type { Product, Image, Category };
 
 declare global {
   namespace Express {
     export interface Request {
-      productList: ProductList;
+      product: Product;
       image: Image;
       category: Category;
     }
