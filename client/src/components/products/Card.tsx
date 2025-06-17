@@ -2,9 +2,9 @@ import { useState } from "react";
 import "../../assets/styles/_variables.css";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
+import btn_ajouter_panier from "../../../public/img/icons/btn_ajouter_panier.png";
+import coeur_favori_inactif from "../../../public/img/icons/coeur_favori_inactif.png";
 import type { CardProps } from "../../types/ClientType.ts";
-import btn_ajouter_panier from "../../../public/img/icons/btn_ajouter_panier.png"
-import coeur_favori_inactif from "../../../public/img/icons/coeur_favori_inactif.png"
 
 function Card({ products }: CardProps) {
   const [currentPage, setCurrentPage] = useState(1);
