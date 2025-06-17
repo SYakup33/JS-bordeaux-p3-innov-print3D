@@ -30,3 +30,7 @@
   --font-size-paragraph: 1.5rem;
   --font-size-paragraph-small: 1rem;
 }
+
+* {
+  font-family: var(--font-family);
+}
