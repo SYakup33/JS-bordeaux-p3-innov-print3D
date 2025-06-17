@@ -3,6 +3,8 @@ import "../../assets/styles/_variables.css";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
 import type { CardProps } from "../../types/ClientType.ts";
+import btn_ajouter_panier from "../../../public/img/icons/btn_ajouter_panier.png"
+import coeur_favori_inactif from "../../../public/img/icons/coeur_favori_inactif.png"
 
 function Card({ products }: CardProps) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -87,7 +89,7 @@ function Card({ products }: CardProps) {
                       className="btn p-0 border-0 bg-transparent"
                     >
                       <img
-                        src="../../../coeur_favori_inactif.png"
+                        src={coeur_favori_inactif}
                         alt="coeur_favori_inactif"
                         className="d-flex justify-content-end"
                         style={{
@@ -101,7 +103,7 @@ function Card({ products }: CardProps) {
                       className="btn p-0 border-0 bg-transparent"
                     >
                       <img
-                        src="../../../btn_ajouter_panier.png"
+                        src={btn_ajouter_panier}
                         alt="ajouter_au_panier"
                         className="d-flex justify-content-end"
                         style={{
