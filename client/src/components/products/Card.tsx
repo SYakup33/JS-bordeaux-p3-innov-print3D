@@ -123,7 +123,7 @@ function Card({ products }: CardProps) {
         current={currentPage}
         total={products?.length}
         pageSize={productPerPage}
-        onChange={(page) => {
+        onChange={(page: number) => {
           setCurrentPage(page);
         }}
         style={{
