@@ -130,7 +130,11 @@ function Card({ products }: CardProps) {
           display: "flex",
           justifyContent: "center",
         }}
-        itemRender={(page, type, element) => {
+        itemRender={(
+          page: number,
+          type: "page" | "prev" | "next" | "jump-prev" | "jump-next",
+          element: React.ReactNode,
+        ) => {
           const baseButtonStyle = {
             padding: "5px 12px",
             border: "1px solid #ccc",
