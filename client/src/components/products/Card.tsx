@@ -130,7 +130,7 @@ function Card({ products }: CardProps) {
           display: "flex",
           justifyContent: "center",
         }}
-        itemRender={(page, type) => {
+        itemRender={(page, type, element) => {
           const baseButtonStyle = {
             padding: "5px 12px",
             border: "1px solid #ccc",
@@ -159,6 +159,7 @@ function Card({ products }: CardProps) {
               </span>
             );
           }
+          return element;
         }}
       />
       <style>
