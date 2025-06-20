@@ -1,11 +1,15 @@
-export type { Product, Image, Category };
+export type { Product };
 
 declare global {
   namespace Express {
     export interface Request {
-      product: Product;
-      image: Image;
-      category: Category;
+      product: {
+        id: number;
+        name: string;
+        description: string;
+        price: number;
+        category_id: number;
+      };
     }
   }
 }

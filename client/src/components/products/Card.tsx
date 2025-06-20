@@ -2,8 +2,6 @@ import { useState } from "react";
 import "../../assets/styles/_variables.css";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
-import btn_ajouter_panier from "../../../public/img/icons/btn_ajouter_panier.png";
-import coeur_favori_inactif from "../../../public/img/icons/coeur_favori_inactif.png";
 import type { CardProps } from "../../types/vite-env.d.ts";
 
 function Card({ products }: CardProps) {
@@ -22,7 +20,7 @@ function Card({ products }: CardProps) {
         className="d-flex align-items-center"
         style={{
           backgroundColor: "var(--secondary-color)",
-          fontSize: "var(--font-size-h1: 3rem)",
+          fontSize: "var(--font-size-h1)",
           height: "100px",
           padding: "10px 0px 0px 10px",
           marginBottom: "20px",
@@ -31,10 +29,10 @@ function Card({ products }: CardProps) {
         <h1>TOUS LES PRODUITS</h1>
       </div>
       <div
-        className="d-flex justify-content-center flex-wrap gap-4"
+        className="d-flex justify-content-end flex-wrap gap-4"
         style={{
           color: "var(--primary-color)",
-          padding: "1% 1% 2% 23%",
+          paddingRight: "12px",
         }}
       >
         {currentProducts?.map((product) => {
@@ -55,9 +53,9 @@ function Card({ products }: CardProps) {
                 >
                   <img
                     src={product.images[0]}
-                    alt={product.name}
-                    className="w-100 rounded-top-3"
-                    style={{ height: "70vh", objectFit: "cover" }}
+                    alt=""
+                    className="w-100 rounded-top-3 object-fit-cover"
+                    style={{ height: "70vh" }}
                   />
                 </button>
               ) : (
@@ -88,13 +86,10 @@ function Card({ products }: CardProps) {
                       type="button"
                       className="btn p-0 border-0 bg-transparent"
                     >
-                      <img
-                        src={coeur_favori_inactif}
-                        alt="coeur_favori_inactif"
-                        className="d-flex justify-content-end"
+                      <i
+                        className="bi bi-heart"
                         style={{
-                          width: "2rem",
-                          height: "2rem",
+                          fontSize: "1.8rem",
                         }}
                       />
                     </button>
@@ -102,13 +97,10 @@ function Card({ products }: CardProps) {
                       type="button"
                       className="btn p-0 border-0 bg-transparent"
                     >
-                      <img
-                        src={btn_ajouter_panier}
-                        alt="ajouter_au_panier"
-                        className="d-flex justify-content-end"
+                      <i
+                        className="bi bi-cart-plus-fill"
                         style={{
-                          width: "2rem",
-                          height: "2rem",
+                          fontSize: "2rem",
                         }}
                       />
                     </button>
