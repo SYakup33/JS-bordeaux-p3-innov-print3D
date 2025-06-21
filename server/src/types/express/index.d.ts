@@ -2,6 +2,15 @@
 export type {};
 
 declare global {
+  type CartProduct = {
+    productId: number;
+    productName: string;
+    description: string;
+    price: number;
+    categoryName: string;
+    quantity: number;
+    images: string[];
+  };
   namespace Express {
     export interface Request {
       /* ************************************************************************* */
