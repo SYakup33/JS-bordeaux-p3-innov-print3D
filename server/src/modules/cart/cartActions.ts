@@ -1,4 +1,3 @@
-
 import type { RequestHandler } from "express";
 import cartRepository from "./cartRepository";
 
@@ -28,7 +27,7 @@ const update: RequestHandler = async (req, res, next) => {
     await cartRepository.updateCartQuantity(
       updatedCart.userId,
       updatedCart.productId,
-      updatedCart.quantity
+      updatedCart.quantity,
     );
 
     res.json(updatedCart);

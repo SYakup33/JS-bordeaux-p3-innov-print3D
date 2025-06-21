@@ -14,7 +14,7 @@ class cartRepository {
        LEFT JOIN category cat ON p.category_id = cat.id
        WHERE cart.user_id = ?
        ORDER BY p.id DESC`,
-      [userId]
+      [userId],
     );
 
     for (const product of cartRows) {
@@ -22,7 +22,7 @@ class cartRepository {
         `SELECT path
          FROM image
          WHERE product_id = ?`,
-        [product.productId]
+        [product.productId],
       );
 
       product.images = imageRows.map((img) => img.path);
@@ -31,19 +31,22 @@ class cartRepository {
     return cartRows;
   }
 
-  async updateCartQuantity( userId: number, productId: number, quantity: number) {
+  async updateCartQuantity(
+    userId: number,
+    productId: number,
+    quantity: number,
+  ) {
     const [updateRows] = await databaseClient.query(
       "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?",
-      [quantity, userId, productId]
+      [quantity, userId, productId],
     );
     return updateRows;
   }
 
   async delete(userId: number, productId: number) {
     const [deleteRows] = await databaseClient.query(
-      
       "DELETE FROM cart WHERE user_id = ? AND product_id = ?",
-      [userId, productId]
+      [userId, productId],
     );
     return deleteRows;
   }
