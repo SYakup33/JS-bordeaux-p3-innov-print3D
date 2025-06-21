@@ -28,7 +28,7 @@ class cartRepository {
       product.images = imageRows.map((img) => img.path);
     }
 
-    return cartRows;
+    return cartRows as CartProduct[];
   }
 
   async updateCartQuantity(
