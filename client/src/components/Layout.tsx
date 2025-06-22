@@ -6,7 +6,7 @@ function Layout() {
   return (
     <>
       <div className="container mt-4">
-        <header className="d-flex justify-content-end align-items-center mb-4">
+        <header className="d-flex justify-content-end align-items-center mb-3">
           <button
             type="button"
             className="btn position-relative border-0 p-0 me-2 cursor-pointer"
