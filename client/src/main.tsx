@@ -2,11 +2,11 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
 import CartList from "./pages/CartList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Layout from "./components/Layout";
+import Header from "./components/Header";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <Header />,
     children: [
       {
         path: "/cart/user/:id",

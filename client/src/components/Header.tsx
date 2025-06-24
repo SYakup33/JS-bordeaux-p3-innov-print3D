@@ -1,7 +1,7 @@
 import { Cart3 } from "react-bootstrap-icons";
 import { Outlet, useNavigate } from "react-router";
 
-function Layout() {
+function Header() {
   const navigate = useNavigate();
   return (
     <>
@@ -11,7 +11,6 @@ function Layout() {
             type="button"
             className="btn position-relative border-0 p-0 me-2 cursor-pointer"
             onClick={() => {
-              //le userId est mis en dur pour l'instant
               navigate("/cart/user/3");
             }}
           >
@@ -29,4 +28,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default Header;

@@ -1,5 +1,7 @@
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "../../assets/styles/_variables.css";
+import "./cart.css";
+import type { CartProps } from "../../types/cart";
 
 function Cart({
   products,
@@ -19,10 +21,7 @@ function Cart({
 
   return (
     <section className="d-flex flex-column">
-      <div
-        className="d-flex align-items-center justify-content-start p-5"
-        style={{ backgroundColor: "var(--tertiary-color)", height: "100px" }}
-      >
+      <div className="d-flex align-items-center justify-content-start p-5 cart-header-title">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <CartFill size={28} />
           Mon Panier
@@ -52,8 +51,7 @@ function Cart({
             ) : (
               <button
                 type="button"
-                className="btn btn-link p-0 d-flex justify-content-start"
-                style={{ color: "#011847" }}
+                className="btn p-0 d-flex justify-content-start text-dart text-decoration-underline"
                 onClick={checkAll}
               >
                 Sélectionner tous les articles
@@ -73,13 +71,10 @@ function Cart({
                 key={product.productId}
                 className="flex-column list-group-item flex-md-row d-flex align-items-center gap-3 gap-md-0 p-3 "
               >
-                <div
-                  className="w-75 d-flex justify-content-center align-items-center gap-4"
-                  style={{ height: "140px" }}
-                >
+                <div className="w-75 d-flex justify-content-center align-items-center gap-4 cart-container">
                   <input
                     type="checkbox"
-                    className="form-check-input row align-items-center justifu-content-center text-center"
+                    className="form-check-input row align-items-center justify-content-center text-center"
                     onChange={() => checkProduct(product.productId)}
                     checked={selectedProducts.includes(product.productId)}
                   />
@@ -108,9 +103,8 @@ function Cart({
                         updateQuantity(product.productId, product.quantity - 1)
                       }
                       disabled={product.quantity === 1}
-                      style={{ width: 28, height: 28 }}
                     >
-                      <Dash />
+                      <Dash size={20} />
                     </button>
                     <span className="fs-5">{product.quantity}</span>
                     <button
@@ -119,9 +113,8 @@ function Cart({
                       onClick={() =>
                         updateQuantity(product.productId, product.quantity + 1)
                       }
-                      style={{ width: 28, height: 28 }}
                     >
-                      <Plus />
+                      <Plus size={20} />
                     </button>
                   </div>
                 </div>

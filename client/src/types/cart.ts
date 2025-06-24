@@ -1,4 +1,4 @@
-type CartProduct = {
+export type CartProduct = {
   productId: number;
   productName: string;
   description: string;
@@ -8,7 +8,7 @@ type CartProduct = {
   images: string[];
 };
 
-type CartProps = {
+export type CartProps = {
   products: CartProduct[];
   selectedProducts: number[];
   checkProduct: (productId: number) => void;

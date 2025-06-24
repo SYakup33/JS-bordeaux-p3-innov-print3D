@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Cart from "../components/carts/Cart";
+import type { CartProduct } from "../types/cart";
 
 function CartList() {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
@@ -14,12 +15,15 @@ function CartList() {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/cart/${userId}`,
         );
+
         if (!response.ok)
           throw new Error("Erreur lors du chargement du panier");
+
         const data = await response.json();
+
         setCartProducts(data);
       } catch (error) {
-        alert("Erreur lors du chargement du panier");
+        console.error("Erreur lors du chargement du panier");
       }
     };
     fetchCart();
@@ -63,7 +67,7 @@ function CartList() {
     }
   };
 
-  const checkSelectProducts = (productId: number) => {
+  const checkProduct = (productId: number) => {
     setSelectedProducts((prev) => {
       if (prev.includes(productId)) {
         return prev.filter((id) => id !== productId);
@@ -76,7 +80,7 @@ function CartList() {
     <Cart
       products={cartProducts}
       selectedProducts={selectedProducts}
-      checkProduct={checkSelectProducts}
+      checkProduct={checkProduct}
       updateQuantity={updateQuantity}
       deleteProduct={deleteProduct}
       checkAll={() => setSelectedProducts(cartProducts.map((p) => p.productId))}

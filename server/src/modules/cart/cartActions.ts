@@ -2,7 +2,7 @@ import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import cartRepository from "./cartRepository";
 
-const browse: RequestHandler = async (req, res, next) => {
+const read: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
     if (Number.isNaN(userId)) {
@@ -23,26 +23,15 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
-const update: RequestHandler = async (req, res, next) => {
+const edit: RequestHandler = async (req, res, next) => {
   try {
     const updatedCart = {
       userId: Number(req.params.userId),
       productId: Number(req.params.productId),
-      quantity: req.body.quantity,
+      quantity: Number(req.body.quantity),
     };
 
-    if (
-      Number.isNaN(updatedCart.userId) ||
-      Number.isNaN(updatedCart.productId) ||
-      Number.isNaN(updatedCart.quantity)
-    ) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Paramétres invalides" });
-      return;
-    }
-
-    await cartRepository.updateCartQuantity(
+    await cartRepository.update(
       updatedCart.userId,
       updatedCart.productId,
       updatedCart.quantity,
@@ -54,22 +43,12 @@ const update: RequestHandler = async (req, res, next) => {
   }
 };
 
-const remove: RequestHandler = async (req, res, next) => {
+const destroy: RequestHandler = async (req, res, next) => {
   try {
     const deletedCart = {
       productId: Number(req.params.productId),
       userId: Number(req.params.userId),
     };
-
-    if (
-      Number.isNaN(deletedCart.userId) ||
-      Number.isNaN(deletedCart.productId)
-    ) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Paramétres invalides" });
-      return;
-    }
 
     await cartRepository.delete(deletedCart.userId, deletedCart.productId);
 
@@ -79,4 +58,28 @@ const remove: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, update, remove };
+const validate: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    const productId = Number(req.params.productId);
+    const quantity = Number(req.body.quantity);
+
+    if (
+      Number.isNaN(userId) ||
+      Number.isNaN(productId) ||
+      Number.isNaN(quantity) ||
+      quantity < 1
+    ) {
+      console.log(quantity);
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Paramétres invalides" });
+      return;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { read, edit, destroy, validate };
