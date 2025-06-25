@@ -28,7 +28,7 @@ CREATE TABLE product (
 
 CREATE TABLE image (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  path TEXT NOT NULL,
+  path VARCHAR(255) NOT NULL,
   product_id INT NOT NULL,
   CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id)
 );
