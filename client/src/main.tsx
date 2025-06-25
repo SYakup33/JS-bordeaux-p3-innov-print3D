@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
-import CartList from "./pages/CartList";
+import CartList from "./pages/cart/CartList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 const router = createBrowserRouter([

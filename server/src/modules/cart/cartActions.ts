@@ -11,12 +11,12 @@ const read: RequestHandler = async (req, res, next) => {
         .json({ error: "Identifiant doit être un nombre" });
       return;
     }
-    const products = await cartRepository.find(userId);
+    const cart = await cartRepository.findByUserId(userId);
 
-    if (products == null) {
+    if (cart == null) {
       res.status(StatusCodes.NOT_FOUND);
     } else {
-      res.status(StatusCodes.OK).json(products);
+      res.status(StatusCodes.OK).json(cart);
     }
   } catch (err) {
     next(err);
@@ -70,7 +70,6 @@ const validate: RequestHandler = async (req, res, next) => {
       Number.isNaN(quantity) ||
       quantity < 1
     ) {
-      console.log(quantity);
       res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Paramétres invalides" });

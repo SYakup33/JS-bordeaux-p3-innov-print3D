@@ -2,7 +2,7 @@ import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
 class cartRepository {
-  async find(userId: number) {
+  async findByUserId(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT p.id AS productId, p.name AS productName, p.description, p.price,
        cat.name AS categoryName,
