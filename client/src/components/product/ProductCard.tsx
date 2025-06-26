@@ -1,4 +1,4 @@
-import "../../assets/styles/_variables.css";
+import "../../../assets/styles/_variables.css";
 import type { ProductType } from "../../types/product.ts";
 import "./ProductCard.css";
 

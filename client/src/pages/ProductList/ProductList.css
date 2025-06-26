@@ -6,6 +6,9 @@
   margin-bottom: 20px;
 }
 
+#cards-main-content {
+  display: flex;
+}
 .cards-pagination-btn {
   padding: 5px 12px;
   border: 1px solid #ccc;
