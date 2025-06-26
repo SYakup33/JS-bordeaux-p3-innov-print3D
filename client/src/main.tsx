@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import Cart from "./pages/Cart";
 import ConfirmatedOrder from "./pages/ConfirmatedOrder";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/cart", element: <Cart /> },
-      { path: "/order", element: <ConfirmatedOrder /> },
+      { path: "/order/confirmation", element: <ConfirmatedOrder /> },
     ],
   },
 ]);

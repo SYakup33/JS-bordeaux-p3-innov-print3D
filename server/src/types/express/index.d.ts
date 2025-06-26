@@ -2,6 +2,7 @@
 export type {};
 
 declare global {
+  // types à mettre
   namespace Express {
     export interface Request {
       /* ************************************************************************* */
