@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 interface CartWithProductsProps {
-  user_id: number;
+  userId: number;
   product_id: number;
   quantity: number;
   product_name: string;
@@ -21,36 +21,46 @@ interface Cart {
   userId: number;
 }
 
-// interface Order {
-//   user_id: number;
-//   status: "en préparation" | "expédiée" | "livrée" | "annulée";
-// }
-
 function Cart() {
   const [cart, setCart] = useState<CartWithProductsProps[]>([]);
-
-  const userId = 4;
+  const [error, setError] = useState<string | null>(null);
+  const userId = 11;
 
   const navigate = useNavigate();
-  const routeChange = async () => {
+  const placeAnOrder = async () => {
+    if (cart.length === 0) {
+      setError("Votre panier est vide");
+      return;
+    }
+    setError(null);
+
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/order`,
+        `${import.meta.env.VITE_API_URL}/api/order/${userId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ user_id: userId, status: "en préparation" }),
+          body: JSON.stringify({
+            products: cart.map((p) => {
+              return {
+                product_id: p.product_id,
+                unit_price: p.price,
+                quantity: p.quantity,
+              };
+            }),
+          }),
         },
       );
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const path = "/order/confirmation";
       navigate(path);
     } catch (error) {
-      console.error("❌ Erreur lors du fetch:", error);
+      setError("Erreur lors de la création de commande");
     }
   };
 
@@ -64,10 +74,9 @@ function Cart() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const cartData = await response.json();
-        console.log("✅ Données du panier:", cartData);
         setCart(cartData.data);
       } catch (error) {
-        console.error("❌ Erreur lors du fetch:", error);
+        setError("Erreur lors du chargement du panier");
       }
     };
 
@@ -78,6 +87,8 @@ function Cart() {
 
   return (
     <>
+      {error && <p className="alert alert-danger">{error}</p>}
+
       <h1>Les produits de mon panier ({totalArticles} articles)</h1>
       <ul>
         {cart.map((item) => (
@@ -92,13 +103,8 @@ function Cart() {
       <div className="container">
         <button
           type="button"
-          className="btn btn-danger w-100 btn-lg  fw-semibold"
-          onClick={routeChange}
-          style={{
-            backgroundColor: "#dc3545",
-            borderColor: "#dc3545",
-            borderRadius: "8px",
-          }}
+          className="btn btn-danger w-100 btn-lg fw-semibold"
+          onClick={placeAnOrder}
         >
           Passer commande
         </button>

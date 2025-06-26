@@ -24,9 +24,7 @@ class OrderRepository {
     }
 
     const idOrderedProducts = products.map((p) => p.product_id);
-    console.log(idOrderedProducts);
     const placeholders = idOrderedProducts.map(() => "?").join(",");
-    console.log(placeholders);
 
     await databaseClient.query<Result>(
       `DELETE FROM cart WHERE user_id = ? AND product_id IN (${placeholders})`,

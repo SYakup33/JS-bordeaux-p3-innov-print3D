@@ -15,12 +15,4 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-const addOrderFromCart: RequestHandler = async (req, res, next) => {
-  try {
-    const userId = req.body.userId;
-  } catch (err) {
-    next(err);
-  }
-};
-
-export default { add, addOrderFromCart };
+export default { add };
