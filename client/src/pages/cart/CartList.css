@@ -1,0 +1,10 @@
+@import "../../assets/styles/_variables.css";
+
+.cart-header-title {
+  background-color: var(--tertiary-color);
+  height: 100px;
+}
+
+.cart-container {
+  height: 140px;
+}

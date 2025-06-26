@@ -29,8 +29,8 @@ CREATE TABLE product (
 CREATE TABLE image (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   path VARCHAR(255) NOT NULL,
-  product_id INT NOT NULL,
-  CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id)
+  product_id INT NOT NULL
+  -- CONSTRAINT fk_image_product FOREIGN KEY (product_id) REFERENCES product (id)
 );
 
 CREATE TABLE cart (
