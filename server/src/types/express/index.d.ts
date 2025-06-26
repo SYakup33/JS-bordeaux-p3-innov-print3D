@@ -1,5 +1,4 @@
-// to make the file a module and avoid the TypeScript error
-export type {};
+export type { Product };
 
 declare global {
   type CartProduct = {
@@ -13,11 +12,13 @@ declare global {
   };
   namespace Express {
     export interface Request {
-      /* ************************************************************************* */
-      // Add your custom properties here, for example:
-      //
-      // user?: { ... }
-      /* ************************************************************************* */
+      product: {
+        id: number;
+        name: string;
+        description: string;
+        price: number;
+        category_id: number;
+      };
     }
   }
 }
