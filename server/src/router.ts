@@ -1,11 +1,17 @@
 import express from "express";
-
+import cartActions from "./modules/cart/cartActions";
+import orderActions from "./modules/order/orderActions";
 const router = express.Router();
 
-import cartActions from "./modules/cart/cartActions";
-router.get("/api/cart/user/:userId", cartActions.readUserCartProducts);
-
-import orderActions from "./modules/order/orderActions";
 router.post("/api/order/:userId", orderActions.add);
+router.get("/api/cart/:userId", cartActions.read);
+router.put(
+  "/api/cart/:userId/:productId",
+  cartActions.validate,
+  cartActions.edit,
+);
+router.delete("/api/cart/:userId/:productId", cartActions.destroy);
+import productActions from "./modules/product/productActions";
+router.get("/api/products", productActions.browse);
 
 export default router;

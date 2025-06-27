@@ -1,20 +1,7 @@
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router";
-
-import App from "./App";
-import Cart from "./pages/Cart";
-import ConfirmatedOrder from "./pages/ConfirmatedOrder";
+import { RouterProvider } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const router = createBrowserRouter([
-  {
-    element: <App />,
-    children: [
-      { path: "/cart", element: <Cart /> },
-      { path: "/order/confirmation", element: <ConfirmatedOrder /> },
-    ],
-  },
-]);
+import router from "./router";
 
 const rootElement = document.getElementById("root");
 if (rootElement == null) {

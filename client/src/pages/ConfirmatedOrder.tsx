@@ -1,7 +1,46 @@
+import { useLocation, useParams } from "react-router";
 import logo from "../assets/images/lnnovPrintLogo.png";
 import "./ConfirmatedOrder.css";
+import { useEffect } from "react";
+import type { SelectedProductsType } from "../types/order";
 
 function ConfirmatedOrder() {
+  const location = useLocation();
+  const selectedProducts = location.state?.selectedProducts;
+  const { id } = useParams();
+  const userId = Number(id);
+
+  useEffect(() => {
+    const placeAnOrder = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/order/${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              products: selectedProducts.map((p: SelectedProductsType) => {
+                return {
+                  product_id: p.productId,
+                  unit_price: p.price,
+                  quantity: p.quantity,
+                };
+              }),
+            }),
+          },
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la création de commande");
+      }
+    };
+    placeAnOrder();
+  }, [userId, selectedProducts]);
+
   return (
     <>
       <body className="d-flex align-items-center justify-content-center">
@@ -13,7 +52,6 @@ function ConfirmatedOrder() {
                   Votre commande est bien validée, nous vous recontacterons
                   ultérieurement pour procéder au règlement
                 </p>
-
                 <img src={logo} alt="logo InnovPrint3D" />
 
                 <div className="w-100 consult">
