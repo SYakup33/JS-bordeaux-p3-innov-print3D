@@ -18,6 +18,25 @@ class ProductRepository {
 
     return productRows as Product[];
   }
-}
 
+  async find(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM product WHERE id = ?",
+      [id],
+    );
+
+    if (rows.length === 0) return null;
+
+    const product = rows[0];
+
+    const [imageRows] = await databaseClient.query<Rows>(
+      "SELECT path FROM image WHERE product_id = ?",
+      [product.id],
+    );
+
+    product.images = imageRows.map((img) => img.path);
+
+    return product as Product;
+  }
+}
 export default new ProductRepository();
