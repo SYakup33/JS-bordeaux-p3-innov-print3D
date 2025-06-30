@@ -1,12 +1,5 @@
 import databaseClient from "../../../database/client";
-
-import type { Result, Rows } from "../../../database/client";
-
-type OrderProduct = {
-  product_id: number;
-  quantity: number;
-  unit_price: number;
-};
+import type { Result } from "../../../database/client";
 
 class OrderRepository {
   async create(userId: number, products: OrderProduct[]) {

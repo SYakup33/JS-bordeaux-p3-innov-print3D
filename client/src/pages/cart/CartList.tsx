@@ -251,7 +251,7 @@ function CartList() {
                 </h5>
                 <button
                   type="button"
-                  className="btn btn-danger px-4 py-2 fw-semibold"
+                  className="btn px-4 py-2 fw-semibold confirmed-cart-btn"
                   disabled={totalSelectedPrice === 0}
                   onClick={() => {
                     const productToOrder = cartProducts.filter((p) =>

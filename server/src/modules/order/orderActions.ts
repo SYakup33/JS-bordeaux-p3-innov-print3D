@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { StatusCodes } from "http-status-codes";
 
 import orderRepository from "./orderRepository";
 
@@ -9,7 +10,7 @@ const add: RequestHandler = async (req, res, next) => {
 
     await orderRepository.create(userId, products);
 
-    res.status(201).json(products);
+    res.status(StatusCodes.OK).json(products);
   } catch (err) {
     next(err);
   }

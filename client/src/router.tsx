@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Header from "./components/Header.tsx";
-import ConfirmatedOrder from "./pages/ConfirmatedOrder.tsx";
+import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
 import CartList from "./pages/cart/CartList.tsx";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/order/confirmation/:id",
-        element: <ConfirmatedOrder />,
+        element: <ConfirmedOrder />,
       },
     ],
   },
