@@ -1,0 +1,20 @@
+.carousel-control-prev-icon {
+  width: 5rem;
+  height: 5rem;
+}
+
+.carousel-control-next-icon {
+  width: 5rem;
+  height: 5rem;
+}
+
+.product-cta-add-to-cart {
+  color: var(--font-secondary-color);
+  background-color: var(--btn-cta-primary-color);
+}
+
+.btn:hover {
+  color: var(--btn-cta-primary-color);
+  background-color: var(--btn-cta-secondary-color);
+  border: 2px solid var(--btn-cta-primary-color);
+}
