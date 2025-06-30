@@ -42,7 +42,7 @@ function Product() {
 
   return (
     <>
-      <main className="container my-3">
+      <main className="container mw-100">
         <div className="w-100 product-top-bar" />
         <div className="row">
           <article className="col-md-6 mb-4">
@@ -91,7 +91,7 @@ function Product() {
               </button>
             </div>
           </article>
-          <article className="col-md-6 d-flex flex-column justify-content-center">
+          <article className="col-md-6 d-flex flex-column justify-content-center pe-5">
             <h1 className="fs-1 fw-semibold">{product?.name}</h1>
             <div className="mb-5">{rating()}</div>
             <div className="d-flex justify-content-between">
@@ -118,11 +118,11 @@ function Product() {
             <button
               type="button"
               onClick={() => ""}
-              className="btn my-5 py-4 fs-4 fw-bold w-75 product-cta-add-to-cart d-block"
+              className="btn my-5 py-4 fs-4 fw-bold w-75 mx-auto product-cta-add-to-cart"
             >
               Ajouter au panier
             </button>
-            <p className="mt-5 lh-lg">
+            <p className="mt-5 lh-lg d-none d-lg-block">
               {(product?.description?.length || 0) > 300
                 ? `${product?.description.slice(0, 300)}... `
                 : product?.description}
