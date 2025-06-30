@@ -1,11 +1,21 @@
-.carousel-control-prev-icon {
-  width: 5rem;
-  height: 5rem;
+.product-top-bar {
+  background-color: var(--tertiary-color);
+  height: 100px;
+  margin-bottom: 20px;
 }
 
+.product-img {
+  max-height: 600px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.carousel-control-prev-icon,
 .carousel-control-next-icon {
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
 }
 
 .product-cta-add-to-cart {

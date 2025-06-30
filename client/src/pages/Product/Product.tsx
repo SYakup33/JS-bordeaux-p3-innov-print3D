@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ProductType } from "../../types/product.ts";
 import "./Product.css";
-import { StarFill, StarHalf } from "react-bootstrap-icons";
+import { Dash, Plus, StarFill, StarHalf } from "react-bootstrap-icons";
 import { useParams } from "react-router";
 
 function Product() {
@@ -42,7 +42,8 @@ function Product() {
 
   return (
     <>
-      <main className="container my-4">
+      <main className="container my-3">
+        <div className="w-100 product-top-bar" />
         <div className="row">
           <article className="col-md-6 mb-4">
             <div
@@ -53,13 +54,13 @@ function Product() {
               <div className="carousel-inner">
                 {product?.images?.map((imgPath) => (
                   <div
-                    className={`carousel-item ${product.id === 0 ? "active" : ""}`}
-                    key={product.name}
+                    className={`carousel-item ${product.images[0] === imgPath ? "active" : ""}`}
+                    key={imgPath}
                   >
                     <img
                       src={imgPath}
-                      alt={`Cliché ${product.id + 1} du ${product?.name}`}
-                      className="d-block img-fluid rounded"
+                      alt={`Cliché du ${product?.name}`}
+                      className="product-img d-block img-fluid rounded"
                     />
                   </div>
                 ))}
@@ -90,14 +91,34 @@ function Product() {
               </button>
             </div>
           </article>
-          <article className="col-md-6 d-flex flex-column justify-content-center gap-3">
+          <article className="col-md-6 d-flex flex-column justify-content-center">
             <h1 className="fs-1 fw-semibold">{product?.name}</h1>
             <div className="mb-5">{rating()}</div>
-            <h2 className="text-end fs-1 fw-bold my-5">{product?.price} €</h2>
+            <div className="d-flex justify-content-between">
+              <div className="d-flex align-items-center gap-3">
+                <p className="me-2 mb-0 fw-semibold">Quantité :</p>
+                <button
+                  type="button"
+                  className="btn btn-outline-dark btn-sm p-1"
+                  onClick={() => ""}
+                >
+                  <Dash size={20} />
+                </button>
+                <span className="fs-5">1</span>
+                <button
+                  type="button"
+                  className="btn btn-outline-dark btn-sm p-1"
+                  onClick={() => ""}
+                >
+                  <Plus size={20} />
+                </button>
+              </div>
+              <h2 className="fs-1 fw-bold my-3">{product?.price} €</h2>
+            </div>
             <button
               type="button"
               onClick={() => ""}
-              className="btn my-5 mx-auto py-4 fs-4 fw-bold w-75 product-cta-add-to-cart d-block"
+              className="btn my-5 py-4 fs-4 fw-bold w-75 product-cta-add-to-cart d-block"
             >
               Ajouter au panier
             </button>
