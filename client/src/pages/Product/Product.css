@@ -18,6 +18,10 @@
   border-radius: 50%;
 }
 
+.product-badge {
+  width: 110px;
+}
+
 .product-cta-add-to-cart {
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
