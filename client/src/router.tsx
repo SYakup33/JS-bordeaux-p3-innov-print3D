@@ -7,16 +7,13 @@ import CartList from "./pages/cart/CartList.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/products",
-    element: <ProductList />,
-  },
-  {
-    path: "/",
     element: <Header />,
     children: [
+      { index: true, element: <Home /> },
+      {
+        path: "products",
+        element: <ProductList />,
+      },
       {
         path: "/cart/user/:id",
         element: <CartList />,
