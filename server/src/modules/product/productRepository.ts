@@ -36,6 +36,12 @@ class ProductRepository {
 
     product.images = imageRows.map((img) => img.path);
 
+    const [categoryRows] = await databaseClient.query<Rows>(
+      "SELECT name FROM category WHERE id = ?",
+      [product.category_id],
+    );
+    product.category_name = categoryRows[0]?.name || "";
+
     return product as Product;
   }
 }
