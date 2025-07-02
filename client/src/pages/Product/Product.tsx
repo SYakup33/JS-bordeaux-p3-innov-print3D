@@ -12,7 +12,7 @@ function Product() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/products/${id}`,
+          `${import.meta.env.VITE_API_URL}/api/product/${id}`,
         );
         if (!response.ok) {
           throw new Error("Erreur lors du chargement du produit");
@@ -93,6 +93,9 @@ function Product() {
           </article>
           <article className="col-md-6 d-flex flex-column justify-content-center pe-5">
             <h1 className="fs-1 fw-semibold">{product?.name}</h1>
+            <h2 className="product-badge badge bg-secondary d-flex justify-content-center py-2">
+              {product?.category_name}
+            </h2>
             <div className="mb-5">{rating()}</div>
             <div className="d-flex justify-content-between">
               <div className="d-flex align-items-center gap-3">
