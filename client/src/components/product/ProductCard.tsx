@@ -1,4 +1,5 @@
 import "../../assets/styles/_variables.css";
+import { useNavigate } from "react-router";
 import type { ProductType } from "../../types/product.ts";
 import "./ProductCard.css";
 
@@ -7,11 +8,16 @@ interface ProductCardProps {
 }
 
 function ProductCard({ products }: ProductCardProps) {
+  const navigate = useNavigate();
   return (
     <>
       <div key={products?.id} className="card rounded-3 cards-card">
         {products ? (
-          <button type="button" className="btn p-0 border-0 bg-transparent">
+          <button
+            type="button"
+            onClick={() => navigate(`/product/${products.id}`)}
+            className="btn p-0 border-0 bg-transparent"
+          >
             <img
               src={products.images[0]}
               alt={`Cliché du ${products.name}`}
