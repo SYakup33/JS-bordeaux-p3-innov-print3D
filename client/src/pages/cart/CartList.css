@@ -25,3 +25,8 @@
   cursor: pointer;
   box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.4);
 }
+
+.confirmed-cart-btn {
+  background-color: var(--btn-cta-primary-color);
+  color: var(--font-cta-btn-primary);
+}
