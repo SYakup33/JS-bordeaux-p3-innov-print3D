@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
+import { useNavigate } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
 import { useCart } from "../../context/CartContext";
-import { useNavigate } from "react-router";
 import { useUser } from "../../context/UserContext";
 
 type Message = { text: string };
