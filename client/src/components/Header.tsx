@@ -1,8 +1,14 @@
 import { Cart3 } from "react-bootstrap-icons";
-import { Outlet, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 
 function Header() {
   const navigate = useNavigate();
+  const { cartProducts } = useCart();
+  const { user } = useUser();
+  const userId = user?.userId;
+
   return (
     <>
       <div className="container mt-4">
@@ -11,19 +17,16 @@ function Header() {
             type="button"
             className="btn position-relative border-0 p-0 me-2 cursor-pointer"
             onClick={() => {
-              navigate("/cart/user/3");
+              navigate(`/cart/user/${userId}`);
             }}
           >
             <Cart3 size={28} className="text-dark" />
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              0
+              {cartProducts.reduce((acc, p) => acc + p.quantity, 0)}
             </span>
           </button>
         </header>
       </div>
-      <main>
-        <Outlet />
-      </main>
     </>
   );
 }

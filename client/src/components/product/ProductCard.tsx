@@ -1,12 +1,17 @@
+import { CartDash, CartPlus } from "react-bootstrap-icons";
 import "../../assets/styles/_variables.css";
 import type { ProductType } from "../../types/product.ts";
 import "./ProductCard.css";
+import { useCart } from "../../context/CartContext.tsx";
 
 interface ProductCardProps {
   products: ProductType;
 }
 
 function ProductCard({ products }: ProductCardProps) {
+  const { addToCart, cartProducts } = useCart();
+  const isInCart = cartProducts.map((p) => p.productId).includes(products.id);
+
   return (
     <>
       <div key={products?.id} className="card rounded-3 cards-card">
@@ -32,8 +37,10 @@ function ProductCard({ products }: ProductCardProps) {
               <button
                 type="button"
                 className="btn p-0 border-0 bg-transparent cards-card-cart"
+                onClick={() => addToCart(products.id, products.name)}
               >
-                <i className="bi bi-cart-plus-fill" />
+                {isInCart ? <CartDash /> : <CartPlus />}
+                {/* <i className="bi bi-cart-plus-fill" /> */}
               </button>
             </div>
           </div>
