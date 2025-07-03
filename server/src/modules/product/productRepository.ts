@@ -4,35 +4,36 @@ import type { Rows } from "../../../database/client";
 import type { Product } from "../../types/express/index";
 
 class ProductRepository {
-  async findAll(
+  async findBy(
     name: unknown,
     categoryId: unknown,
     minPrice: unknown,
     maxPrice: unknown,
     description: unknown,
   ) {
-    const [productRows] = await databaseClient.query<Rows>(
-      `SELECT p.id, p.name, p.description, p.price, c.name AS categoryName 
-       FROM product p 
-       LEFT JOIN category c ON p.category_id = c.id
-       WHERE (? IS NULL OR p.name LIKE ?)
-        AND (? IS NULL OR c.id = ?)
-        AND (? IS NULL OR p.price >= ?)
-        AND (? IS NULL OR p.price <= ?)
-        AND (? IS NULL OR p.description LIKE ?)`,
-      [
-        name,
-        `%${name}%`,
-        categoryId,
-        categoryId,
-        minPrice,
-        minPrice,
-        maxPrice,
-        maxPrice,
-        description,
-        `%${description}%`,
-      ],
-    );
+    const query = `
+    SELECT p.id, p.name, p.description, p.price, c.name AS categoryName 
+    FROM product p 
+    LEFT JOIN category c ON p.category_id = c.id
+    WHERE (? IS NULL OR p.name LIKE ?)
+      AND (? IS NULL OR c.id = ?)
+      AND (? IS NULL OR p.price >= ?)
+      AND (? IS NULL OR p.price <= ?)
+      AND (? IS NULL OR p.description LIKE ?)
+  `;
+
+    const [productRows] = await databaseClient.query<Rows>(query, [
+      name,
+      `%${name}%`,
+      categoryId,
+      categoryId,
+      minPrice,
+      minPrice,
+      maxPrice,
+      maxPrice,
+      description,
+      `%${description}%`,
+    ]);
 
     for (const product of productRows) {
       const [imageRows] = await databaseClient.query<Rows>(

@@ -4,10 +4,9 @@ import productRepository from "./productRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   const { name, categoryId, minPrice, maxPrice, description } = req.query;
-  console.log(req.query);
 
   try {
-    const products = await productRepository.findAll(
+    const products = await productRepository.findBy(
       name,
       categoryId,
       minPrice,
