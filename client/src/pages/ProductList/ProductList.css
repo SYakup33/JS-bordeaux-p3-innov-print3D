@@ -1,14 +1,11 @@
 .cards-title {
-  background-color: var(--secondary-color);
+  background-color: var(--tertiary-color);
   font-size: var(--font-size-h1);
   height: 100px;
   padding: 10px 0px 0px 10px;
   margin-bottom: 20px;
 }
 
-#cards-main-content {
-  display: flex;
-}
 .cards-pagination-btn {
   padding: 5px 12px;
   border: 1px solid #ccc;
@@ -37,4 +34,5 @@
 .rc-pagination-item:hover {
   border-color: transparent;
   box-shadow: none;
+  margin: 0;
 }
