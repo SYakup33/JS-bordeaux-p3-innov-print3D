@@ -7,6 +7,18 @@
   padding-right: 12px;
 }
 
+.card-body {
+  height: 130px;
+}
+
+.card-body .card-title {
+  font-size: 1.1em;
+}
+
+.card-body .card-price {
+  font-size: 1.2em;
+}
+
 .cards .cards-card {
   background-color: var(--tertiary-color);
   width: 24rem;
@@ -19,7 +31,6 @@
 
 .cards .cards-card .cards-card-footer {
   font-size: var(--font-size-paragraph);
-  padding-top: 15px;
   background-color: black;
 }
 
@@ -28,10 +39,23 @@
   padding: 15px 0px 15px 0px;
 }
 
-.cards-card-heart {
-  font-size: 1.8rem;
+.product-card-icon {
+  transition: transform 0.2s ease;
 }
 
-.cards-card-cart {
-  font-size: 2rem;
+.heart {
+  margin-bottom: 0.1em;
+}
+
+.product-card-icon:hover {
+  transform: scale(1.2);
+}
+
+@media (min-width: 768px) {
+  .card-body .card-title {
+    font-size: 1.8em;
+  }
+  .card-body .card-price {
+    font-size: 1.5em;
+  }
 }

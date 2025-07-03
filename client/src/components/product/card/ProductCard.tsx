@@ -16,7 +16,7 @@ function ProductCard({ products }: ProductCardProps) {
         {products ? (
           <button
             onClick={() => {
-              navigate(`/products/${products.id}`);
+              navigate(`/product/${products.id}`);
             }}
             type="button"
             className="btn p-0 border-0 bg-transparent"
