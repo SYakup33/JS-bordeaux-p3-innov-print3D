@@ -8,3 +8,8 @@
 .cart-container {
   height: 140px;
 }
+
+.confirmed-cart-btn {
+  background-color: var(--btn-cta-primary-color);
+  color: var(--font-cta-btn-primary);
+}

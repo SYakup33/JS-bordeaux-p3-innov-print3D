@@ -3,6 +3,7 @@ import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import { useParams } from "react-router";
 import type { CartProduct } from "../../types/cart";
 import "./CartList.css";
+import { useNavigate } from "react-router";
 
 type Message = { text: string };
 
@@ -12,6 +13,7 @@ function CartList() {
   const [message, setMessage] = useState<Message | null>(null);
   const { id } = useParams();
   const userId = Number(id);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -85,6 +87,49 @@ function CartList() {
       }
       return [...prev, productId];
     });
+  };
+
+  const createAnOrder = async () => {
+    setMessage(null);
+
+    try {
+      const productToOrder = cartProducts.filter((p) =>
+        selectedProducts.includes(p.productId),
+      );
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/order/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            products: productToOrder.map((p) => ({
+              product_id: p.productId,
+              unit_price: p.price,
+              quantity: p.quantity,
+            })),
+          }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const order = await response.json();
+
+      navigate(`/order/${userId}/confirmation`, {
+        state: {
+          selectedProducts: productToOrder,
+          orderId: order.id,
+        },
+      });
+    } catch (error) {
+      console.error("Erreur lors de la création de commande:", error);
+      setMessage({
+        text: "Erreur lors de la création de la commande. Veuillez réessayer.",
+      });
+    }
   };
 
   let totalSelectedPrice = 0;
@@ -249,8 +294,9 @@ function CartList() {
                 </h5>
                 <button
                   type="button"
-                  className="btn btn-danger px-4 py-2 fw-semibold"
+                  className="btn px-4 py-2 fw-semibold confirmed-cart-btn"
                   disabled={totalSelectedPrice === 0}
+                  onClick={createAnOrder}
                 >
                   Passer la commande
                 </button>
