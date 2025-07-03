@@ -3,6 +3,8 @@ import cartActions from "./modules/cart/cartActions";
 
 const router = express.Router();
 
+router.post("/api/cart/:userId", cartActions.create);
+
 router.get("/api/cart/:userId", cartActions.read);
 router.put(
   "/api/cart/:userId/:productId",

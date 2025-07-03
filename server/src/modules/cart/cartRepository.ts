@@ -2,6 +2,20 @@ import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
 class cartRepository {
+  async add(userId: number, productId: number) {
+    await databaseClient.query<Result>(
+      `INSERT INTO cart (user_id, product_id, quantity)
+      VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE quantity = quantity + 1`,
+      [userId, productId],
+    );
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT COUNT(*) FROM cart WHERE user_id = ?",
+      [userId],
+    );
+
+    return rows[0].count;
+  }
+
   async findByUserId(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT p.id AS productId, p.name AS productName, p.description, p.price,
