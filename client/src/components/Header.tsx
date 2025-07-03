@@ -1,5 +1,5 @@
 import { Cart3 } from "react-bootstrap-icons";
-import { Outlet, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 function Header() {
   const navigate = useNavigate();
@@ -21,9 +21,6 @@ function Header() {
           </button>
         </header>
       </div>
-      <main>
-        <Outlet />
-      </main>
     </>
   );
 }

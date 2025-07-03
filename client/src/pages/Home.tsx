@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router";
-import Header from "../components/Header";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <>
-      <Header />
       <button
         type="button"
         onClick={() => navigate("/products")}
