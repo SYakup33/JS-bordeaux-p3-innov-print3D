@@ -89,6 +89,49 @@ function CartList() {
     });
   };
 
+  const createAnOrder = async () => {
+    setMessage(null);
+
+    try {
+      const productToOrder = cartProducts.filter((p) =>
+        selectedProducts.includes(p.productId),
+      );
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/order/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            products: productToOrder.map((p) => ({
+              product_id: p.productId,
+              unit_price: p.price,
+              quantity: p.quantity,
+            })),
+          }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const order = await response.json();
+
+      navigate(`/order/${userId}/confirmation`, {
+        state: {
+          selectedProducts: productToOrder,
+          orderId: order.id,
+        },
+      });
+    } catch (error) {
+      console.error("Erreur lors de la création de commande:", error);
+      setMessage({
+        text: "Erreur lors de la création de la commande. Veuillez réessayer.",
+      });
+    }
+  };
+
   let totalSelectedPrice = 0;
   for (const product of cartProducts) {
     if (selectedProducts.includes(product.productId)) {
@@ -253,14 +296,7 @@ function CartList() {
                   type="button"
                   className="btn px-4 py-2 fw-semibold confirmed-cart-btn"
                   disabled={totalSelectedPrice === 0}
-                  onClick={() => {
-                    const productToOrder = cartProducts.filter((p) =>
-                      selectedProducts.includes(p.productId),
-                    );
-                    navigate(`/order/confirmation/${userId}`, {
-                      state: { selectedProducts: productToOrder },
-                    });
-                  }}
+                  onClick={createAnOrder}
                 >
                   Passer la commande
                 </button>

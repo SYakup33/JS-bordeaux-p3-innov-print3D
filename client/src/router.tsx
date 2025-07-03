@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <CartList />,
       },
       {
-        path: "/order/confirmation/:id",
+        path: "/order/:id/confirmation",
         element: <ConfirmedOrder />,
       },
     ],

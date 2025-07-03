@@ -1,46 +1,7 @@
-import { useLocation, useParams } from "react-router";
-import logo from "../../public/img/icons/lnnovPrintLogo.png";
+import logo from "/img/icons/lnnovPrintLogo.png";
 import "./ConfirmedOrder.css";
-import { useEffect } from "react";
-import type { SelectedProductsType } from "../types/order";
 
 function ConfirmedOrder() {
-  const location = useLocation();
-  const selectedProducts = location.state?.selectedProducts;
-  const { id } = useParams();
-  const userId = Number(id);
-
-  useEffect(() => {
-    const placeAnOrder = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/order/${userId}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              products: selectedProducts.map((p: SelectedProductsType) => {
-                return {
-                  product_id: p.productId,
-                  unit_price: p.price,
-                  quantity: p.quantity,
-                };
-              }),
-            }),
-          },
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la création de commande");
-      }
-    };
-    placeAnOrder();
-  }, [userId, selectedProducts]);
-
   return (
     <>
       <section className="d-flex align-items-center justify-content-center">

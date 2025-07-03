@@ -5,7 +5,7 @@ import orderRepository from "./orderRepository";
 
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const userId = Number(req.params.userId);
+    const userId = 4;
     const { products } = req.body;
 
     await orderRepository.create(userId, products);
