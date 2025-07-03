@@ -1,0 +1,40 @@
+section {
+  min-height: 100vh;
+}
+
+.confirmed-order-message {
+  background: var(--linear-gradient);
+  color: var(--font-secondary-color);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.confirmed-order-consult {
+  max-width: 300px;
+  background-color: var(--btn-cta-primary-color);
+  color: var(--font-cta-btn-primary);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.consult-btn {
+  font-family: var(--font-family);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(223, 48, 48, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.confirmed-order-btn-animated {
+  background-color: var(--btn-cta-primary-color, #dc3545);
+  transition: all 0.3s ease;
+  color: var(--font-secondary-color);
+}
+
+.confirmed-order-btn-animated:hover {
+  background-color: #c82828 !important;
+  transform: translateY(-2px);
+}
