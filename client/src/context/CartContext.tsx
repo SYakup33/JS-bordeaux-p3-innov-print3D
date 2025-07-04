@@ -24,7 +24,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
       const data = await response.json();
 
-      setCartProducts(Array.isArray(data) ? data : []);
+      setCartProducts(data);
     } catch (err) {
       toast.error("Erreur lors du chargement du panier.");
     }
@@ -79,7 +79,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ productId, quantity: 1 }),
+          body: JSON.stringify({ productId }),
         });
         toast.success(`${productName} ajouté au panier !`);
       }

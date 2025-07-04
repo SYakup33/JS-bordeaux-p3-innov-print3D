@@ -96,4 +96,22 @@ const validate: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { create, read, edit, destroy, validate };
+const validateCreate: RequestHandler = (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    const productId = Number(req.body.productId);
+
+    if (Number.isNaN(userId) || Number.isNaN(productId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Paramètres invalides pour la création du panier" });
+      return;
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { create, read, edit, destroy, validate, validateCreate };
