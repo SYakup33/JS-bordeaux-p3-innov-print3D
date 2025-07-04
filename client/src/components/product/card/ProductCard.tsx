@@ -1,7 +1,8 @@
-import "../../assets/styles/_variables.css";
-import { useNavigate } from "react-router";
-import type { ProductType } from "../../types/product.ts";
+import "../../../assets/styles/_variables.css";
+import { CartPlusFill, Heart } from "react-bootstrap-icons";
+import type { ProductType } from "../../../types/product.ts";
 import "./ProductCard.css";
+import { useNavigate } from "react-router";
 
 interface ProductCardProps {
   products: ProductType;
@@ -11,11 +12,13 @@ function ProductCard({ products }: ProductCardProps) {
   const navigate = useNavigate();
   return (
     <>
-      <div key={products?.id} className="card rounded-3 cards-card">
+      <article key={products?.id} className="card rounded-3 cards-card">
         {products ? (
           <button
+            onClick={() => {
+              navigate(`/product/${products.id}`);
+            }}
             type="button"
-            onClick={() => navigate(`/product/${products.id}`)}
             className="btn p-0 border-0 bg-transparent"
           >
             <img
@@ -27,24 +30,24 @@ function ProductCard({ products }: ProductCardProps) {
         ) : (
           <p>Pas d'image disponible</p>
         )}
-        <div className="card-body d-flex flex-column justify-content-between cards-card-footer">
+        <div className="card-body d-flex flex-column justify-content-between cards-card-footer p-2">
           <h3 className="card-title">{products?.name}</h3>
           <div className="d-flex justify-content-between align-items-center mt-auto cards-card-price-icons">
-            <h4 className="fw-bold mb-0">{products?.price} €</h4>
-            <div className="d-flex align-items-center gap-3">
+            <h4 className="card-price fw-bold mb-0">{products?.price}€</h4>
+            <div className="d-flex">
               <button type="button" className="btn p-0 border-0 bg-transparent">
-                <i className="bi bi-heart cards-card-heart" />
+                <Heart size={20} className="product-card-icon me-2" />
               </button>
               <button
                 type="button"
                 className="btn p-0 border-0 bg-transparent cards-card-cart"
               >
-                <i className="bi bi-cart-plus-fill" />
+                <CartPlusFill size={20} className="product-card-icon heart" />
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </article>
     </>
   );
 }

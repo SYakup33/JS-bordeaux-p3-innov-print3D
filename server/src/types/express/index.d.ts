@@ -23,6 +23,12 @@ declare global {
     quantity: number;
     unit_price: number;
   };
+  type ProductFilters = {
+    name?: string;
+    category_id?: string;
+    minPrice?: number;
+    maxPrice?: number;
+  };
   namespace Express {
     export interface Request {}
   }

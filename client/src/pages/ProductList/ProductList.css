@@ -1,5 +1,5 @@
 .cards-title {
-  background-color: var(--secondary-color);
+  background-color: var(--tertiary-color);
   font-size: var(--font-size-h1);
   height: 100px;
   padding: 10px 0px 0px 10px;
@@ -34,4 +34,5 @@
 .rc-pagination-item:hover {
   border-color: transparent;
   box-shadow: none;
+  margin: 0;
 }

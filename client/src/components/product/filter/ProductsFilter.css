@@ -1,0 +1,29 @@
+.product-filter-li {
+  transition: background-color 0.3s ease;
+  list-style: none;
+  background-color: var(--tertiary-color);
+  cursor: pointer;
+}
+
+.product-filter-li:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+  border-radius: 4px;
+  padding: 0.2em;
+}
+
+.show-filter-btn,
+.dropdown-menu li *:hover {
+  background-color: var(--tertiary-color);
+}
+
+.show-filter-btn:hover,
+.product-filter-dropdown:hover {
+  background-color: var(--secondary-color);
+}
+
+@media (min-width: 768px) {
+  .filter-prices {
+    width: 75%;
+  }
+}

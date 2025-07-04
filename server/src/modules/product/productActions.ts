@@ -4,7 +4,7 @@ import productRepository from "./productRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    const products = await productRepository.findAll();
+    const products = await productRepository.findBy(req.query);
 
     if (products === null) {
       res.status(StatusCodes.NOT_FOUND);
