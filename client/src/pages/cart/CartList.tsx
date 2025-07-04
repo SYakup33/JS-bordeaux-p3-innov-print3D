@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
 import { useCart } from "../../context/CartContext";
-import { useUser } from "../../context/UserContext";
-
-type Message = { text: string };
+import type { Message } from "../../types/cart";
 
 function CartList() {
   const { cartProducts, fetchCart, updateQuantity, deleteProduct } = useCart();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
   const navigate = useNavigate();
-  const { user } = useUser();
-  const userId = user?.userId;
+  const { id } = useParams();
+  const userId = Number(id ?? 1);
 
   useEffect(() => {
     fetchCart();
@@ -140,7 +138,8 @@ function CartList() {
                     <div className="w-75 d-flex justify-content-center align-items-center gap-4 cart-container">
                       <input
                         type="checkbox"
-                        className="form-check-input"
+                        role="button"
+                        className="form-check-input border-dark "
                         onChange={() => checkProduct(product.productId)}
                         checked={selectedProducts.includes(product.productId)}
                       />

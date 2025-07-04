@@ -12,7 +12,6 @@
 .form-check-input {
   width: 1.2rem;
   height: 1.2rem;
-  border: 1px solid #495057;
 }
 
 .form-check-input:checked {
@@ -22,7 +21,6 @@
 }
 
 .form-check-input:hover {
-  cursor: pointer;
   box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.4);
 }
 

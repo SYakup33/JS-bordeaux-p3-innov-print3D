@@ -5,9 +5,9 @@ import cartRepository from "./cartRepository";
 const create: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
-    const { productId } = req.body;
+    const { productId, quantity = 1 } = req.body;
 
-    await cartRepository.add(userId, productId);
+    await cartRepository.add(userId, productId, quantity);
 
     const cart = await cartRepository.findByUserId(userId);
 

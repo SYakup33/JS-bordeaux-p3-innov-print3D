@@ -8,16 +8,6 @@ export type CartProduct = {
   images: string[];
 };
 
-export type CartProps = {
-  products: CartProduct[];
-  selectedProducts: number[];
-  checkProduct: (productId: number) => void;
-  updateQuantity: (productId: number, newQuantity: number) => void;
-  deleteProduct: (productId: number) => void;
-  checkAll: () => void;
-  uncheckAll: () => void;
-};
-
 export type CartContextType = {
   cartProducts: CartProduct[];
   fetchCart: () => void;
@@ -25,3 +15,5 @@ export type CartContextType = {
   updateQuantity: (productId: number, newQuantity: number) => void;
   deleteProduct: (productId: number) => void;
 };
+
+export type Message = { text: string };

@@ -11,12 +11,7 @@ function App() {
       <main>
         <Outlet />
       </main>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1000}
-        newestOnTop
-        closeOnClick
-      />
+      <ToastContainer position="bottom-left" autoClose={1000} closeOnClick />
     </>
   );
 }

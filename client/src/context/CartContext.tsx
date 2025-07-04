@@ -5,16 +5,16 @@ import {
   useContext,
   useState,
 } from "react";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import type { CartContextType, CartProduct } from "../types/cart";
-import { useUser } from "./UserContext";
 
 const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
-  const { user } = useUser();
-  const userId = user?.userId;
+  const { id } = useParams();
+  const userId = Number(id ?? 1);
 
   const fetchCart = useCallback(async () => {
     try {
@@ -71,29 +71,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const isInCart = cartProducts.map((p) => p.productId).includes(productId);
 
       if (isInCart) {
-        await fetch(
-          `${import.meta.env.VITE_API_URL}/api/cart/${userId}/${productId}`,
-          {
-            method: "DELETE",
-          },
-        );
+        await deleteProduct(productId);
         toast.info(`${productName} retiré du panier.`);
       } else {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/cart/${userId}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ productId, quantity: 1 }),
+        await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
-
-        if (!res.ok) {
-          throw new Error();
-        }
-
+          body: JSON.stringify({ productId, quantity: 1 }),
+        });
         toast.success(`${productName} ajouté au panier !`);
       }
 
