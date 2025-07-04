@@ -5,24 +5,29 @@ import "./ProductsFilter.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { ArrowDownSquare, ArrowUpSquare } from "react-bootstrap-icons";
 
-function ProductsFilter({
-  productName,
-  productNameChange,
-  suggestions,
-  minPrice,
-  minPriceChange,
-  maxPrice,
-  maxPriceChange,
-  category,
-  categoryChange,
-  setOrder,
-}: ProductsFilterProps) {
+function ProductsFilter({ filters }: ProductsFilterProps) {
   const [showFilters, setShowFilters] = useState(false);
-  const [activeOrder, setActiveOrder] = useState("");
+
   const navigate = useNavigate();
+
+  const {
+    productName,
+    productNameChange,
+    suggestions,
+    minPrice,
+    minPriceChange,
+    maxPrice,
+    maxPriceChange,
+    category,
+    categoryChange,
+    setSortByPrice,
+    sortByPrice,
+  } = filters;
+
   const resetFilters = () => {
-    productNameChange({
+    filters.productNameChange({
       target: { value: "" },
     } as React.ChangeEvent<HTMLInputElement>);
     minPriceChange({
@@ -33,12 +38,7 @@ function ProductsFilter({
     } as React.ChangeEvent<HTMLInputElement>);
     categoryChange("");
 
-    setOrder("");
-    setActiveOrder("");
-  };
-
-  const categorySelect = (value: string) => {
-    categoryChange(value);
+    setSortByPrice("");
   };
 
   return (
@@ -56,9 +56,8 @@ function ProductsFilter({
             <li
               key={item.id}
               className="product-filter-li border-bottom border-1 border-black ms-5 p-2 w-75"
-              onClick={() => navigate(`/products/${item.id}`)}
-              onKeyDown={() => navigate(`/products/${item.id}`)}
-              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/product/${item.id}`)}
+              onKeyDown={() => navigate(`/product/${item.id}`)}
             >
               {item.name}
             </li>
@@ -74,7 +73,7 @@ function ProductsFilter({
           type="button"
           onClick={() => setShowFilters(!showFilters)}
         >
-          <i className={`bi bi-chevron-${showFilters ? "up" : "down"}`} />
+          {showFilters ? <ArrowUpSquare /> : <ArrowDownSquare />}
         </button>
       </div>
 
@@ -107,14 +106,13 @@ function ProductsFilter({
             <div className="d-flex flex-column align-items-start">
               <button
                 className={`btn btn-link text-decoration-none text-reset p-0 mb-1 mt-md-2 ${
-                  activeOrder === "price-asc"
+                  sortByPrice === "price-asc"
                     ? "text-primary fw-bold text-decoration-underline"
                     : ""
                 }`}
                 type="button"
                 onClick={() => {
-                  setOrder("price-asc");
-                  setActiveOrder("price-asc");
+                  setSortByPrice("price-asc");
                 }}
               >
                 Prix croissant
@@ -122,14 +120,13 @@ function ProductsFilter({
 
               <button
                 className={`btn btn-link text-decoration-none text-reset p-0 mb-3 ${
-                  activeOrder === "price-desc"
+                  sortByPrice === "price-desc"
                     ? "text-primary fw-bold text-decoration-underline"
                     : ""
                 }`}
                 type="button"
                 onClick={() => {
-                  setOrder("price-desc");
-                  setActiveOrder("price-desc");
+                  setSortByPrice("price-desc");
                 }}
               >
                 Prix décroissant
@@ -161,7 +158,7 @@ function ProductsFilter({
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => categorySelect("")}
+                    onClick={() => categoryChange("")}
                   >
                     Tous les produits
                   </button>
@@ -173,7 +170,7 @@ function ProductsFilter({
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => categorySelect("1")}
+                    onClick={() => categoryChange("1")}
                   >
                     Figurines
                   </button>
@@ -182,7 +179,7 @@ function ProductsFilter({
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => categorySelect("2")}
+                    onClick={() => categoryChange("2")}
                   >
                     Objets pratiques
                   </button>
@@ -191,7 +188,7 @@ function ProductsFilter({
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => categorySelect("3")}
+                    onClick={() => categoryChange("3")}
                   >
                     Jeux
                   </button>

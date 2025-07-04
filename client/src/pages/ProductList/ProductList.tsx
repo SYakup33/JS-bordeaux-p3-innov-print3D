@@ -20,7 +20,7 @@ function ProductList() {
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [category, setCategory] = useState<string | null>(null);
-  const [order, setOrder] = useState<string | null>(null);
+  const [sortByPrice, setSortByPrice] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
 
   const fetchAndSortProducts = useCallback(async () => {
@@ -29,7 +29,7 @@ function ProductList() {
       if (productName) params.append("name", productName);
       if (minPrice !== null) params.append("minPrice", String(minPrice));
       if (maxPrice !== null) params.append("maxPrice", String(maxPrice));
-      if (category) params.append("categoryId", category);
+      if (category) params.append("category_id", category);
 
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/products/search?${params.toString()}`,
@@ -37,21 +37,21 @@ function ProductList() {
       if (!response.ok) {
         throw new Error("Erreur lors du chargement des produits");
       }
-      let data: ProductType[] = await response.json();
+      let products: ProductType[] = await response.json();
 
-      if (order === "price-asc") {
-        data = data.sort((a, b) => a.price - b.price);
-      } else if (order === "price-desc") {
-        data = data.sort((a, b) => b.price - a.price);
+      if (sortByPrice === "price-asc") {
+        products = products.sort((a, b) => a.price - b.price);
+      } else if (sortByPrice === "price-desc") {
+        products = products.sort((a, b) => b.price - a.price);
       }
 
-      setProducts(data);
+      setProducts(products);
       setCurrentPage(1);
     } catch (error) {
       console.error("Erreur:", error);
       setProducts([]);
     }
-  }, [productName, minPrice, maxPrice, category, order]);
+  }, [productName, minPrice, maxPrice, category, sortByPrice]);
 
   useEffect(() => {
     fetchAndSortProducts();
@@ -70,13 +70,28 @@ function ProductList() {
       setSuggestions([]);
     }
   };
+  const filters = {
+    productName,
+    productNameChange: suggestionProductName,
+    suggestions,
+    minPrice,
+    minPriceChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setMinPrice(e.target.value ? Number(e.target.value) : null),
+    maxPrice,
+    maxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setMaxPrice(e.target.value ? Number(e.target.value) : null),
+    category,
+    categoryChange: (value: string) => setCategory(value || null),
+    setSortByPrice,
+    sortByPrice,
+  };
 
   return (
     <>
       <div className="d-flex align-items-center cards-title">
         <h1>TOUS LES PRODUITS</h1>
       </div>
-      <main className="d-flex flex-column flex-md-row">
+      <section className="d-flex flex-column flex-md-row">
         <form
           className="d-flex flex-column col-md-3"
           onSubmit={(e) => {
@@ -84,24 +99,7 @@ function ProductList() {
             fetchAndSortProducts();
           }}
         >
-          <ProductsFilter
-            productName={productName}
-            productNameChange={suggestionProductName}
-            suggestions={suggestions}
-            minPrice={minPrice}
-            minPriceChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setMinPrice(e.target.value ? Number(e.target.value) : null);
-            }}
-            maxPrice={maxPrice}
-            maxPriceChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setMaxPrice(e.target.value ? Number(e.target.value) : null);
-            }}
-            setOrder={setOrder}
-            category={category}
-            categoryChange={(value: string) => {
-              setCategory(value || null);
-            }}
-          />
+          <ProductsFilter filters={filters} />
         </form>
         <section className="container">
           <div className="row g-4">
@@ -143,7 +141,7 @@ function ProductList() {
             />
           </div>
         </section>
-      </main>
+      </section>
     </>
   );
 }
