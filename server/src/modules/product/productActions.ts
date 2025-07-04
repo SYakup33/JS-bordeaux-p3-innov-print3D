@@ -18,11 +18,10 @@ const browse: RequestHandler = async (req, res, next) => {
 
 const read: RequestHandler = async (req, res, next) => {
   try {
-    const productId = Number(req.params.id);
-    const product = await productRepository.find(productId);
+    const product = await productRepository.find(Number(req.params.id));
 
     if (product === null) {
-      res.status(StatusCodes.NOT_FOUND);
+      res.sendStatus(StatusCodes.NOT_FOUND);
     }
 
     res.json(product);

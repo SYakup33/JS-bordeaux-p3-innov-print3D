@@ -1,7 +1,7 @@
 export type { Product };
 
 declare global {
-  type product = {
+  type Product = {
     id: number;
     name: string;
     description: string;

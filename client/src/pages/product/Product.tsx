@@ -14,31 +14,21 @@ function Product() {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/product/${id}`,
         );
+
         if (!response.ok) {
-          throw new Error("Erreur lors du chargement du produit");
+          console.error("Erreur lors du chargement du produit");
+          setProduct(null);
         }
         const product: ProductType = await response.json();
         setProduct(product);
       } catch (error) {
-        console.error("Erreur:", error);
+        console.error("Erreur", error);
         setProduct(null);
       }
     };
 
     fetchProduct();
   }, [id]);
-
-  const rating = () => {
-    const stars = [];
-
-    for (let i = 0; i < 4; i++) {
-      stars.push(<StarFill key={i} color="gold" size={20} />);
-    }
-
-    stars.push(<StarHalf key="half" color="gold" size={20} />);
-
-    return stars;
-  };
 
   return (
     <section className="container mw-100">
@@ -89,7 +79,12 @@ function Product() {
           <h2 className="product-badge badge bg-secondary d-flex justify-content-center py-2">
             {product?.category_name}
           </h2>
-          <div className="mb-5">{rating()}</div>
+          <div className="mb-5">
+            {[...Array(4)].map((i) => (
+              <StarFill key={i} color="gold" size={20} />
+            ))}
+            <StarHalf key="half" color="gold" size={20} />
+          </div>
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center gap-3">
               <p className="me-2 mb-0 fw-semibold">Quantité :</p>

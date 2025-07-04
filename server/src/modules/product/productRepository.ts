@@ -53,10 +53,12 @@ class ProductRepository {
 
     return productRows as Product[];
   }
-
   async find(id: number) {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM product WHERE id = ?",
+      `SELECT p.*, c.name as category_name
+      FROM product p
+      JOIN category c ON p.category_id = c.id
+      WHERE p.id = ?`,
       [id],
     );
 
@@ -65,19 +67,13 @@ class ProductRepository {
     const product = rows[0];
 
     const [imageRows] = await databaseClient.query<Rows>(
-      "SELECT path FROM image WHERE product_id = ?",
+      `SELECT path FROM image WHERE product_id = ${product.id}`,
       [product.id],
     );
 
     product.images = imageRows.map((img) => img.path);
 
-    const [categoryRows] = await databaseClient.query<Rows>(
-      "SELECT name FROM category WHERE id = ?",
-      [product.category_id],
-    );
-    product.category_name = categoryRows[0]?.name || "";
-
-    return product as Product;
+    return product;
   }
 }
 export default new ProductRepository();
