@@ -14,6 +14,6 @@ router.put(
 );
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 import productActions from "./modules/product/productActions";
-router.get("/api/products", productActions.browse);
+router.get("/api/products/search", productActions.browse);
 
 export default router;

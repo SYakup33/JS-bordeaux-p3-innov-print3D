@@ -15,15 +15,20 @@ declare global {
     quantity: number;
     unit_price: number;
   };
+  type product = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+  };
+  type ProductFilters = {
+    name?: string;
+    category_id?: string;
+    minPrice?: number;
+    maxPrice?: number;
+  };
   namespace Express {
-    export interface Request {
-      product: {
-        id: number;
-        name: string;
-        description: string;
-        price: number;
-        category_id: number;
-      };
-    }
+    export interface Request {}
   }
 }
