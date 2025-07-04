@@ -12,7 +12,7 @@ function ProductCard({ products }: ProductCardProps) {
   const navigate = useNavigate();
   return (
     <>
-      <div key={products?.id} className="card rounded-3 cards-card">
+      <article key={products?.id} className="card rounded-3 cards-card">
         {products ? (
           <button
             onClick={() => {
@@ -47,7 +47,7 @@ function ProductCard({ products }: ProductCardProps) {
             </div>
           </div>
         </div>
-      </div>
+      </article>
     </>
   );
 }
