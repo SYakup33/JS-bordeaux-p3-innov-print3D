@@ -10,6 +10,11 @@ declare global {
     quantity: number;
     images: string[];
   };
+  type OrderProduct = {
+    product_id: number;
+    quantity: number;
+    unit_price: number;
+  };
   type product = {
     id: number;
     name: string;
