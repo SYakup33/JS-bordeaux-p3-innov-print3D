@@ -4,14 +4,49 @@ import type { Rows } from "../../../database/client";
 import type { Product } from "../../types/express/index";
 
 class ProductRepository {
-  async findAll() {
-    const [productRows] = await databaseClient.query<Rows>(
-      "SELECT p.id, p.name, p.description, p.price, c.name AS categoryName FROM product p LEFT JOIN category c ON p.category_id = c.id",
-    );
+  async findBy(filters: ProductFilters) {
+    const conditions = [];
+    const values = [];
+
+    const { name, category_id, minPrice, maxPrice } = filters;
+
+    if (name) {
+      conditions.push("p.name LIKE ?");
+      values.push(`%${name}%`);
+    }
+
+    if (category_id) {
+      conditions.push("c.id = ?");
+      values.push(category_id);
+    }
+
+    if (minPrice) {
+      conditions.push("p.price >= ?");
+      values.push(minPrice);
+    }
+
+    if (maxPrice) {
+      conditions.push("p.price <= ?");
+      values.push(maxPrice);
+    }
+
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
+
+    const query = `
+      SELECT p.id, p.name, p.description, p.price, c.name AS categoryName
+      FROM product p
+      LEFT JOIN category c ON p.category_id = c.id
+      ${whereClause}
+    `;
+
+    const [productRows] = await databaseClient.query<Rows>(query, values);
 
     for (const product of productRows) {
       const [imageRows] = await databaseClient.query<Rows>(
-        `SELECT path FROM image WHERE product_id = ${product.id}`,
+        "SELECT path FROM image WHERE product_id = ?",
+        [product.id],
       );
       product.images = imageRows.map((img) => img.path);
     }

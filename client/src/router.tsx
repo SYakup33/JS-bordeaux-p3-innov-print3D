@@ -4,6 +4,7 @@ import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import Product from "./pages/product/Product.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/products",
     element: <ProductList />,
+  },
+  {
+    path: "/product/:id",
+    element: <Product />,
   },
   {
     path: "/",
