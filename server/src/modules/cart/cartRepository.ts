@@ -2,12 +2,12 @@ import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
 class cartRepository {
-  async add(userId: number, productId: number, quantity = 1) {
+  async add(userId: number, productId: number) {
     await databaseClient.query<Result>(
       `INSERT INTO cart (user_id, product_id, quantity)
-       VALUES (?, ?, ?) 
-       ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)`,
-      [userId, productId, quantity],
+       VALUES (?, ?, 1) 
+       ON DUPLICATE KEY UPDATE quantity = quantity + 1`,
+      [userId, productId],
     );
   }
 
