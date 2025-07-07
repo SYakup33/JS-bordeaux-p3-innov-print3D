@@ -23,3 +23,12 @@ export type ProductsFilterProps = {
     sortByPrice: string | null;
   };
 };
+
+export type ProductSearchContextType = {
+  productName: string;
+  setProductName: (value: string) => void;
+  suggestions: ProductType[];
+  fetchSuggestions: (searchValue: string) => Promise<void>;
+  clearSuggestions: () => void;
+  resetSearch: () => void;
+};

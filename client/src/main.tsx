@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
+import { ProductSearchProvider } from "./contexts/ProductSearchContext";
 import router from "./router";
 
 const rootElement = document.getElementById("root");
@@ -10,4 +11,8 @@ if (rootElement == null) {
   throw new Error(`Your HTML Document should contain a <div id="root"></div>`);
 }
 
-createRoot(rootElement).render(<RouterProvider router={router} />);
+createRoot(rootElement).render(
+  <ProductSearchProvider>
+    <RouterProvider router={router} />
+  </ProductSearchProvider>,
+);

@@ -1,8 +1,10 @@
 import Pagination from "rc-pagination";
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import "rc-pagination/assets/index.css";
 import ProductCard from "../../components/product/card/ProductCard.tsx";
 import ProductsFilter from "../../components/product/filter/ProductFilter.tsx";
+import { useProductSearch } from "../../contexts/ProductSearchContext.tsx";
 import type { ProductType } from "../../types/product.ts";
 import "./ProductList.css";
 
@@ -16,12 +18,15 @@ function ProductList() {
     indexOfFirstProduct,
     indexOfLastProduct,
   );
-  const [productName, setProductName] = useState<string | null>(null);
+
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const [sortByPrice, setSortByPrice] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<ProductType[]>([]);
+
+  const { productName, suggestions, fetchSuggestions, resetSearch } =
+    useProductSearch();
+  const location = useLocation();
 
   const fetchAndSortProducts = useCallback(async () => {
     try {
@@ -57,22 +62,20 @@ function ProductList() {
     fetchAndSortProducts();
   }, [fetchAndSortProducts]);
 
-  const suggestionProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setProductName(value || null);
-
-    if (value && products) {
-      const filtered = products
-        .filter((p) => p.name.toLowerCase().includes(value.toLowerCase()))
-        .slice(0, 5);
-      setSuggestions(filtered);
-    } else {
-      setSuggestions([]);
+  useEffect(() => {
+    if (location.pathname === "/products") {
+      resetSearch();
     }
+  }, [location.pathname, resetSearch]);
+
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    fetchSuggestions(value);
   };
+
   const filters = {
     productName,
-    productNameChange: suggestionProductName,
+    productNameChange: onSearchInputChange,
     suggestions,
     minPrice,
     minPriceChange: (e: React.ChangeEvent<HTMLInputElement>) =>
