@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import Header from "./components/Header.tsx";
+import App from "./App.tsx";
 import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
@@ -9,20 +9,17 @@ import Product from "./pages/product/Product.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/products",
-    element: <ProductList />,
-  },
-  {
-    path: "/product/:id",
-    element: <Product />,
-  },
-  {
-    path: "/",
-    element: <Header />,
+    element: <App />,
     children: [
+      { index: true, element: <Home /> },
+      {
+        path: "products",
+        element: <ProductList />,
+      },
+      {
+        path: "/product/:id",
+        element: <Product />,
+      },
       {
         path: "/cart/user/:id",
         element: <CartList />,
