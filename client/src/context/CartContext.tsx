@@ -32,7 +32,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const updateQuantity = async (productId: number, newQuantity: number) => {
     try {
-      if (newQuantity < 1) return;
       await fetch(
         `${import.meta.env.VITE_API_URL}/api/cart/${userId}/${productId}`,
         {

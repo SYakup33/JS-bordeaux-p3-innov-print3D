@@ -82,8 +82,7 @@ const validate: RequestHandler = async (req, res, next) => {
     if (
       Number.isNaN(userId) ||
       Number.isNaN(productId) ||
-      Number.isNaN(quantity) ||
-      quantity < 1
+      Number.isNaN(quantity)
     ) {
       res
         .status(StatusCodes.BAD_REQUEST)
@@ -96,22 +95,4 @@ const validate: RequestHandler = async (req, res, next) => {
   }
 };
 
-const validateCreate: RequestHandler = (req, res, next) => {
-  try {
-    const userId = Number(req.params.userId);
-    const productId = Number(req.body.productId);
-
-    if (Number.isNaN(userId) || Number.isNaN(productId)) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Paramètres invalides pour la création du panier" });
-      return;
-    }
-
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-
-export default { add, read, edit, destroy, validate, validateCreate };
+export default { add, read, edit, destroy, validate };

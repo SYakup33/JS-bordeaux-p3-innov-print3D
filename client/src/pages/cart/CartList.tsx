@@ -161,19 +161,28 @@ function CartList() {
                         <small className="me-2 mb-0 fw-semibold">
                           Quantité :
                         </small>
-                        <button
-                          type="button"
-                          className="btn btn-outline-dark btn-sm p-1"
-                          onClick={() =>
-                            updateQuantity(
-                              product.productId,
-                              product.quantity - 1,
-                            )
-                          }
-                          disabled={product.quantity === 1}
-                        >
-                          <Dash size={20} />
-                        </button>
+                        {product.quantity > 1 ? (
+                          <button
+                            type="button"
+                            className="btn btn-outline-dark btn-sm p-1"
+                            onClick={() =>
+                              updateQuantity(
+                                product.productId,
+                                product.quantity - 1,
+                              )
+                            }
+                          >
+                            <Dash size={20} />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-outline-danger btn-sm p-1"
+                            onClick={() => deleteProduct(product.productId)}
+                          >
+                            <Trash size={20} />
+                          </button>
+                        )}
                         <span className="fs-5">{product.quantity}</span>
                         <button
                           type="button"
