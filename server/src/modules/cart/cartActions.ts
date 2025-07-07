@@ -2,6 +2,21 @@ import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import cartRepository from "./cartRepository";
 
+const add: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    const { productId } = req.body;
+
+    await cartRepository.add(userId, productId);
+
+    const cart = await cartRepository.findByUserId(userId);
+
+    res.status(StatusCodes.CREATED).json(cart);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const read: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
@@ -67,8 +82,7 @@ const validate: RequestHandler = async (req, res, next) => {
     if (
       Number.isNaN(userId) ||
       Number.isNaN(productId) ||
-      Number.isNaN(quantity) ||
-      quantity < 1
+      Number.isNaN(quantity)
     ) {
       res
         .status(StatusCodes.BAD_REQUEST)
@@ -81,4 +95,4 @@ const validate: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { read, edit, destroy, validate };
+export default { add, read, edit, destroy, validate };

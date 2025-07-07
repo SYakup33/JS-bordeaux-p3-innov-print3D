@@ -9,6 +9,21 @@
   height: 140px;
 }
 
+.form-check-input {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.form-check-input:checked {
+  background-color: #198754;
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.form-check-input:hover {
+  box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.4);
+}
+
 .confirmed-cart-btn {
   background-color: var(--btn-cta-primary-color);
   color: var(--font-cta-btn-primary);
