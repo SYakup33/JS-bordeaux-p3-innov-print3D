@@ -3,11 +3,7 @@ import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
 const router = express.Router();
 
-router.post(
-  "/api/cart/:userId",
-  cartActions.validateCreate,
-  cartActions.create,
-);
+router.post("/api/cart/:userId", cartActions.validateCreate, cartActions.add);
 
 router.post("/api/order/", orderActions.add);
 router.get("/api/cart/:userId", cartActions.read);

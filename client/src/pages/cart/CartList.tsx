@@ -90,7 +90,7 @@ function CartList() {
       </div>
       <div className="container py-4 flex-grow-1">
         {message ? (
-          <div>{message.text}</div>
+          <p>{message.text}</p>
         ) : (
           <div>
             {cartProducts.length > 0 && (

@@ -22,9 +22,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         `${import.meta.env.VITE_API_URL}/api/cart/${userId}`,
       );
 
-      const data = await response.json();
+      const cart = await response.json();
 
-      setCartProducts(data);
+      setCartProducts(cart);
     } catch (err) {
       toast.error("Erreur lors du chargement du panier.");
     }
@@ -108,7 +108,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("erreur");
+    throw new Error("useCart doit être utilisé dans un <CartProvider>");
   }
   return context;
 };

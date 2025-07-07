@@ -2,7 +2,7 @@ import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import cartRepository from "./cartRepository";
 
-const create: RequestHandler = async (req, res, next) => {
+const add: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
     const { productId } = req.body;
@@ -11,7 +11,7 @@ const create: RequestHandler = async (req, res, next) => {
 
     const cart = await cartRepository.findByUserId(userId);
 
-    res.json(cart);
+    res.status(StatusCodes.CREATED).json(cart);
   } catch (error) {
     next(error);
   }
@@ -114,4 +114,4 @@ const validateCreate: RequestHandler = (req, res, next) => {
   }
 };
 
-export default { create, read, edit, destroy, validate, validateCreate };
+export default { add, read, edit, destroy, validate, validateCreate };
