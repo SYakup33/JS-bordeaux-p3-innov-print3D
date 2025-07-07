@@ -8,12 +8,12 @@ export type CartProduct = {
   images: string[];
 };
 
-export type CartProps = {
-  products: CartProduct[];
-  selectedProducts: number[];
-  checkProduct: (productId: number) => void;
+export type CartContextType = {
+  cartProducts: CartProduct[];
+  fetchCart: () => void;
+  addToCart: (productId: number, productName: string) => void;
   updateQuantity: (productId: number, newQuantity: number) => void;
   deleteProduct: (productId: number) => void;
-  checkAll: () => void;
-  uncheckAll: () => void;
 };
+
+export type Message = { text: string };

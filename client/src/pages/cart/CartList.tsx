@@ -1,84 +1,22 @@
 import { useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
-import { useParams } from "react-router";
-import type { CartProduct } from "../../types/cart";
 import "./CartList.css";
-import { useNavigate } from "react-router";
-
-type Message = { text: string };
+import { useNavigate, useParams } from "react-router";
+import { ReadMore } from "../../components/ReadMore";
+import { useCart } from "../../contexts/CartContext";
+import type { Message } from "../../types/cart";
 
 function CartList() {
-  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
+  const { cartProducts, fetchCart, updateQuantity, deleteProduct } = useCart();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
-  const { id } = useParams();
-  const userId = Number(id);
   const navigate = useNavigate();
+  const { id } = useParams();
+  const userId = Number(id ?? 1);
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/cart/${userId}`,
-        );
-
-        if (!response.ok)
-          throw new Error("Erreur lors du chargement du panier");
-
-        const data = await response.json();
-
-        setCartProducts(data);
-      } catch (error) {
-        setMessage({
-          text: "Erreur lors du chargement du panier",
-        });
-      }
-    };
     fetchCart();
-  }, [userId]);
-
-  const updateQuantity = async (productId: number, newQuantity: number) => {
-    try {
-      if (newQuantity < 1) return;
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/cart/${userId}/${productId}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ quantity: newQuantity }),
-        },
-      );
-      if (!response.ok) throw new Error("Erreur lors de la mise à jour");
-      setCartProducts((prev) =>
-        prev.map((p) =>
-          p.productId === productId ? { ...p, quantity: newQuantity } : p,
-        ),
-      );
-    } catch {
-      setMessage({
-        text: "Impossible de modifier la quantité",
-      });
-    }
-  };
-
-  const deleteProduct = async (productId: number) => {
-    try {
-      setMessage(null);
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/cart/${userId}/${productId}`,
-        {
-          method: "DELETE",
-        },
-      );
-      if (!response.ok) throw new Error("Erreur lors de la suppression");
-      setCartProducts((prev) => prev.filter((p) => p.productId !== productId));
-      setSelectedProducts((prev) => prev.filter((id) => id !== productId));
-    } catch {
-      setMessage({
-        text: "Impossible de supprimer le produit",
-      });
-    }
-  };
+  }, [fetchCart]);
 
   const checkProduct = (productId: number) => {
     setSelectedProducts((prev) => {
@@ -145,19 +83,14 @@ function CartList() {
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <CartFill size={28} />
           Mon Panier
-          <span className="text-muted fs-6">
+          <span className="text-muted fs-6 mt-2">
             ({cartProducts.length} article{cartProducts.length > 1 ? "s" : ""})
           </span>
         </h2>
       </div>
       <div className="container py-4 flex-grow-1">
         {message ? (
-          <div
-            className="alert alert-danger mt-4 text-center fw-semibold"
-            role="alert"
-          >
-            {message.text}
-          </div>
+          <p>{message.text}</p>
         ) : (
           <div>
             {cartProducts.length > 0 && (
@@ -205,7 +138,8 @@ function CartList() {
                     <div className="w-75 d-flex justify-content-center align-items-center gap-4 cart-container">
                       <input
                         type="checkbox"
-                        className="form-check-input row align-items-center justify-content-center text-center"
+                        role="button"
+                        className="form-check-input border-dark "
                         onChange={() => checkProduct(product.productId)}
                         checked={selectedProducts.includes(product.productId)}
                       />
@@ -222,26 +156,33 @@ function CartList() {
                           {product.categoryName}
                         </small>
                       </div>
-                      <p className="text-muted small mb-2 w-100">
-                        {product.description}
-                      </p>
+                      <ReadMore text={product.description} maxLength={100} />
                       <div className="d-flex align-items-center gap-2">
                         <small className="me-2 mb-0 fw-semibold">
                           Quantité :
                         </small>
-                        <button
-                          type="button"
-                          className="btn btn-outline-dark btn-sm p-1"
-                          onClick={() =>
-                            updateQuantity(
-                              product.productId,
-                              product.quantity - 1,
-                            )
-                          }
-                          disabled={product.quantity === 1}
-                        >
-                          <Dash size={20} />
-                        </button>
+                        {product.quantity > 1 ? (
+                          <button
+                            type="button"
+                            className="btn btn-outline-dark btn-sm p-1"
+                            onClick={() =>
+                              updateQuantity(
+                                product.productId,
+                                product.quantity - 1,
+                              )
+                            }
+                          >
+                            <Dash size={20} />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-outline-danger btn-sm p-1"
+                            onClick={() => deleteProduct(product.productId)}
+                          >
+                            <Trash size={20} />
+                          </button>
+                        )}
                         <span className="fs-5">{product.quantity}</span>
                         <button
                           type="button"
@@ -294,7 +235,7 @@ function CartList() {
                 </h5>
                 <button
                   type="button"
-                  className="btn px-4 py-2 fw-semibold confirmed-cart-btn"
+                  className="btn px-4 py-2 fw-semibold btn-danger confirmed-cart-btn"
                   disabled={totalSelectedPrice === 0}
                   onClick={createAnOrder}
                 >

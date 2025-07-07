@@ -1,14 +1,18 @@
 import "../../../assets/styles/_variables.css";
-import { CartPlusFill, Heart } from "react-bootstrap-icons";
-import type { ProductType } from "../../../types/product.ts";
 import "./ProductCard.css";
+import { CartDash, CartPlusFill, Heart } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
+import { useCart } from "../../../contexts/CartContext.tsx";
+import type { ProductType } from "../../../types/product.ts";
 
 interface ProductCardProps {
   products: ProductType;
 }
 
 function ProductCard({ products }: ProductCardProps) {
+  const { addToCart, cartProducts } = useCart();
+  const isInCart = cartProducts.map((p) => p.productId).includes(products.id);
+
   const navigate = useNavigate();
   return (
     <>
@@ -41,8 +45,13 @@ function ProductCard({ products }: ProductCardProps) {
               <button
                 type="button"
                 className="btn p-0 border-0 bg-transparent cards-card-cart"
+                onClick={() => addToCart(products.id, products.name)}
               >
-                <CartPlusFill size={20} className="product-card-icon heart" />
+                {isInCart ? (
+                  <CartDash size={20} />
+                ) : (
+                  <CartPlusFill size={20} className="product-card-icon heart" />
+                )}
               </button>
             </div>
           </div>
