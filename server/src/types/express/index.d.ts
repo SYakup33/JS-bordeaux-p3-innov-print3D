@@ -1,6 +1,14 @@
 export type { Product };
 
 declare global {
+  type Product = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    images: string[];
+    category_id: number;
+  };
   type CartProduct = {
     productId: number;
     productName: string;
@@ -14,13 +22,6 @@ declare global {
     product_id: number;
     quantity: number;
     unit_price: number;
-  };
-  type product = {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    category_id: number;
   };
   type ProductFilters = {
     name?: string;

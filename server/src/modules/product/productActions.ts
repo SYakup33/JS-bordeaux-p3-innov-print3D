@@ -16,4 +16,18 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse };
+const read: RequestHandler = async (req, res, next) => {
+  try {
+    const product = await productRepository.find(Number(req.params.id));
+
+    if (product === null) {
+      res.sendStatus(StatusCodes.NOT_FOUND);
+    }
+
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read };
