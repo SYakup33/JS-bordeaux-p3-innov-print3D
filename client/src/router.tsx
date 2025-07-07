@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
+import Register from "./pages/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
 import Product from "./pages/product/Product.tsx";
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <Product />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/cart/user/:id",
