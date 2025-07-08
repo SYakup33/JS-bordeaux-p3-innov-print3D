@@ -29,6 +29,17 @@ declare global {
     minPrice?: number;
     maxPrice?: number;
   };
+  type ProductToInsert = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+  };
+  type ImageToInsert = {
+    path: string;
+    product_id: number;
+  };
   namespace Express {
     export interface Request {}
   }

@@ -1,6 +1,6 @@
 import databaseClient from "../../../database/client";
 
-import type { Rows } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 import type { Product } from "../../types/express/index";
 
 class ProductRepository {
@@ -74,6 +74,15 @@ class ProductRepository {
     product.images = imageRows.map((img) => img.path);
 
     return product;
+  }
+
+  async add(product: Omit<ProductToInsert, "id">) {
+    const [result] = await databaseClient.query<Result>(
+      `INSERT INTO product (name, description, price, category_id)
+        VALUES (?, ?, ?, ?)`,
+      [product.name, product.description, product.price, product.category_id],
+    );
+    return result.insertId;
   }
 }
 export default new ProductRepository();
