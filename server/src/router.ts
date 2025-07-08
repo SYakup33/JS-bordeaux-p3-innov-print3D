@@ -18,6 +18,6 @@ router.get("/api/product/:id", productActions.read);
 router.get("/api/products/search", productActions.browse);
 
 import userActions from "./modules/user/userActions";
-router.post("/api/users", userActions.add);
+router.post("/api/users", userActions.validate, userActions.add);
 
 export default router;
