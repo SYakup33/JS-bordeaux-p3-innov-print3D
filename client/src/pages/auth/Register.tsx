@@ -1,8 +1,8 @@
-import { useRef } from "react";
 import { StatusCodes } from "http-status-codes";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useRef } from "react";
 import type { FormEventHandler } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function Register() {
   const firstnameRef = useRef<HTMLInputElement>(null);
