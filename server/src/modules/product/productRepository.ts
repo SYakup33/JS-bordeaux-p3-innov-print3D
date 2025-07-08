@@ -76,13 +76,30 @@ class ProductRepository {
     return product;
   }
 
-  async add(product: Omit<ProductToInsert, "id">) {
+  async add(product: Omit<ProductManagement, "id">) {
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO product (name, description, price, category_id)
         VALUES (?, ?, ?, ?)`,
       [product.name, product.description, product.price, product.category_id],
     );
     return result.insertId;
+  }
+
+  async update(product: ProductManagement) {
+    const [result] = await databaseClient.query<Result>(
+      `UPDATE product
+        SET name = ?, description = ?, price = ?, category_id = ? 
+        WHERE id = ?`,
+      [
+        product.name,
+        product.description,
+        product.price,
+        product.category_id,
+        product.id,
+      ],
+    );
+
+    return result.affectedRows;
   }
 }
 export default new ProductRepository();

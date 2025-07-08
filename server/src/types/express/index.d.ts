@@ -29,14 +29,14 @@ declare global {
     minPrice?: number;
     maxPrice?: number;
   };
-  type ProductToInsert = {
+  type ProductManagement = {
     id: number;
     name: string;
     description: string;
     price: number;
     category_id: number;
   };
-  type ImageToInsert = {
+  type ImageManagement = {
     path: string;
     product_id: number;
   };

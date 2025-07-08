@@ -22,5 +22,6 @@ router.get("/api/products", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 router.get("/api/products/search", productActions.browse);
 router.post("/api/products", productActions.validate, productActions.add);
+router.put("/api/product/:id", productActions.validate, productActions.edit);
 
 export default router;

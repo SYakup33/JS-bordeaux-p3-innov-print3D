@@ -40,6 +40,37 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    const product = {
+      id: Number(req.params.id),
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      category_id: req.body.category_id,
+    };
+    const affectedRows = await productRepository.update(product);
+
+    if (affectedRows === 0) {
+      res.status(404);
+    }
+    await imageRepository.deleteByProductId(product.id);
+
+    const images: string[] = req.body.images;
+    await Promise.all(
+      images.map((imagePath) =>
+        imageRepository.add({
+          product_id: product.id,
+          path: imagePath,
+        }),
+      ),
+    );
+    res.status(204).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     const newProduct = {
@@ -61,7 +92,6 @@ const add: RequestHandler = async (req, res, next) => {
         }),
       ),
     );
-    console.log(req.body);
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);
@@ -77,4 +107,4 @@ const validate: RequestHandler = (req, res, next) => {
     res.status(400).json({ validationErrors: error.details });
   }
 };
-export default { browse, read, add, validate };
+export default { browse, read, edit, add, validate };
