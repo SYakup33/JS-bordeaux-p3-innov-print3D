@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
-import userRepository from "./userRepository";
 import Joi from "joi";
+import userRepository from "./userRepository";
 
 const add: RequestHandler = async (req, res, next) => {
   try {
