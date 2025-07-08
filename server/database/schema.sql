@@ -29,7 +29,8 @@ CREATE TABLE product (
 CREATE TABLE image (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   path VARCHAR(255) NOT NULL,
-  product_id INT NOT NULL
+  product_id INT NOT NULL,
+  FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 
 CREATE TABLE cart (

@@ -101,5 +101,13 @@ class ProductRepository {
 
     return result.affectedRows;
   }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM product where id = ?",
+      [id],
+    );
+    return result.affectedRows;
+  }
 }
 export default new ProductRepository();

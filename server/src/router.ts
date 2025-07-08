@@ -23,5 +23,6 @@ router.get("/api/product/:id", productActions.read);
 router.get("/api/products/search", productActions.browse);
 router.post("/api/products", productActions.validate, productActions.add);
 router.put("/api/product/:id", productActions.validate, productActions.edit);
+router.delete("/api/product/:id", productActions.destroy);
 
 export default router;
