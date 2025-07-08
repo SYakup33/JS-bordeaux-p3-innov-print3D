@@ -7,7 +7,7 @@ import productRepository from "./productRepository";
 const productSchema = joi.object({
   name: joi.string().max(100).required(),
   description: joi.string().max(255).required(),
-  price: joi.number().integer().required(),
+  price: joi.number().required(),
   category_id: joi.number().integer().required(),
   images: joi.array().items(joi.string()).required(),
 });
@@ -52,7 +52,7 @@ const edit: RequestHandler = async (req, res, next) => {
     const affectedRows = await productRepository.update(product);
 
     if (affectedRows === 0) {
-      res.status(404);
+      res.status(StatusCodes.NOT_FOUND).json(product);
     }
     await imageRepository.deleteByProductId(product.id);
 
@@ -65,7 +65,7 @@ const edit: RequestHandler = async (req, res, next) => {
         }),
       ),
     );
-    res.status(204).json(product);
+    res.status(StatusCodes.OK).json(product);
   } catch (err) {
     next(err);
   }
@@ -92,7 +92,7 @@ const add: RequestHandler = async (req, res, next) => {
         }),
       ),
     );
-    res.status(201).json({ insertId });
+    res.status(StatusCodes.CREATED).json({ insertId });
   } catch (err) {
     next(err);
   }
@@ -104,7 +104,7 @@ const destroy: RequestHandler = async (req, res, next) => {
 
     await productRepository.delete(protuctId);
 
-    res.status(204).json(protuctId);
+    res.status(StatusCodes.OK).json({ deletedId: protuctId });
   } catch (err) {
     next(err);
   }
@@ -116,7 +116,9 @@ const validate: RequestHandler = (req, res, next) => {
   if (error == null) {
     next();
   } else {
-    res.status(400).json({ validationErrors: error.details });
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ validationErrors: error.details });
   }
 };
 export default { browse, read, edit, add, destroy, validate };
