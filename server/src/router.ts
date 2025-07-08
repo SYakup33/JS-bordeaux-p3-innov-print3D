@@ -11,9 +11,13 @@ router.put(
   cartActions.edit,
 );
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
+
 import productActions from "./modules/product/productActions";
 router.get("/api/products", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 router.get("/api/products/search", productActions.browse);
+
+import userActions from "./modules/user/userActions";
+router.post("/api/users", userActions.add);
 
 export default router;
