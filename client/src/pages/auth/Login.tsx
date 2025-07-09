@@ -1,0 +1,119 @@
+import { type FormEventHandler, useRef, useState } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../context/AuthContext";
+import "./Login.css";
+import chat_1 from "/img/products/chat_1.jpg";
+
+const Login = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit: FormEventHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: (emailRef.current as HTMLInputElement).value,
+            password: (passwordRef.current as HTMLInputElement).value,
+          }),
+        },
+      );
+
+      if (!response.ok) throw new Error("Erreur lors de la connexion");
+
+      const data = await response.json();
+      login(data.user, data.token);
+      navigate(`/cart/${data.user.id}`);
+    } catch {
+      setError("Email ou mot de passe incorrect");
+    }
+  };
+
+  return (
+    <section className="container d-flex min-vh-100 align-items-center justify-content-center py-4">
+      <div className="row shadow-lg rounded-4 overflow-hidden w-100 login-max-w-900">
+        <div className="col-md-6 d-md-flex flex-column justify-content-center align-items-center text-white p-5 login-left-side">
+          <h1 className="fw-bold mb-3 text-center">
+            Bienvenue sur InnovPrint3D
+          </h1>
+          <p className="fs-5 text-center">
+            Connectez-vous pour accéder à votre espace personnel.
+          </p>
+          <img
+            src={chat_1}
+            alt="Illustration"
+            className="rounded mt-4 object-fit-cover login-img w-100"
+          />
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="col-md-6 p-5 d-flex flex-column justify-content-center"
+        >
+          <h2 className="text-center mb-4 fw-bold">Connexion</h2>
+
+          {error && (
+            <div className="alert alert-danger text-center" role="alert">
+              {error}
+            </div>
+          )}
+
+          <div className="mb-4">
+            <label htmlFor="email" className="form-label fw-semibold">
+              Adresse e-mail
+            </label>
+            <input
+              ref={emailRef}
+              id="email"
+              type="email"
+              className="form-control form-control-lg rounded-3 shadow-sm"
+              required
+              placeholder="dupont@mail.com"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="password" className="form-label fw-semibold">
+              Mot de passe
+            </label>
+            <input
+              ref={passwordRef}
+              id="password"
+              type="password"
+              className="form-control form-control-lg rounded-3 shadow-sm"
+              required
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-lg fw-semibold rounded-4 shadow-sm mb-3 btn-danger"
+          >
+            Se connecter
+          </button>
+
+          <p className="text-center fw-medium">
+            Pas encore de compte ?{" "}
+            <a
+              href="/resister"
+              className="fw-bold text-decoration-none text-danger"
+            >
+              Inscrivez-vous
+            </a>
+          </p>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default Login;
