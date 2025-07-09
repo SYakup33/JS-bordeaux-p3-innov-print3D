@@ -1,0 +1,17 @@
+@import "../../assets/styles/_variables.css";
+
+.login-max-w-900 {
+  max-width: 900px;
+}
+
+.login-left-side {
+  background: var(--linear-gradient);
+}
+
+.login-form {
+  background: var(--tertiary-color);
+}
+
+.login-img {
+  height: 250px;
+}
