@@ -17,5 +17,5 @@ export type AuthContextType = {
   token: string | null;
   login: (user: User, token: string) => void;
   logout: () => void;
-  isLoggedIn: boolean;
+  isLogged: boolean;
 };
