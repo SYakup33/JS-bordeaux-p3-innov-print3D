@@ -14,6 +14,7 @@ function ProductCard({ products }: ProductCardProps) {
   const isInCart = cartProducts.map((p) => p.productId).includes(products.id);
 
   const navigate = useNavigate();
+
   return (
     <>
       <article key={products?.id} className="card rounded-3 cards-card">
@@ -26,7 +27,7 @@ function ProductCard({ products }: ProductCardProps) {
             className="btn p-0 border-0 bg-transparent"
           >
             <img
-              src={products.images[0]}
+              src={`${import.meta.env.VITE_API_URL}${products.images[0]}`}
               alt={`Cliché du ${products.name}`}
               className="w-100 rounded-top-3 object-fit-cover card-card-img"
             />

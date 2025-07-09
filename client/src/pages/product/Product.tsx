@@ -29,7 +29,6 @@ function Product() {
 
     fetchProduct();
   }, [id]);
-
   return (
     <section className="container mw-100">
       <div className="w-100 product-top-bar" />
@@ -47,7 +46,7 @@ function Product() {
                   key={imgPath}
                 >
                   <img
-                    src={imgPath}
+                    src={`${import.meta.env.VITE_API_URL}${imgPath}`}
                     alt={`Cliché du ${product?.name}`}
                     className="product-img d-block img-fluid rounded"
                   />
