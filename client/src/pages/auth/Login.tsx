@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <section className="container d-flex min-vh-100 align-items-center justify-content-center py-4">
+    <section className="container d-flex align-items-center justify-content-center py-4 mt-5">
       <div className="row shadow-lg rounded-4 overflow-hidden w-100 login-max-w-900">
         <div className="col-md-6 d-md-flex flex-column justify-content-center align-items-center text-white p-5 login-left-side">
           <h1 className="fw-bold mb-3 text-center">
