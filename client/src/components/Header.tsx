@@ -38,7 +38,7 @@ function Header() {
   };
 
   return (
-    <header className="container mt-4 d-flex justify-content-end align-items-center mb-3 position-relative">
+    <header className="container mt-4 d-flex justify-content-end align-items-center mb-3">
       <nav className="d-flex align-items-center position-relative">
         <div className="d-flex align-items-center me-3">
           <button type="button" className="btn" onClick={handleLogClick}>
