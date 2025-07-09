@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import joi from "joi";
@@ -9,7 +11,6 @@ const productSchema = joi.object({
   description: joi.string().max(255).required(),
   price: joi.number().required(),
   category_id: joi.number().integer().required(),
-  images: joi.array().items(joi.string()).required(),
 });
 
 const browse: RequestHandler = async (req, res, next) => {
@@ -82,16 +83,24 @@ const add: RequestHandler = async (req, res, next) => {
 
     const insertId = await productRepository.add(newProduct);
 
-    const images: string[] = req.body.images;
+    const files = req.files as Express.Multer.File[];
 
     await Promise.all(
-      images.map((imagePath) =>
-        imageRepository.add({
+      files.map(async (file) => {
+        const extension = path.extname(file.originalname);
+        const oldPath = path.join("public/uploads/products", file.filename);
+        const newFilename = file.filename + extension;
+        const newPath = path.join("public/uploads/products", newFilename);
+
+        await fs.promises.rename(oldPath, newPath);
+
+        await imageRepository.add({
           product_id: insertId,
-          path: imagePath,
-        }),
-      ),
+          path: `/uploads/products/${newFilename}`,
+        });
+      }),
     );
+
     res.status(StatusCodes.CREATED).json({ insertId });
   } catch (err) {
     next(err);
@@ -113,12 +122,22 @@ const destroy: RequestHandler = async (req, res, next) => {
 const validate: RequestHandler = (req, res, next) => {
   const { error } = productSchema.validate(req.body, { abortEarly: false });
 
-  if (error == null) {
-    next();
-  } else {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ validationErrors: error.details });
+  if (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      validationErrors: error.details,
+    });
+    return;
   }
+
+  const files = req.files as Express.Multer.File[];
+
+  if (!files || files.length !== 3) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      validationErrors: [{ message: "Il faut 3 images." }],
+    });
+    return;
+  }
+  next();
 };
+
 export default { browse, read, edit, add, destroy, validate };

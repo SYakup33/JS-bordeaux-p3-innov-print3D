@@ -32,3 +32,21 @@ export type ProductSearchContextType = {
   clearSuggestions: () => void;
   resetSearch: () => void;
 };
+
+export type AddProductProps = {
+  productDetails: {
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+  };
+  onSubmit: (formData: FormData) => void;
+};
+
+export type SearchBarProps = {
+  searchBar: {
+    productName: string;
+    suggestions: { id: number; name: string }[];
+    productNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+};
