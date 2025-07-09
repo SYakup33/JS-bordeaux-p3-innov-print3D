@@ -22,7 +22,7 @@ function Header() {
   const handleCartClick = () => {
     const userId = currentUser?.id;
 
-    if (isLogged && userId) {
+    if (isLogged) {
       navigate(`/cart/${userId}`);
     } else {
       toast.warning("Veuillez vous connecter pour accéder au panier", {
