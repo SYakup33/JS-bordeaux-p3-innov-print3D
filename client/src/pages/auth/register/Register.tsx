@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import type { FormEventHandler } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import type { FieldErrors, FieldError } from "../../../types/field-errors";
+import type { FieldError, FieldErrors } from "../../../types/field-errors";
 import "./register.css";
 
 function Register() {
