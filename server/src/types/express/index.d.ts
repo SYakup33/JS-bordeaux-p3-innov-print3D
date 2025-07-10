@@ -29,7 +29,25 @@ declare global {
     minPrice?: number;
     maxPrice?: number;
   };
+
+  type User = {
+    id: number;
+    firstname: string;
+    lastname: string;
+    street?: string;
+    city?: string;
+    zip_code?: string;
+    email: string;
+    phone: string;
+    password: string;
+    role: "client" | "admin";
+    created_at: Date;
+  };
+
+  type MyPayload = JwtPayload & { sub: string; role: "client" | "admin" };
   namespace Express {
-    export interface Request {}
+    export interface Request {
+      auth: MyPayload;
+    }
   }
 }
