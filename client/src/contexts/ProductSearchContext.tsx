@@ -42,6 +42,7 @@ export const ProductSearchProvider = ({
 
   const clearSuggestions = () => {
     setSuggestions([]);
+    setProductName("");
   };
 
   const resetSearch = useCallback(() => {
@@ -55,6 +56,7 @@ export const ProductSearchProvider = ({
         productName,
         setProductName,
         suggestions,
+        setSuggestions,
         fetchSuggestions,
         clearSuggestions,
         resetSearch,

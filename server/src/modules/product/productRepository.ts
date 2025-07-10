@@ -67,7 +67,7 @@ class ProductRepository {
     const product = rows[0];
 
     const [imageRows] = await databaseClient.query<Rows>(
-      `SELECT path FROM image WHERE product_id = ${product.id}`,
+      "SELECT path FROM image WHERE product_id = ?",
       [product.id],
     );
 

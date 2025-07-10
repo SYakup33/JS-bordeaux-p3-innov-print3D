@@ -6,12 +6,14 @@ import joi from "joi";
 import imageRepository from "../image/imageRepository";
 import productRepository from "./productRepository";
 
-const productSchema = joi.object({
-  name: joi.string().max(100).required(),
-  description: joi.string().max(255).required(),
-  price: joi.number().required(),
-  category_id: joi.number().integer().required(),
-});
+const productSchema = joi
+  .object({
+    name: joi.string().max(100).required(),
+    description: joi.string().max(255).required(),
+    price: joi.number().required(),
+    category_id: joi.number().integer().required(),
+  })
+  .options({ convert: true });
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
@@ -27,12 +29,18 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
-const read: RequestHandler = async (req, res, next) => {
+const read: RequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const product = await productRepository.find(Number(req.params.id));
+    const id = Number(req.params.id);
+    if (Number.isNaN(id)) {
+      res.sendStatus(StatusCodes.BAD_REQUEST);
+      return;
+    }
 
+    const product = await productRepository.find(id);
     if (product === null) {
       res.sendStatus(StatusCodes.NOT_FOUND);
+      return;
     }
 
     res.json(product);
@@ -50,22 +58,35 @@ const edit: RequestHandler = async (req, res, next) => {
       price: req.body.price,
       category_id: req.body.category_id,
     };
+
     const affectedRows = await productRepository.update(product);
 
     if (affectedRows === 0) {
       res.status(StatusCodes.NOT_FOUND).json(product);
+      return;
     }
-    await imageRepository.deleteByProductId(product.id);
 
-    const images: string[] = req.body.images;
+    const files = req.files as Express.Multer.File[];
+
+    // if (files && files.length > 0) {
+    //   await imageRepository.deleteByProductId(product.id);
+    // }
     await Promise.all(
-      images.map((imagePath) =>
-        imageRepository.add({
+      files.map(async (file) => {
+        const extension = path.extname(file.originalname);
+        const oldPath = path.join("public/uploads/products", file.filename);
+        const newFilename = file.filename + extension;
+        const newPath = path.join("public/uploads/products", newFilename);
+
+        await fs.promises.rename(oldPath, newPath);
+
+        await imageRepository.add({
           product_id: product.id,
-          path: imagePath,
-        }),
-      ),
+          path: `/uploads/products/${newFilename}`,
+        });
+      }),
     );
+
     res.status(StatusCodes.OK).json(product);
   } catch (err) {
     next(err);
@@ -122,15 +143,14 @@ const destroy: RequestHandler = async (req, res, next) => {
 const validate: RequestHandler = (req, res, next) => {
   const { error } = productSchema.validate(req.body, { abortEarly: false });
 
+  const files = req.files as Express.Multer.File[] | undefined;
+
   if (error) {
     res.status(StatusCodes.BAD_REQUEST).json({
       validationErrors: error.details,
     });
     return;
   }
-
-  const files = req.files as Express.Multer.File[];
-
   if (!files || files.length !== 3) {
     res.status(StatusCodes.BAD_REQUEST).json({
       validationErrors: [{ message: "Il faut 3 images." }],

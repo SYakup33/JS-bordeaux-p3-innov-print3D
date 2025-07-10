@@ -28,6 +28,7 @@ export type ProductSearchContextType = {
   productName: string;
   setProductName: (value: string) => void;
   suggestions: ProductType[];
+  setSuggestions: (suggestions: ProductType[]) => void;
   fetchSuggestions: (searchValue: string) => Promise<void>;
   clearSuggestions: () => void;
   resetSearch: () => void;
@@ -43,10 +44,13 @@ export type AddProductProps = {
   onSubmit: (formData: FormData) => void;
 };
 
-export type SearchBarProps = {
+export type ModifyProductProps = {
   searchBar: {
     productName: string;
     suggestions: { id: number; name: string }[];
     productNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   };
+  productDetails: ProductType | null;
+  onFetchProductDetails: (id: number) => void;
+  onSubmit: (formData: FormData, productId: number) => void;
 };
