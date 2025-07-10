@@ -1,8 +1,8 @@
 export type { Product };
 
 declare global {
-    type User = {
-    id?: number
+  type User = {
+    id?: number;
     firstname: string;
     lastname: string;
     street: string;
@@ -11,7 +11,7 @@ declare global {
     country: string;
     email: string;
     phone: string;
-    hashed_password: req.body.hashed_password,
+    hashed_password: req.body.hashed_password;
     role: string;
     created_at?: Date;
   };
