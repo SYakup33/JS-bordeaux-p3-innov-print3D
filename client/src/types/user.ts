@@ -6,7 +6,7 @@ export type User = {
   city?: string;
   zip_code?: string;
   email: string;
-  phonr: string;
+  phone: string;
   password: string;
   role: "client" | "admin";
   created_at: Date;

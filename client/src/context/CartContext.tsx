@@ -22,6 +22,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (userId) {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/cart/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
         );
 
         const cart = await response.json();
@@ -33,21 +36,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       toast.error("Erreur lors du chargement du panier.");
     }
-  }, [userId]);
+  }, [userId, token]);
 
   const updateQuantity = async (productId: number, newQuantity: number) => {
     try {
-      await fetch(
-        `${import.meta.env.VITE_API_URL}/api/cart/${userId}/${productId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ quantity: newQuantity }),
+      await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({ productId, quantity: newQuantity }),
+      });
 
       setCartProducts((prev) =>
         prev.map((p) =>
@@ -113,7 +113,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const localCartToBdd = async () => {
+    const localCartToServer = async () => {
       if (!userId) return;
       try {
         const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -134,7 +134,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         console.error("Erreur sync panier local au serveur", err);
       }
     };
-    localCartToBdd();
+    localCartToServer();
   }, [userId, fetchCart]);
 
   return (

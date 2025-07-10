@@ -1,8 +1,8 @@
 import { type FormEventHandler, useRef, useState } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "../../context/AuthContext";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../../../context/AuthContext";
 import "./Login.css";
-import chat_1 from "/img/products/chat_1.jpg";
+import pokeball_ronflex_1 from "/img/products/pokeball_ronflex_1.jpg";
 
 const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -49,14 +49,14 @@ const Login = () => {
             Connectez-vous pour accéder à votre espace personnel.
           </p>
           <img
-            src={chat_1}
+            src={pokeball_ronflex_1}
             alt="Illustration"
             className="rounded mt-4 object-fit-cover login-img w-100"
           />
         </div>
         <form
           onSubmit={handleSubmit}
-          className="col-md-6 p-5 d-flex flex-column justify-content-center"
+          className="col-md-6 p-5 d-flex flex-column justify-content-center login-right-side"
         >
           <h2 className="text-center mb-4 fw-bold">Connexion</h2>
 
@@ -103,12 +103,12 @@ const Login = () => {
 
           <p className="text-center fw-medium">
             Pas encore de compte ?{" "}
-            <a
-              href="/resister"
+            <Link
+              to="/register"
               className="fw-bold text-decoration-none text-danger"
             >
               Inscrivez-vous
-            </a>
+            </Link>
           </p>
         </form>
       </div>

@@ -1,4 +1,4 @@
-@import "../../assets/styles/_variables.css";
+@import "../../../assets//styles/_variables.css";
 
 .login-max-w-900 {
   max-width: 900px;
@@ -6,6 +6,9 @@
 
 .login-left-side {
   background: var(--linear-gradient);
+}
+.login-right-side {
+  background: var(--tertiary-color);
 }
 
 .login-form {

@@ -67,7 +67,7 @@ const verifyToken: RequestHandler = (req, res, next) => {
     next();
   } catch (err) {
     console.error(err);
-    res.sendStatus(401);
+    res.status(StatusCodes.UNAUTHORIZED);
   }
 };
 
