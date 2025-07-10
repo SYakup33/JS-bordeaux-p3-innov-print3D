@@ -1,0 +1,28 @@
+.register {
+  width: 85%;
+}
+
+.register-form {
+  background-color: var(--tertiary-color);
+}
+
+.register-input {
+  font-size: small;
+  margin: 2px 0px 10px 0px;
+}
+
+.register-label {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.register-cta {
+  color: var(--font-secondary-color);
+  background-color: var(--btn-cta-primary-color);
+}
+
+.register-cta:hover {
+  color: var(--btn-cta-primary-color);
+  background-color: var(--btn-cta-secondary-color);
+  border: 2px solid var(--btn-cta-primary-color);
+}
