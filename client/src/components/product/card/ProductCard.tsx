@@ -45,7 +45,7 @@ function ProductCard({ products }: ProductCardProps) {
               <button
                 type="button"
                 className="btn p-0 border-0 bg-transparent cards-card-cart"
-                onClick={() => addToCart(products.id, products.name)}
+                onClick={() => addToCart(products.id, products.name, 1)}
               >
                 {isInCart ? (
                   <CartDash size={20} />
