@@ -1,27 +1,10 @@
-import path from "node:path";
 import express from "express";
-import multer from "multer";
 import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
+import { productImagesUpload } from "./modules/uploadMulter/uploadMulter";
 
 const router = express.Router();
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads/products");
-  },
-  filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    const ext = path.extname(file.originalname);
-    const basename = path.basename(file.originalname, ext);
-    const customName = `produit-${timestamp}-${basename}${ext}`;
-    cb(null, customName);
-  },
-});
-
-const upload = multer({ storage });
-const productImagesUpload = upload.any();
 
 router.get("/api/products/search", productActions.browse);
 
