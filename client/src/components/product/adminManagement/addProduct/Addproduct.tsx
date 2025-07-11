@@ -24,8 +24,9 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
         }}
       >
         <input type="text" name="name" defaultValue={productDetails.name} />
-        <input
-          type="text"
+        <textarea
+          rows={5}
+          cols={40}
           name="description"
           defaultValue={productDetails.description}
         />
