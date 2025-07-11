@@ -22,6 +22,23 @@ function Register() {
 
   const navigate = useNavigate();
 
+  const onlyLetters = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: keyof FieldErrors,
+  ) => {
+    const value = e.target.value;
+    const isValid = /^[\p{L}]+$/u.test(value) || value === "";
+
+    if (isValid) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "Ce champ doit contenir uniquement des lettres.",
+      }));
+    }
+  };
+
   const createAccount: FormEventHandler = async (event) => {
     event.preventDefault();
 
@@ -80,44 +97,58 @@ function Register() {
 
   return (
     <section className="register m-auto">
-      <form className="register-form p-4" onSubmit={createAccount}>
+      <form className="register-form mb-5" onSubmit={createAccount}>
+        <h1 className="register-header-h1 mb-4">Nouveau client ?</h1>
+        <p>Saisissez le formulaire d'inscription :</p>
         <div className="form-group">
-          <label className="register-label" htmlFor="firstname">
+          <label className="register-label fw-bold" htmlFor="firstname">
             Prénom :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Votre prénom"
+            placeholder="Jérôme"
+            autoComplete="given-name"
+            name="firstname"
             ref={firstnameRef}
             type="text"
             id="firstname"
-            onChange={() => setErrors((prev) => ({ ...prev, firstname: "" }))}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, firstname: "" }));
+              onlyLetters(e, "firstname");
+            }}
           />
           {errors.firstname && (
             <p className="text-danger">{errors.firstname}</p>
           )}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="lastname">
+          <label className="register-label fw-bold" htmlFor="lastname">
             Nom :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Votre nom"
+            placeholder="Dupont"
+            autoComplete="family-name"
+            name="lastname"
             ref={lastnameRef}
             type="text"
             id="lastname"
-            onChange={() => setErrors((prev) => ({ ...prev, lastname: "" }))}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, lastname: "" }));
+              onlyLetters(e, "lastname");
+            }}
           />
           {errors.lastname && <p className="text-danger">{errors.lastname}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="street">
+          <label className="register-label fw-bold" htmlFor="street">
             Voie :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Ex. : 33 rue Jean Jaurès"
+            placeholder="33 cours du médoc"
+            autoComplete="address-line1"
+            name="voie"
             ref={streetRef}
             type="text"
             id="street"
@@ -126,12 +157,14 @@ function Register() {
           {errors.street && <p className="text-danger">{errors.street}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="zip_code">
+          <label className="register-label fw-bold" htmlFor="zip_code">
             Code postal :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Votre code postal"
+            placeholder="33000"
+            autoComplete="postal-code"
+            name="zip_code"
             ref={zip_codeRef}
             type="text"
             id="zip_code"
@@ -140,40 +173,52 @@ function Register() {
           {errors.zip_code && <p className="text-danger">{errors.zip_code}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="city">
+          <label className="register-label fw-bold" htmlFor="city">
             Commune :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Votre commune"
+            placeholder="Bordeaux"
+            autoComplete="address-level2"
+            name="city"
             ref={cityRef}
             type="text"
             id="city"
-            onChange={() => setErrors((prev) => ({ ...prev, city: "" }))}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, city: "" }));
+              onlyLetters(e, "city");
+            }}
           />
           {errors.city && <p className="text-danger">{errors.city}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="country">
+          <label className="register-label fw-bold" htmlFor="country">
             Pays :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Votre pays"
+            placeholder="France"
+            autoComplete="country-name"
+            name="country"
             ref={countryRef}
             type="text"
             id="country"
-            onChange={() => setErrors((prev) => ({ ...prev, country: "" }))}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, country: "" }));
+              onlyLetters(e, "country");
+            }}
           />
           {errors.country && <p className="text-danger">{errors.country}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="email">
+          <label className="register-label fw-bold" htmlFor="email">
             Email :
           </label>
           <input
             className="register-input form-control"
             placeholder="dupont@mail.com"
+            autoComplete="email"
+            name="email"
             ref={emailRef}
             type="email"
             id="email"
@@ -182,12 +227,14 @@ function Register() {
           {errors.email && <p className="text-danger">{errors.email}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="phone">
+          <label className="register-label fw-bold" htmlFor="phone">
             Téléphone :
           </label>
           <input
             className="register-input form-control"
             placeholder="0655778899"
+            autoComplete="tel"
+            name="phone"
             ref={phoneRef}
             type="tel"
             id="phone"
@@ -196,12 +243,14 @@ function Register() {
           {errors.phone && <p className="text-danger">{errors.phone}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="password">
+          <label className="register-label fw-bold" htmlFor="password">
             Créer votre mot de passe :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Choisissez votre mot de passe"
+            placeholder="minimum 8 caractères, une majuscule, un chiffre, un caractère spécial"
+            autoComplete="new-password"
+            name="password"
             ref={passwordRef}
             type="password"
             id="password"
@@ -210,12 +259,14 @@ function Register() {
           {errors.password && <p className="text-danger">{errors.password}</p>}
         </div>
         <div className="form-group">
-          <label className="register-label" htmlFor="confirmPassword">
+          <label className="register-label fw-bold" htmlFor="confirmPassword">
             Confirmation du mot de passe :
           </label>
           <input
             className="register-input form-control"
-            placeholder="Confirmez votre mot de passe"
+            placeholder="confirmez votre mot de passe"
+            autoComplete="new-password"
+            name="confirmPassword"
             ref={confirmPasswordRef}
             type="password"
             id="confirmPassword"
@@ -228,7 +279,7 @@ function Register() {
           )}
         </div>
         <button
-          className="register-cta my-5 py-4 fs-4 fw-bold w-75 rounded-4"
+          className="register-cta d-block py-2 fs-6 fw-bold w-75 rounded-4"
           type="submit"
         >
           Créer mon compte

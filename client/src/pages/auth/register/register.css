@@ -4,6 +4,15 @@
 
 .register-form {
   background-color: var(--tertiary-color);
+  width: 95%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 0.5rem;
+}
+
+.register-label {
+  font-size: medium;
 }
 
 .register-input {
@@ -11,14 +20,10 @@
   margin: 2px 0px 10px 0px;
 }
 
-.register-label {
-  font-size: medium;
-  font-weight: bold;
-}
-
 .register-cta {
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
+  margin: 28px auto 10px auto;
 }
 
 .register-cta:hover {
