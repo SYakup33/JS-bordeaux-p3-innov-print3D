@@ -29,7 +29,12 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
           name="description"
           defaultValue={productDetails.description}
         />
-        <input type="number" name="price" defaultValue={productDetails.price} />
+        <input
+          type="number"
+          name="price"
+          defaultValue={productDetails.price}
+          step="any"
+        />
         <button
           className="product-filter-dropdown btn dropdown-toggle w-100 border-black"
           type="button"

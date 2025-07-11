@@ -40,13 +40,13 @@ function Product() {
             data-bs-ride="carousel"
           >
             <div className="carousel-inner">
-              {product?.images?.map((imgPath) => (
+              {product?.images?.map((image) => (
                 <div
-                  className={`carousel-item ${product.images[0] === imgPath ? "active" : ""}`}
-                  key={imgPath}
+                  className={`carousel-item ${product.images[0] === image ? "active" : ""}`}
+                  key={image.id}
                 >
                   <img
-                    src={`${import.meta.env.VITE_API_URL}${imgPath}`}
+                    src={`${import.meta.env.VITE_API_URL}${image.path}`}
                     alt={`Cliché du ${product?.name}`}
                     className="product-img d-block img-fluid rounded"
                   />

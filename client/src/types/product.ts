@@ -4,8 +4,13 @@ export type ProductType = {
   description: string;
   price: number;
   category_id: number;
-  images: string[];
+  images: Image[];
   category_name?: string;
+};
+
+export type Image = {
+  id: number;
+  path: string;
 };
 
 export type ProductsFilterProps = {

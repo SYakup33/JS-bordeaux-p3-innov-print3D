@@ -51,12 +51,30 @@ const read: RequestHandler = async (req, res, next): Promise<void> => {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
+    const id = Number(req.params.id);
+    if (Number.isNaN(id)) {
+      res.sendStatus(StatusCodes.BAD_REQUEST);
+      return;
+    }
+
+    const existingProduct = await productRepository.find(id);
+    if (!existingProduct) {
+      res.sendStatus(StatusCodes.NOT_FOUND);
+      return;
+    }
+
     const product = {
-      id: Number(req.params.id),
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      category_id: req.body.category_id,
+      id,
+      name: req.body.name || existingProduct.name,
+      description: req.body.description || existingProduct.description,
+      price:
+        req.body.price !== undefined && req.body.price !== ""
+          ? Number(req.body.price)
+          : existingProduct.price,
+      category_id:
+        req.body.category_id !== undefined && req.body.category_id !== ""
+          ? Number(req.body.category_id)
+          : existingProduct.category_id,
     };
 
     const affectedRows = await productRepository.update(product);
@@ -68,21 +86,18 @@ const edit: RequestHandler = async (req, res, next) => {
 
     const files = req.files as Express.Multer.File[];
 
-    // if (files && files.length > 0) {
-    //   await imageRepository.deleteByProductId(product.id);
-    // }
     await Promise.all(
-      files.map(async (file) => {
+      files.map(async (file, index) => {
         const extension = path.extname(file.originalname);
         const oldPath = path.join("public/uploads/products", file.filename);
         const newFilename = file.filename + extension;
         const newPath = path.join("public/uploads/products", newFilename);
-
         await fs.promises.rename(oldPath, newPath);
 
-        await imageRepository.add({
-          product_id: product.id,
+        await imageRepository.update({
+          id: existingProduct.images[index].id,
           path: `/uploads/products/${newFilename}`,
+          product_id: product.id,
         });
       }),
     );

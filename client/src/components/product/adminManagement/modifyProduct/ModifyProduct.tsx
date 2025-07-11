@@ -37,6 +37,7 @@ function ModifyProduct({
 
     const formData = new FormData(e.currentTarget);
     formData.append("category_id", String(category));
+
     onSubmit(formData, productDetails.id);
 
     formRef.current?.reset();
@@ -135,16 +136,17 @@ function ModifyProduct({
               </button>
             </li>
           </ul>
-          {productDetails?.images?.map((imageUrl) => (
-            <div key={imageUrl}>
+          {productDetails?.images?.map((image) => (
+            <div key={image.id}>
               <img
-                src={`${import.meta.env.VITE_API_URL}${imageUrl}`}
+                src={`${import.meta.env.VITE_API_URL}${image.path}`}
                 alt={`Produit ${productDetails.name}`}
                 width="100"
               />
-              <input type="file" name="images" multiple />
+              <input type="file" name="images" />
             </div>
           ))}
+
           <button type="submit">
             <Floppy />
           </button>

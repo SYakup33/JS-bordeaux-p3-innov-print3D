@@ -37,6 +37,7 @@ declare global {
     category_id: number;
   };
   type ImageManagement = {
+    id: number;
     path: string;
     product_id: number;
   };

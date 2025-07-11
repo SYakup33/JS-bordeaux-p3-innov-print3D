@@ -67,11 +67,14 @@ class ProductRepository {
     const product = rows[0];
 
     const [imageRows] = await databaseClient.query<Rows>(
-      "SELECT path FROM image WHERE product_id = ?",
+      "SELECT id, path FROM image WHERE product_id = ?",
       [product.id],
     );
 
-    product.images = imageRows.map((img) => img.path);
+    product.images = imageRows.map((img) => ({
+      id: img.id,
+      path: img.path,
+    }));
 
     return product;
   }

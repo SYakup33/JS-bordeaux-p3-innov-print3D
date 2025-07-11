@@ -21,8 +21,9 @@ class ImageRepository {
   async update(image: ImageManagement) {
     const [result] = await databaseClient.query<Result>(
       `UPDATE image
-      SET path = ?, product_id = ?`,
-      [image.path, image.product_id],
+      SET path = ?
+      WHERE id = ?`,
+      [image.path, image.id],
     );
 
     return result.affectedRows;
