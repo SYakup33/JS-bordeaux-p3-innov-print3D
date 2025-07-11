@@ -84,7 +84,6 @@ const edit: RequestHandler = async (req, res, next) => {
       return;
     }
     const imageIds = req.body.imageIds;
-    console.log("imageIds", req.body.imageIds);
     await Promise.all(
       imageIds.map(async (id: string) => {
         const file = (req.files as Express.Multer.File[]).find(
