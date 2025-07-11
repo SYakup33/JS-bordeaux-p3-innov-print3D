@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const productImagesUpload = upload.array("images", 3);
+const productImagesUpload = upload.any();
 
 router.get("/api/products/search", productActions.browse);
 

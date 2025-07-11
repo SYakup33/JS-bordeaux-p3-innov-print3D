@@ -83,22 +83,27 @@ const edit: RequestHandler = async (req, res, next) => {
       res.status(StatusCodes.NOT_FOUND).json(product);
       return;
     }
-
-    const files = req.files as Express.Multer.File[];
-
+    const imageIds = req.body.imageIds;
+    console.log("imageIds", req.body.imageIds);
     await Promise.all(
-      files.map(async (file, index) => {
-        const extension = path.extname(file.originalname);
-        const oldPath = path.join("public/uploads/products", file.filename);
-        const newFilename = file.filename + extension;
-        const newPath = path.join("public/uploads/products", newFilename);
-        await fs.promises.rename(oldPath, newPath);
+      imageIds.map(async (id: string) => {
+        const file = (req.files as Express.Multer.File[]).find(
+          (f) => f.fieldname === `image-${id}`,
+        );
 
-        await imageRepository.update({
-          id: existingProduct.images[index].id,
-          path: `/uploads/products/${newFilename}`,
-          product_id: product.id,
-        });
+        if (file) {
+          const extension = path.extname(file.originalname);
+          const oldPath = path.join("public/uploads/products", file.filename);
+          const newFilename = file.filename + extension;
+          const newPath = path.join("public/uploads/products", newFilename);
+          await fs.promises.rename(oldPath, newPath);
+
+          await imageRepository.update({
+            id: Number(id),
+            path: `/uploads/products/${newFilename}`,
+            product_id: product.id,
+          });
+        }
       }),
     );
 

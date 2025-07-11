@@ -143,7 +143,8 @@ function ModifyProduct({
                 alt={`Produit ${productDetails.name}`}
                 width="100"
               />
-              <input type="file" name="images" />
+              <input type="hidden" name="imageIds" value={image.id} />
+              <input type="file" name={`image-${image.id}`} />
             </div>
           ))}
 
