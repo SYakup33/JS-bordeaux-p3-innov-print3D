@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { useRef, useState } from "react";
 import type { FormEventHandler } from "react";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import type { FieldError, FieldErrors } from "../../../types/field-errors";
@@ -19,6 +20,7 @@ function Register() {
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -251,16 +253,27 @@ function Register() {
             <label className="register-label fw-bold" htmlFor="password">
               Créer votre mot de passe :
             </label>
-            <input
-              className="register-input form-control"
-              placeholder="minimum 8 caractères, une majuscule, un chiffre, un caractère spécial"
-              autoComplete="new-password"
-              name="password"
-              ref={passwordRef}
-              type="password"
-              id="password"
-              onChange={() => setErrors((prev) => ({ ...prev, password: "" }))}
-            />
+            <div className="input-group">
+              <input
+                className="register-input form-control"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                name="password"
+                ref={passwordRef}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                onChange={() =>
+                  setErrors((prev) => ({ ...prev, password: "" }))
+                }
+              />
+              <button
+                className="register-eye-btn rounded-2"
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-danger">{errors.password}</p>
             )}
@@ -271,11 +284,11 @@ function Register() {
             </label>
             <input
               className="register-input form-control"
-              placeholder="confirmez votre mot de passe"
+              placeholder="••••••••"
               autoComplete="new-password"
               name="confirmPassword"
               ref={confirmPasswordRef}
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="confirmPassword"
               onChange={() =>
                 setErrors((prev) => ({ ...prev, confirmPassword: "" }))

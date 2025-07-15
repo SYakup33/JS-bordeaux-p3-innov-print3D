@@ -20,6 +20,10 @@
   margin: 2px 0px 10px 0px;
 }
 
+.register-eye-btn {
+  height: 37px;
+}
+
 .register-cta {
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
