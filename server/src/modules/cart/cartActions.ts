@@ -2,6 +2,21 @@ import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import cartRepository from "./cartRepository";
 
+const add: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    const { productId } = req.body;
+
+    await cartRepository.add(userId, productId);
+
+    const cart = await cartRepository.findByUserId(userId);
+
+    res.status(StatusCodes.CREATED).json(cart);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const read: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
@@ -27,7 +42,7 @@ const edit: RequestHandler = async (req, res, next) => {
   try {
     const updatedCart = {
       userId: Number(req.params.userId),
-      productId: Number(req.params.productId),
+      productId: Number(req.body.productId),
       quantity: Number(req.body.quantity),
     };
 
@@ -61,15 +76,9 @@ const destroy: RequestHandler = async (req, res, next) => {
 const validate: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
-    const productId = Number(req.params.productId);
-    const quantity = Number(req.body.quantity);
+    const productId = Number(req.body.productId);
 
-    if (
-      Number.isNaN(userId) ||
-      Number.isNaN(productId) ||
-      Number.isNaN(quantity) ||
-      quantity < 1
-    ) {
+    if (Number.isNaN(userId) || Number.isNaN(productId)) {
       res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Paramétres invalides" });
@@ -81,4 +90,4 @@ const validate: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { read, edit, destroy, validate };
+export default { add, read, edit, destroy, validate };

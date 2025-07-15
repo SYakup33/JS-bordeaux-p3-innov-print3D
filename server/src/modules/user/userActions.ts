@@ -14,7 +14,7 @@ const add: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const newUser = {
+    const user = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       street: req.body.street,
@@ -27,7 +27,7 @@ const add: RequestHandler = async (req, res, next) => {
       role: "client",
     };
 
-    const insertId = await userRepository.create(newUser);
+    const insertId = await userRepository.create(user);
 
     if (insertId === 0) {
       res.status(StatusCodes.UNAUTHORIZED);

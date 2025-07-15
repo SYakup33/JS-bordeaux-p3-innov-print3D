@@ -2,7 +2,7 @@ export type { Product };
 
 declare global {
   type User = {
-    id?: number;
+    id: number;
     firstname: string;
     lastname: string;
     street: string;
@@ -12,7 +12,7 @@ declare global {
     email: string;
     phone: string;
     hashed_password: req.body.hashed_password;
-    role: string;
+    role: "client" | "admin";
     created_at?: Date;
   };
   type Product = {
@@ -43,7 +43,11 @@ declare global {
     minPrice?: number;
     maxPrice?: number;
   };
+
+  type MyPayload = JwtPayload & { sub: string; role: "client" | "admin" };
   namespace Express {
-    export interface Request {}
+    export interface Request {
+      auth: MyPayload;
+    }
   }
 }

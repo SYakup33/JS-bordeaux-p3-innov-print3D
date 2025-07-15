@@ -87,8 +87,8 @@ CREATE TABLE review (
 
 INSERT INTO user (id, firstname, lastname, street, city, zip_code, country, email, phone, hashed_password, role)
 VALUES 
-(1, 'Jérôme', 'Doe', 'rue Lucien Faure', 'Bordeaux', '33300', 'France', 'innovprint3d@outlook.fr', '+33 612345678', '12345678', 'admin'),
-(2, 'Cynthia', 'M', '1 rue Lucien Faure', 'Bordeaux', '33300', 'France', 'cm@outlook.fr', '+33 687654321', '87654321', 'client');
+(1, 'Jérôme', 'Doe', 'rue Lucien Faure', 'Bordeaux', '33300', 'France', 'innovprint3d@outlook.fr', '+33 612345678', '$argon2i$v=19$m=16,t=2,p=1$eW92NlQ1UENPNVY5TVR2cg$2gqkDtG9e1zDbM6Bf68JYw', 'admin'),
+(2, 'Cynthia', 'M', '1 rue Lucien Faure', 'Bordeaux', '33300', 'France', 'cm@outlook.fr', '+33 687654321', '$argon2i$v=19$m=16,t=2,p=1$eW92NlQ1UENPNVY5TVR2cg$bdvJULZC8d6MJqE2tNhYHA', 'client');
 
 INSERT INTO category (id, name)
 VALUES 

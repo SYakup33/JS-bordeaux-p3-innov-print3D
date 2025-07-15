@@ -1,9 +1,8 @@
 import databaseClient from "../../../database/client";
-
 import type { Result, Rows } from "../../../database/client";
 
 class UserRepository {
-  async create(user: Omit<User, "id" | "created_at">) {
+  async create(user: Omit<User, "id" | "created_at" | "role">) {
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO user (firstname, lastname, street, city, zip_code, country, email, phone, hashed_password, role) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -26,10 +25,9 @@ class UserRepository {
 
   async findByEmail(email: string) {
     const [rows] = await databaseClient.query<Rows>(
-      "select * from user where email = ?",
+      "SELECT * FROM user WHERE email = ?",
       [email],
     );
-
     return rows[0] as User;
   }
 }
