@@ -1,10 +1,6 @@
-section {
-  min-height: 100vh;
-}
-
 .confirmed-order-message {
-  background: var(--linear-gradient);
-  color: var(--font-secondary-color);
+  background: var(--tertiary-color);
+  color: var(--font-primary-color);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   font-weight: 600;
@@ -13,7 +9,7 @@ section {
 
 .confirmed-order-consult {
   max-width: 300px;
-  background-color: var(--btn-cta-primary-color);
+  background-color: var(--tertiary-color);
   color: var(--font-cta-btn-primary);
   border: none;
   border-radius: 12px;

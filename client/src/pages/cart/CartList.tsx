@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
 import { useCart } from "../../context/CartContext";
 import type { Message } from "../../types/cart";
@@ -10,9 +10,15 @@ function CartList() {
   const { cartProducts, fetchCart, updateQuantity, deleteProduct } = useCart();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
-  const navigate = useNavigate();
   const { id } = useParams();
   const userId = Number(id ?? 1);
+
+  let totalSelectedPrice = 0;
+  for (const product of cartProducts) {
+    if (selectedProducts.includes(product.productId)) {
+      totalSelectedPrice += product.price * product.quantity;
+    }
+  }
 
   useEffect(() => {
     fetchCart();
@@ -35,7 +41,7 @@ function CartList() {
         selectedProducts.includes(p.productId),
       );
 
-      const response = await fetch(
+      const orderCreationResponse = await fetch(
         `${import.meta.env.VITE_API_URL}/api/order/`,
         {
           method: "POST",
@@ -51,17 +57,32 @@ function CartList() {
           }),
         },
       );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const order = await response.json();
 
-      navigate(`/order/${userId}/confirmation`, {
-        state: {
-          selectedProducts: productToOrder,
-          orderId: order.id,
+      if (!orderCreationResponse.ok) {
+        throw new Error(`HTTP error! status: ${orderCreationResponse.status}`);
+      }
+      const order = await orderCreationResponse.json();
+      console.log("Commande créée:", order);
+
+      const checkoutSessionResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/order/create-checkout-session`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            totalAmount: totalSelectedPrice,
+            orderId: order.orderId || order,
+            userId: userId,
+            products: productToOrder,
+          }),
         },
-      });
+      );
+
+      const { url } = await checkoutSessionResponse.json();
+      console.log(checkoutSessionResponse);
+      window.location.href = url;
     } catch (error) {
       console.error("Erreur lors de la création de commande:", error);
       setMessage({
@@ -69,13 +90,6 @@ function CartList() {
       });
     }
   };
-
-  let totalSelectedPrice = 0;
-  for (const product of cartProducts) {
-    if (selectedProducts.includes(product.productId)) {
-      totalSelectedPrice += product.price * product.quantity;
-    }
-  }
 
   return (
     <section className="d-flex flex-column">

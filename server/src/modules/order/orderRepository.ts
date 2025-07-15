@@ -1,6 +1,20 @@
 import databaseClient from "../../../database/client";
 import type { Result } from "../../../database/client";
 
+// //
+// enum Status {
+//   STATUS_PREPARATION = "en préparation",
+//   STATUS_SENT = "expédiée",
+//   STATUS_DELIVERED = "livrée",
+//   STATUS_CANCELLED = "annulée",
+// }
+
+// function f(s: string) {
+//   console.log(s);
+// }
+
+// f("coucou");
+
 class OrderRepository {
   static readonly STATUS_PREPARATION = "en préparation";
   static readonly STATUS_SENT = "expédiée";
