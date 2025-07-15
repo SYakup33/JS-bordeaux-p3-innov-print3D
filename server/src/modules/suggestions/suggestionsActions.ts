@@ -13,7 +13,7 @@ const read: RequestHandler = async (req, res, next) => {
     }
     const product = await suggestionsRepository.findById(productId);
 
-    const priceMinMax = 0.2;
+    const priceMinMax = 0.4;
     const SuggestedProducts = await suggestionsRepository.findBysuggestions({
       categoryId: product.category_id,
       currentId: productId,

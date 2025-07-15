@@ -68,11 +68,11 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
             <div className="spinner-border text-light" />
           </div>
           <div className="text-light mt-4 fw-semibold fs-4 d-flex align-items-center gap-2">
-            <small>Chargement en cours...</small>
+            <p>Chargement en cours...</p>
           </div>
         </div>
       )}
-      <section className="similar-products-container  my-5 py-4 rounded  mx-auto px-4">
+      <section className="container  my-5 py-4 rounded  mx-auto px-4">
         <h2 className="mb-4 pb-2 text-center fw-semibold">
           Vous aimerez aussi...
         </h2>
@@ -112,7 +112,7 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
                     />
                     <div className="card-body d-flex flex-column">
                       <h5
-                        className="card-title mb-0 fs-6 fw-bold"
+                        className="card-title mb-0 fs-5 fw-bold"
                         onClick={() => handleNavigate(product.id)}
                         onKeyDown={(e) =>
                           e.key === "Enter" && navigate(`product/${product.id}`)
@@ -131,8 +131,8 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
                           {product.category_name}
                         </span>
                       </div>
-                      <div className="overflow-auto similar-products-scrollbar small">
-                        <ReadMore text={product.description} maxLength={50} />
+                      <div className="overflow-auto similar-products-scrollbar ">
+                        <ReadMore text={product.description} maxLength={60} />
                       </div>
                       <div className="d-flex justify-content-between align-items-center">
                         <span className="fw-semibold text-dark fs-5">
