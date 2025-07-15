@@ -29,7 +29,7 @@ const createCheckoutSession: RequestHandler = async (req, res, next) => {
             currency: "eur",
             unit_amount: totalAmount * 100,
             product_data: {
-              name: "coucou",
+              name: "Vos articles",
             },
           },
           quantity: 1,
@@ -37,7 +37,7 @@ const createCheckoutSession: RequestHandler = async (req, res, next) => {
       ],
       mode: "payment",
       success_url: "http://localhost:3000/order/:id/confirmation",
-      cancel_url: "http://tata.com",
+      cancel_url: "http://localhost:3000/order/:id/paymentfail",
     });
     res.status(StatusCodes.OK).json({ url: session.url });
   } catch (err) {
