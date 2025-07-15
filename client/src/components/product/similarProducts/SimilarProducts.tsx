@@ -6,24 +6,20 @@ import {
   StarHalf,
   XSquareFill,
 } from "react-bootstrap-icons";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import type { ProductType } from "../../../types/product";
+import type { ProductType, quantityProductId } from "../../../types/product";
 import { ReadMore } from "../../ReadMore";
 import "./SimilarProducts.css";
 
 type SimilarProductsProps = {
   suggestions: ProductType[];
   addProduct: (product: ProductType, quantity: number) => void;
-};
-
-type quantityProductId = {
-  [productId: number]: number;
 };
 
 function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
@@ -85,25 +81,24 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
         ) : (
           <>
             <Swiper
-              modules={[Navigation, Pagination, Autoplay]}
+              modules={[Pagination, Autoplay]}
               spaceBetween={30}
               slidesPerView={1}
               className="similar-products"
-              // navigation
               pagination={{ clickable: true }}
               autoplay={{ delay: 8000 }}
               breakpoints={{
-                576: { slidesPerView: 1 },
+                425: { slidesPerView: 1 },
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 3 },
               }}
             >
               {suggestions.map((product) => (
                 <SwiperSlide key={product.id}>
-                  <div className="card shadow-sm border-0 rounded-4 similar-products-cursor">
+                  <div className="card shadow-sm border-0 rounded-4 similar-products-height">
                     <img
                       src={product.images?.[0]}
-                      className="card-img-top object-fit-cover similar-products-img"
+                      className="card-img-top object-fit-cover similar-products-img similar-products-cursor"
                       alt={product.name}
                       onClick={() => handleNavigate(product.id)}
                       onKeyDown={(e) =>
@@ -112,7 +107,7 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
                     />
                     <div className="card-body d-flex flex-column">
                       <h5
-                        className="card-title mb-0 fs-5 fw-bold"
+                        className="card-title mb-0 fs-5 fw-bold similar-products-cursor"
                         onClick={() => handleNavigate(product.id)}
                         onKeyDown={(e) =>
                           e.key === "Enter" && navigate(`product/${product.id}`)
@@ -163,7 +158,7 @@ function SimilarProducts({ suggestions, addProduct }: SimilarProductsProps) {
                             <button
                               type="button"
                               onClick={() => {
-                                addProduct(product, quantity[product.id] || 1);
+                                addProduct(product, quantity[product.id]);
                                 setQuantity((prev) => ({
                                   ...prev,
                                   [product.id]: 1,

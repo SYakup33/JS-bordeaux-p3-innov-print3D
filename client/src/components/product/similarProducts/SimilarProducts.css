@@ -2,9 +2,12 @@
   z-index: 1000;
 }
 
+.similar-products-height {
+  min-height: 440px;
+}
+
 .similar-products-cursor {
   cursor: pointer;
-  min-height: 440px;
 }
 
 .similar-products-img {
