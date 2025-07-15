@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Cart3, PersonFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import { useCart } from "../context/CartContext";
 
 function Header() {
   const navigate = useNavigate();
-  const { cartProducts } = useCart();
+  const { cartProducts, fetchCart } = useCart();
   const [showLogout, setShowLogout] = useState(false);
   const { currentUser, isLogged, logout } = useAuth();
 
@@ -36,6 +36,10 @@ function Header() {
     setShowLogout(false);
     navigate("/");
   };
+
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
 
   return (
     <header className="container mt-4 d-flex justify-content-end align-items-center mb-3">
