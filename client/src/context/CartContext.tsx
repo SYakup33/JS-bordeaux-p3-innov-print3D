@@ -47,6 +47,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       );
       localStorage.setItem("cart", JSON.stringify(updateCart));
       setCartProducts(updateCart);
+      return;
     }
     try {
       await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
