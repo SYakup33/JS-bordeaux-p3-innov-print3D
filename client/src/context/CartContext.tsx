@@ -41,7 +41,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateQuantity = async (productId: number, newQuantity: number) => {
     if (!userId) {
       const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-
       const updateCart = storedCart.map(
         (p: { productId: number; quantity: number }) =>
           p.productId === productId ? { ...p, quantity: newQuantity } : p,
