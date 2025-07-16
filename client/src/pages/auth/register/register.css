@@ -22,6 +22,7 @@
 
 .register-eye-btn {
   height: 37px;
+  background-color: var(--tertiary-color);
 }
 
 .register-cta {
