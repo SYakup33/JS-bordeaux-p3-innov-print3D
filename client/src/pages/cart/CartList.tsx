@@ -62,7 +62,6 @@ function CartList() {
         throw new Error(`HTTP error! status: ${orderCreationResponse.status}`);
       }
       const order = await orderCreationResponse.json();
-      console.log("Commande créée:", order);
 
       const checkoutSessionResponse = await fetch(
         `${import.meta.env.VITE_API_URL}/api/order/create-checkout-session`,
@@ -81,7 +80,6 @@ function CartList() {
       );
 
       const { url } = await checkoutSessionResponse.json();
-      console.log(checkoutSessionResponse);
       window.location.href = url;
     } catch (error) {
       console.error("Erreur lors de la création de commande:", error);
