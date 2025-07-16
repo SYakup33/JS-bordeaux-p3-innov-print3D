@@ -24,19 +24,18 @@ const createCheckoutSession: RequestHandler = async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
-          // Provide the exact Price ID (for example, price_1234) of the product you want to sell
           price_data: {
             currency: "eur",
             unit_amount: totalAmount * 100,
             product_data: {
-              name: "Vos articles",
+              name: "Votre total à régler",
             },
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: "http://localhost:3000/order/:id/confirmation",
+      success_url: "http://localhost:3000/order/:id/paymentsuccess",
       cancel_url: "http://localhost:3000/order/:id/paymentfail",
     });
     res.status(StatusCodes.OK).json({ url: session.url });
