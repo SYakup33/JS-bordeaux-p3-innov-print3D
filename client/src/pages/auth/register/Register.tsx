@@ -4,14 +4,17 @@ import type { FormEventHandler } from "react";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import type { FieldError, FieldErrors } from "../../../types/field-errors";
+import type {
+  RegisterError,
+  RegisterErrors,
+} from "../../../types/register-errors";
 import "./register.css";
 
 function Register() {
   const firstnameRef = useRef<HTMLInputElement>(null);
   const lastnameRef = useRef<HTMLInputElement>(null);
   const streetRef = useRef<HTMLInputElement>(null);
-  const zip_codeRef = useRef<HTMLInputElement>(null);
+  const zipCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -19,14 +22,14 @@ function Register() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<RegisterErrors>({});
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
   const onlyLetters = (
     e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof FieldErrors,
+    field: keyof RegisterErrors,
   ) => {
     const value = e.target.value;
     const isValid = /^[\p{L}]+$/u.test(value) || value === "";
@@ -54,7 +57,7 @@ function Register() {
             firstname: (firstnameRef.current as HTMLInputElement).value,
             lastname: (lastnameRef.current as HTMLInputElement).value,
             street: (streetRef.current as HTMLInputElement).value,
-            zip_code: (zip_codeRef.current as HTMLInputElement).value,
+            zip_code: (zipCodeRef.current as HTMLInputElement).value,
             city: (cityRef.current as HTMLInputElement).value,
             country: (countryRef.current as HTMLInputElement).value,
             email: (emailRef.current as HTMLInputElement).value,
@@ -70,24 +73,24 @@ function Register() {
         toast.success("Votre compte a été créé avec succès !");
         navigate("/login");
       } else if (response.status === StatusCodes.BAD_REQUEST) {
-        const data = await response.json();
+        const { details, error } = await response.json();
 
-        if (data.details) {
-          const fieldErrors: FieldErrors = {};
+        if (details) {
+          const fieldErrors: RegisterErrors = {};
 
-          for (const err of data.details as FieldError[]) {
+          for (const err of details as RegisterError[]) {
             fieldErrors[err.field] = err.message;
           }
 
           setErrors(fieldErrors);
           toast.error("Veuillez corriger le(s) erreur(s) du formulaire.");
         } else {
-          toast.error(data.error || "Erreur de validation.");
+          toast.error(error || "Erreur de validation.");
         }
       } else if (response.status === StatusCodes.CONFLICT) {
-        const data = await response.json();
-        setErrors({ email: data.error });
-        toast.error(data.error);
+        const { error } = await response.json();
+        setErrors({ email: error });
+        toast.error(error);
       } else {
         toast.error("Une erreur inattendue est survenue.");
       }
@@ -170,7 +173,7 @@ function Register() {
               placeholder="33000"
               autoComplete="postal-code"
               name="zip_code"
-              ref={zip_codeRef}
+              ref={zipCodeRef}
               type="text"
               id="zip_code"
               onChange={() => setErrors((prev) => ({ ...prev, zip_code: "" }))}
@@ -257,7 +260,6 @@ function Register() {
               <input
                 className="register-input form-control"
                 placeholder="••••••••"
-                autoComplete="new-password"
                 name="password"
                 ref={passwordRef}
                 type={showPassword ? "text" : "password"}
@@ -285,7 +287,6 @@ function Register() {
             <input
               className="register-input form-control"
               placeholder="••••••••"
-              autoComplete="new-password"
               name="confirmPassword"
               ref={confirmPasswordRef}
               type={showPassword ? "text" : "password"}

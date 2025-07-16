@@ -1,4 +1,4 @@
-export type FieldErrors = {
+export type RegisterErrors = {
   firstname?: string;
   lastname?: string;
   street?: string;
@@ -11,7 +11,7 @@ export type FieldErrors = {
   confirmPassword?: string;
 };
 
-export type FieldError = {
-  field: keyof FieldErrors;
+export type RegisterError = {
+  field: keyof RegisterErrors;
   message: string;
 };
