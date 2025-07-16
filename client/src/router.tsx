@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <CartList />,
       },
       {
-        path: "order/:id/confirmation",
+        path: "order/:id/paymentsuccess",
         element: <PaymentSuccess />,
       },
       {
