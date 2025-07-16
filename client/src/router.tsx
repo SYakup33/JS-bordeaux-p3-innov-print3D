@@ -6,6 +6,7 @@ import ProductList from "./pages/ProductList/ProductList.tsx";
 import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import ContactForm from "./pages/contact/ContactForm.tsx";
 import Product from "./pages/product/Product.tsx";
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "order/:id/confirmation",
         element: <ConfirmedOrder />,
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
       },
     ],
   },
