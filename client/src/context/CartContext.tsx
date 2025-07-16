@@ -39,6 +39,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [userId, token]);
 
   const updateQuantity = async (productId: number, newQuantity: number) => {
+    if (!userId) {
+      const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const updateCart = storedCart.map(
+        (p: { productId: number; quantity: number }) =>
+          p.productId === productId ? { ...p, quantity: newQuantity } : p,
+      );
+      localStorage.setItem("cart", JSON.stringify(updateCart));
+      setCartProducts(updateCart);
+      return;
+    }
     try {
       await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
         method: "PUT",
@@ -74,7 +84,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addToCart = async (productId: number, productName: string) => {
+  const addToCart = async (
+    productId: number,
+    productName: string,
+    quantity = 1,
+  ) => {
     try {
       if (userId) {
         const isInCart = cartProducts
@@ -89,7 +103,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ productId }),
+            body: JSON.stringify({ productId, quantity }),
           });
           toast.success(`${productName} ajouté au panier !`);
         }
@@ -102,7 +116,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           .map((p) => p.productId)
           .includes(productId)
           ? storedCart.filter((p) => p.productId !== productId)
-          : [...storedCart, { productId, quantity: 1 }];
+          : [...storedCart, { productId, quantity }];
 
         localStorage.setItem("cart", JSON.stringify(updateCart));
         await fetchCart();
