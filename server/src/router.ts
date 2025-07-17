@@ -11,7 +11,7 @@ router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 
-router.post("/api/contact", contactActions.send);
+router.post("/api/contact", contactActions.validate, contactActions.send);
 
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 
