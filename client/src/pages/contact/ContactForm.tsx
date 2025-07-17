@@ -4,6 +4,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import "./ContactForm.css";
 import { Envelope, Instagram, TelephoneFill } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
+import type { ContactError, ContactErrors } from "../../types/contact-errors";
 
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,25 @@ function ContactForm() {
     phone: "",
     message: "",
   });
+
+  const [errors, setErrors] = useState<ContactErrors>({});
+
+  const onlyLetters = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: keyof ContactErrors,
+  ) => {
+    const value = e.target.value;
+    const isValid = /^[\p{L}]+$/u.test(value) || value === "";
+
+    if (isValid) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "Ce champ doit contenir uniquement des lettres.",
+      }));
+    }
+  };
 
   const inputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -43,11 +63,31 @@ function ContactForm() {
           phone: "",
           message: "",
         });
+      } else if (response.status === StatusCodes.BAD_REQUEST) {
+        const { details, error } = await response.json();
+
+        if (details) {
+          const fieldErrors: ContactErrors = {};
+
+          for (const err of details as ContactError[]) {
+            fieldErrors[err.field] = err.message;
+          }
+
+          setErrors(fieldErrors);
+          toast.error("Veuillez corriger le(s) erreur(s) du formulaire.");
+        } else {
+          toast.error(error || "Erreur de validation.");
+        }
+      } else if (response.status === StatusCodes.CONFLICT) {
+        const { error } = await response.json();
+        setErrors({ email: error });
+        toast.error(error);
       } else {
-        throw new Error("Erreur lors de l'envoi");
+        toast.error("Une erreur inattendue est survenue.");
       }
-    } catch (error) {
-      toast.error("Erreur lors de l'envoi du message. Veuillez réessayer.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Erreur de connexion au serveur.");
     }
   };
 
@@ -82,10 +122,16 @@ function ContactForm() {
               id="firstname"
               autoComplete="given-name"
               placeholder="Marc"
-              required
               value={formData.firstname}
-              onChange={inputChange}
+              onChange={(e) => {
+                setErrors((prev) => ({ ...prev, firstname: "" }));
+                onlyLetters(e, "firstname");
+                inputChange(e);
+              }}
             />
+            {errors.firstname && (
+              <p className="text-danger">{errors.firstname}</p>
+            )}
           </div>
           <div className="form-group col-12 col-md-6">
             <label className="contact-form-label fw-bold" htmlFor="lastname">
@@ -98,10 +144,16 @@ function ContactForm() {
               id="lastname"
               autoComplete="family-name"
               placeholder="Dupont"
-              required
               value={formData.lastname}
-              onChange={inputChange}
+              onChange={(e) => {
+                setErrors((prev) => ({ ...prev, lastname: "" }));
+                onlyLetters(e, "lastname");
+                inputChange(e);
+              }}
             />
+            {errors.lastname && (
+              <p className="text-danger">{errors.lastname}</p>
+            )}
           </div>
           <div className="form-group col-12 col-md-6">
             <label className="contact-form-label fw-bold" htmlFor="email">
@@ -114,10 +166,13 @@ function ContactForm() {
               id="email"
               autoComplete="email"
               placeholder="dupont@mail.com"
-              required
               value={formData.email}
-              onChange={inputChange}
+              onChange={(e) => {
+                setErrors((prev) => ({ ...prev, email: "" }));
+                inputChange(e);
+              }}
             />
+            {errors.email && <p className="text-danger">{errors.email}</p>}
           </div>
           <div className="form-group col-12 col-md-6">
             <label className="contact-form-label fw-bold" htmlFor="phone">
@@ -130,10 +185,13 @@ function ContactForm() {
               id="phone"
               autoComplete="tel"
               placeholder="0699999999"
-              required
               value={formData.phone}
-              onChange={inputChange}
+              onChange={(e) => {
+                setErrors((prev) => ({ ...prev, phone: "" }));
+                inputChange(e);
+              }}
             />
+            {errors.phone && <p className="text-danger">{errors.phone}</p>}
           </div>
         </div>
         <div className="form-group col-12">
@@ -145,10 +203,13 @@ function ContactForm() {
             id="message"
             className="contact-form-input form-control"
             placeholder="Votre message ici"
-            required
             value={formData.message}
-            onChange={inputChange}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, message: "" }));
+              inputChange(e);
+            }}
           />
+          {errors.message && <p className="text-danger">{errors.message}</p>}
         </div>
         <button
           className="contact-form-cta d-block py-2 fs-6 fw-bold w-50 rounded-4"
