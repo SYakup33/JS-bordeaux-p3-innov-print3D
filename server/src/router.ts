@@ -27,13 +27,13 @@ router.post("/api/login", authActions.login);
 router.use(authActions.verifyToken);
 
 router.get("/api/cart/:userId", cartActions.read);
-router.post("/api/order/", orderActions.add);
-router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
-
-router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 router.post(
   "/api/order/create-checkout-session",
   orderActions.createCheckoutSession,
 );
+router.post("/api/order/:userId", orderActions.add);
+router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
+
+router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 
 export default router;

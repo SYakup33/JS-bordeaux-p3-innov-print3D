@@ -7,7 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
 
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const userId = 2;
+    const userId = Number(req.params.userId);
+    console.log(req.params);
     const { products } = req.body;
 
     await orderRepository.create(userId, products);
@@ -20,7 +21,7 @@ const add: RequestHandler = async (req, res, next) => {
 
 const createCheckoutSession: RequestHandler = async (req, res, next) => {
   try {
-    const { totalAmount } = req.body;
+    const { totalAmount, successUrl, cancelUrl } = req.body;
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -35,8 +36,8 @@ const createCheckoutSession: RequestHandler = async (req, res, next) => {
         },
       ],
       mode: "payment",
-      success_url: "http://localhost:3000/order/:id/paymentsuccess",
-      cancel_url: "http://localhost:3000/order/:id/paymentfail",
+      success_url: successUrl,
+      cancel_url: cancelUrl,
     });
     res.status(StatusCodes.OK).json({ url: session.url });
   } catch (err) {

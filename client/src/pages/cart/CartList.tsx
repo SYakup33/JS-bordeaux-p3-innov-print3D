@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
-import { useParams } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
+import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import type { Message } from "../../types/cart";
 
@@ -10,8 +10,8 @@ function CartList() {
   const { cartProducts, fetchCart, updateQuantity, deleteProduct } = useCart();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
-  const { id } = useParams();
-  const userId = Number(id ?? 1);
+  const { currentUser, token } = useAuth();
+  const userId = currentUser?.id;
 
   let totalSelectedPrice = 0;
   for (const product of cartProducts) {
@@ -33,7 +33,7 @@ function CartList() {
     });
   };
 
-  const createAnOrder = async () => {
+  const createAnOrder = useCallback(async () => {
     setMessage(null);
 
     try {
@@ -42,11 +42,12 @@ function CartList() {
       );
 
       const orderCreationResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/order/`,
+        `${import.meta.env.VITE_API_URL}/api/order/${userId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             products: productToOrder.map((p) => ({
@@ -69,9 +70,12 @@ function CartList() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             totalAmount: totalSelectedPrice,
+            successUrl: `http://localhost:3000/order/${userId}/paymentsuccess`,
+            cancelUrl: `http://localhost:3000/order/${userId}/paymentfail`,
             orderId: order.orderId || order,
             userId: userId,
             products: productToOrder,
@@ -87,7 +91,7 @@ function CartList() {
         text: "Erreur lors de la création de la commande. Veuillez réessayer.",
       });
     }
-  };
+  }, [userId, token, cartProducts, selectedProducts, totalSelectedPrice]);
 
   return (
     <section className="d-flex flex-column">
