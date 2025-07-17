@@ -4,6 +4,7 @@ import { Outlet } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header";
 import { NavigateProvider } from "./context/Navigatecontext";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
