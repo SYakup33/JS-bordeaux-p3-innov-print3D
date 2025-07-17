@@ -3,15 +3,12 @@ import authActions from "./modules/auth/authActions";
 import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
-import suggestionsActions from "./modules/suggestions/suggestionsActions";
 
 const router = express.Router();
 
 router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
-
-router.get("/api/product/:productId/suggestions", suggestionsActions.read);
 
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 

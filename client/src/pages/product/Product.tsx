@@ -9,10 +9,9 @@ import { useCart } from "../../context/CartContext.tsx";
 function Product() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductType | null>(null);
-  const [SuggestedProducts, setSuggestedProducts] = useState<ProductType[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
 
-  const { addToCart, updateQuantity, cartProducts } = useCart();
+  const { addProduct } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,36 +34,6 @@ function Product() {
 
     fetchProduct();
   }, [id]);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchSuggestions = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/product/${id}/suggestions`,
-        );
-        const data = await response.json();
-
-        setSuggestedProducts(data.SuggestedProducts || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchSuggestions();
-  }, [id]);
-
-  const addProduct = async (product: ProductType, quantity: number) => {
-    if (!product) return;
-    const isInCart = cartProducts.find((p) => p.productId === product.id);
-    if (isInCart) {
-      await updateQuantity(product.id, isInCart.quantity + quantity);
-    } else {
-      addToCart(product.id, product.name, quantity);
-    }
-    setQuantity(1);
-  };
 
   return (
     <>
@@ -152,7 +121,10 @@ function Product() {
             </div>
             <button
               type="button"
-              onClick={() => product && addProduct(product, quantity)}
+              onClick={() => {
+                product && addProduct(product, quantity);
+                setQuantity(1);
+              }}
               className="my-5 py-4 fs-4 fw-bold w-75 mx-auto product-cta-add-to-cart"
             >
               Ajouter au panier
@@ -180,10 +152,7 @@ function Product() {
         </div>
       </section>
       <section>
-        <SimilarProducts
-          suggestions={SuggestedProducts}
-          addProduct={addProduct}
-        />
+        <SimilarProducts />
       </section>
     </>
   );

@@ -8,6 +8,7 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import type { CartContextType, CartProduct } from "../types/cart";
+import type { ProductType } from "../types/product";
 import { useAuth } from "./AuthContext";
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -84,6 +85,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addProduct = async (product: ProductType, quantity: number) => {
+    if (!product) return;
+    const isInCart = cartProducts.find((p) => p.productId === product.id);
+    if (isInCart) {
+      await updateQuantity(product.id, isInCart.quantity + quantity);
+    } else {
+      addToCart(product.id, product.name, quantity);
+    }
+  };
+
   const addToCart = async (
     productId: number,
     productName: string,
@@ -91,12 +102,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     try {
       if (userId) {
-        const isInCart = cartProducts
-          .map((p) => p.productId)
-          .includes(productId);
+        const isInCart = cartProducts.find((p) => p.productId === productId);
         if (isInCart) {
-          await deleteProduct(productId);
-          toast.info(`${productName} retiré du panier.`);
+          const newQuantity = isInCart.quantity + quantity;
+          await updateQuantity(productId, newQuantity);
+          toast.success(`${productName} quantité mise à jour : ${newQuantity}`);
         } else {
           await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
             method: "POST",
@@ -159,6 +169,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         addToCart,
         updateQuantity,
         deleteProduct,
+        addProduct,
       }}
     >
       {children}

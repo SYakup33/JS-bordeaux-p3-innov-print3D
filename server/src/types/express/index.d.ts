@@ -19,13 +19,6 @@ declare global {
     images: string[];
   };
 
-  type SuggestedProducts = {
-    categoryId: number;
-    currentId: number;
-    minPrice: number;
-    maxPrice: number;
-  };
-
   type OrderProduct = {
     product_id: number;
     quantity: number;
