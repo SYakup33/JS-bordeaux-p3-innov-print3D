@@ -87,7 +87,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
           <div className="d-flex align-items-center">
             {activeProduct === product.id ? (
               <div
-                className="d-flex align-items-center gap-4 rounded-4 px-1 py-1 product-card-style-modal"
+                className="d-flex align-items-center gap-lg-3 gap-2 rounded-4 px-1 py-1 product-card-style-modal"
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
