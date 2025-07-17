@@ -1,6 +1,7 @@
 import express from "express";
 import authActions from "./modules/auth/authActions";
 import cartActions from "./modules/cart/cartActions";
+import contactActions from "./modules/contact/contactActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
 
@@ -10,7 +11,7 @@ router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 
-router.post("/api/contact");
+router.post("/api/contact", contactActions.send);
 
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 
