@@ -94,4 +94,14 @@ const verifyToken: RequestHandler = (req, res, next) => {
   }
 };
 
-export default { hashPassword, login, verifyToken };
+const isAdmin: RequestHandler = (req, res, next) => {
+  if (req.auth.role === "admin") {
+    return next();
+  }
+  res
+    .status(StatusCodes.FORBIDDEN)
+    .json({ message: "Accès interdit, réservé uniquement à l'admin" });
+  return;
+};
+
+export default { hashPassword, login, verifyToken, isAdmin };

@@ -1,4 +1,5 @@
 import express from "express";
+import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
 import authActions from "./modules/auth/authActions";
 import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
@@ -24,6 +25,18 @@ router.post(
 router.post("/api/login", authActions.login);
 
 router.use(authActions.verifyToken);
+
+router.get("/api/admin/orders/:userId", orderActions.gestUsersOrders);
+router.get(
+  "/api/admin/orders",
+  authActions.isAdmin,
+  adminOrdersActions.readAll,
+);
+router.put(
+  "/api/admin/order/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.updateStatus,
+);
 
 router.get("/api/cart/:userId", cartActions.read);
 router.post("/api/order/", orderActions.add);

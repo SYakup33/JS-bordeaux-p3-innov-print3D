@@ -1,6 +1,6 @@
-section {
+/* section {
   min-height: 100vh;
-}
+} */
 
 .confirmed-order-message {
   background: var(--linear-gradient);

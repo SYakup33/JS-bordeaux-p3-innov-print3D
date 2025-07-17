@@ -3,6 +3,7 @@ import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
 import { useNavigate, useParams } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
+import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import type { Message } from "../../types/cart";
 
@@ -13,6 +14,7 @@ function CartList() {
   const navigate = useNavigate();
   const { id } = useParams();
   const userId = Number(id ?? 1);
+  const { token } = useAuth();
 
   useEffect(() => {
     fetchCart();
@@ -41,6 +43,7 @@ function CartList() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             products: productToOrder.map((p) => ({

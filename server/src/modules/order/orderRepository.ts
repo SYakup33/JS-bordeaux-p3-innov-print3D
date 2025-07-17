@@ -1,5 +1,5 @@
 import databaseClient from "../../../database/client";
-import type { Result } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 
 class OrderRepository {
   static readonly STATUS_PREPARATION = "en préparation";
@@ -29,6 +29,14 @@ class OrderRepository {
     );
 
     return orderId;
+  }
+
+  async find(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "select * from orders where user_id = ? order by created_at desc",
+      [userId],
+    );
+    return rows;
   }
 }
 
