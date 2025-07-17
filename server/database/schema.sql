@@ -6,9 +6,9 @@ CREATE TABLE user (
   city VARCHAR(150) NOT NULL,
   zip_code VARCHAR(25) NOT NULL,
   country VARCHAR(100) NOT NULL,
-  email VARCHAR(150) NOT NULL,
+  email VARCHAR(150) UNIQUE NOT NULL,
   phone VARCHAR(30) NOT NULL,
-  password VARCHAR(255) NOT NULL,
+  hashed_password VARCHAR(255) NOT NULL,
   role ENUM('client', 'admin') NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -85,7 +85,7 @@ CREATE TABLE review (
   CONSTRAINT fk_review_product FOREIGN KEY (product_id) REFERENCES product (id)
 );
 
-INSERT INTO user (id, firstname, lastname, street, city, zip_code, country, email, phone, password, role)
+INSERT INTO user (id, firstname, lastname, street, city, zip_code, country, email, phone, hashed_password, role)
 VALUES 
 (1, 'Jérôme', 'Doe', 'rue Lucien Faure', 'Bordeaux', '33300', 'France', 'innovprint3d@outlook.fr', '+33 612345678', '$argon2i$v=19$m=16,t=2,p=1$eW92NlQ1UENPNVY5TVR2cg$2gqkDtG9e1zDbM6Bf68JYw', 'admin'),
 (2, 'Cynthia', 'M', '1 rue Lucien Faure', 'Bordeaux', '33300', 'France', 'cm@outlook.fr', '+33 687654321', '$argon2i$v=19$m=16,t=2,p=1$eW92NlQ1UENPNVY5TVR2cg$bdvJULZC8d6MJqE2tNhYHA', 'client');

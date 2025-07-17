@@ -145,8 +145,8 @@ function Product() {
             )}
           </p>
         </article>
-        <article className="mx-5">
-          <h3 id={product?.name} className="mx-auto my-5">
+        <article className="p-5">
+          <h3 id={product?.name} className="my-5">
             Description complète
           </h3>
           <p className="lh-lg w-75">{product?.description}</p>
