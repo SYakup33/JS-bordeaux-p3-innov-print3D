@@ -1,0 +1,13 @@
+.upload-column {
+  height: 100%;
+}
+
+.add-product-icon {
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .add-product-btn {
+    color: var(--btn-cta-secondary-color);
+  }
+}

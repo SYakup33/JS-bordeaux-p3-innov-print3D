@@ -46,7 +46,8 @@ export type AddProductProps = {
     price: number;
     category_id: number;
   };
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (formData: FormData) => Promise<{ success: boolean }>;
+  onSuccess?: () => void;
 };
 
 export type ModifyProductProps = {
@@ -58,4 +59,5 @@ export type ModifyProductProps = {
   productDetails: ProductType | null;
   onFetchProductDetails: (id: number) => void;
   onSubmit: (formData: FormData, productId: number) => void;
+  onDelete: (id: number) => void;
 };

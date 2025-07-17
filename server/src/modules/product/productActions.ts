@@ -8,10 +8,27 @@ import productRepository from "./productRepository";
 
 const productSchema = joi
   .object({
-    name: joi.string().max(100).required(),
-    description: joi.string().max(255).required(),
-    price: joi.number().required(),
-    category_id: joi.number().integer().required(),
+    name: joi.string().max(100).required().messages({
+      "string.empty": "Création du produit : Le nom du produit est requis.",
+      "string.max":
+        "Création du produit : Le nom du produit ne doit pas dépasser les 100 caractères.",
+    }),
+    description: joi.string().required().messages({
+      "string.empty":
+        "Création du produit : La description du produit est requise.",
+    }),
+    price: joi.number().greater(0).required().messages({
+      "number.base":
+        "Création du produit : Le prix doit être strictement supérieur à 0.",
+      "number.greater":
+        "Création du produit : Le prix doit être strictement supérieur à 0.",
+      "any.required": "Création du produit : Le prix est requis.",
+    }),
+    category_id: joi.number().integer().valid(1, 2, 3).required().messages({
+      "any.only":
+        "Création du produit : La catégorie du produit est manquante.",
+    }),
+    imageIds: joi.array().items(joi.string().pattern(/^\d+$/)).default([]),
   })
   .options({ convert: true });
 
@@ -166,15 +183,34 @@ const validate: RequestHandler = (req, res, next) => {
 
   if (error) {
     res.status(StatusCodes.BAD_REQUEST).json({
-      validationErrors: error.details,
+      validationErrors: error.details.map((err) => ({
+        message: err.message,
+        path: err.path,
+      })),
     });
     return;
   }
-  if (!files || files.length !== 3) {
-    res.status(StatusCodes.BAD_REQUEST).json({
-      validationErrors: [{ message: "Il faut 3 images." }],
-    });
-    return;
+  if (req.method === "POST") {
+    const files = req.files as Express.Multer.File[] | undefined;
+    const filecount = files?.length || 0;
+    if (filecount === 0) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        validationErrors: [
+          { message: "Création du produit : Les images sont manquantes." },
+        ],
+      });
+      return;
+    }
+    if (filecount === 1 || filecount === 2) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        validationErrors: [
+          {
+            message: `Création du produit : Il manque ${3 - filecount} images.`,
+          },
+        ],
+      });
+      return;
+    }
   }
   next();
 };
