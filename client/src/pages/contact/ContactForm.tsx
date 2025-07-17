@@ -34,7 +34,7 @@ function ContactForm() {
         },
       );
 
-      if (response.status === StatusCodes.NO_CONTENT) {
+      if (response.status === StatusCodes.OK) {
         toast.success("Votre message a été envoyé avec succès !");
         setFormData({
           firstname: "",
