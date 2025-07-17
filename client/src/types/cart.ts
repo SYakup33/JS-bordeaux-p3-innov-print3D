@@ -11,7 +11,7 @@ export type CartProduct = {
 export type CartContextType = {
   cartProducts: CartProduct[];
   fetchCart: () => void;
-  addToCart: (productId: number, productName: string) => void;
+  addToCart: (productId: number, productName: string, quantity: number) => void;
   updateQuantity: (productId: number, newQuantity: number) => void;
   deleteProduct: (productId: number) => void;
 };

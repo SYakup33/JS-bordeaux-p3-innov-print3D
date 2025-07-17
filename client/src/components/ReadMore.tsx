@@ -6,6 +6,8 @@ export function ReadMore({
 }: { text: string; maxLength?: number }) {
   const [showAll, setShowAll] = useState(false);
 
+  if (!text) return;
+
   const isLong = text.length > maxLength;
   const textToShow =
     showAll || !isLong ? text : `${text.slice(0, maxLength)}...`;

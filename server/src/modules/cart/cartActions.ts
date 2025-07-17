@@ -5,9 +5,9 @@ import cartRepository from "./cartRepository";
 const add: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
-    const { productId } = req.body;
+    const { productId, quantity } = req.body;
 
-    await cartRepository.add(userId, productId);
+    await cartRepository.add(userId, productId, quantity);
 
     const cart = await cartRepository.findByUserId(userId);
 
@@ -42,7 +42,7 @@ const edit: RequestHandler = async (req, res, next) => {
   try {
     const updatedCart = {
       userId: Number(req.params.userId),
-      productId: Number(req.params.productId),
+      productId: Number(req.body.productId),
       quantity: Number(req.body.quantity),
     };
 
@@ -76,14 +76,9 @@ const destroy: RequestHandler = async (req, res, next) => {
 const validate: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
-    const productId = Number(req.params.productId);
-    const quantity = Number(req.body.quantity);
+    const productId = Number(req.body.productId);
 
-    if (
-      Number.isNaN(userId) ||
-      Number.isNaN(productId) ||
-      Number.isNaN(quantity)
-    ) {
+    if (Number.isNaN(userId) || Number.isNaN(productId)) {
       res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Paramétres invalides" });

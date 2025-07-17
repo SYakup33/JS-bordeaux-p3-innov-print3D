@@ -3,10 +3,27 @@ import type { ProductType } from "../../types/product.ts";
 import "./Product.css";
 import { Dash, Plus, StarFill, StarHalf } from "react-bootstrap-icons";
 import { useParams } from "react-router";
+import { useCart } from "../../context/CartContext.tsx";
 
 function Product() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductType | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const { cartProducts, addToCart, updateQuantity } = useCart();
+
+  const addProduct = async () => {
+    if (!product?.id) return;
+
+    const isInCart = cartProducts.find((p) => p.productId === Number(id));
+
+    if (isInCart) {
+      updateQuantity(product?.id, isInCart.quantity + quantity);
+    } else {
+      addToCart(product?.id, product?.name, quantity);
+    }
+    setQuantity(1);
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -91,15 +108,16 @@ function Product() {
               <button
                 type="button"
                 className="btn btn-outline-dark btn-sm p-1"
-                onClick={() => ""}
+                onClick={() => setQuantity(quantity - 1)}
+                disabled={quantity === 1}
               >
                 <Dash size={20} />
               </button>
-              <span className="fs-5">1</span>
+              <span className="fs-5"> {quantity} </span>
               <button
                 type="button"
                 className="btn btn-outline-dark btn-sm p-1"
-                onClick={() => ""}
+                onClick={() => setQuantity(quantity + 1)}
               >
                 <Plus size={20} />
               </button>
@@ -108,7 +126,7 @@ function Product() {
           </div>
           <button
             type="button"
-            onClick={() => ""}
+            onClick={addProduct}
             className="my-5 py-4 fs-4 fw-bold w-75 mx-auto product-cta-add-to-cart"
           >
             Ajouter au panier
@@ -127,8 +145,8 @@ function Product() {
             )}
           </p>
         </article>
-        <article className="mx-5">
-          <h3 id={product?.name} className="mx-auto my-5">
+        <article className="p-5">
+          <h3 id={product?.name} className="my-5">
             Description complète
           </h3>
           <p className="lh-lg w-75">{product?.description}</p>

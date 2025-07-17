@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
+import { UserProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import router from "./router";
 
@@ -12,7 +13,9 @@ if (rootElement == null) {
 }
 
 createRoot(rootElement).render(
-  <CartProvider>
-    <RouterProvider router={router} />
-  </CartProvider>,
+  <UserProvider>
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  </UserProvider>,
 );
