@@ -92,7 +92,7 @@ function ContactForm() {
   };
 
   return (
-    <section className="contact m-auto">
+    <section className="contact m-auto py-4">
       <article className="contact-form my-4 container">
         <h1 className="pb-3">Nous contacter</h1>
         <p>
@@ -215,7 +215,7 @@ function ContactForm() {
           className="contact-form-cta d-block py-2 fs-6 fw-bold w-50 rounded-4"
           type="submit"
         >
-          Envoyer
+          Envoyer ma demande
         </button>
       </form>
     </section>
