@@ -119,7 +119,7 @@ function ModifyOrDeleteProduct({
                     src={
                       previewImages[image.id]
                         ? previewImages[image.id]
-                        : `${import.meta.env.VITE_API_URL}${image.path}`
+                        : `${import.meta.env.VITE_API_URL}/uploads/products/${image.path}`
                     }
                     alt={`Produit ${productDetails.name}`}
                     className="img-fluid modify-delete-product-images"

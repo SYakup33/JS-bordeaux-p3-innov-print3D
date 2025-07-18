@@ -108,15 +108,14 @@ const edit: RequestHandler = async (req, res, next) => {
         );
 
         if (file) {
-          const extension = path.extname(file.originalname);
           const oldPath = path.join("public/uploads/products", file.filename);
-          const newFilename = file.filename + extension;
+          const newFilename = file.filename;
           const newPath = path.join("public/uploads/products", newFilename);
           await fs.promises.rename(oldPath, newPath);
 
           await imageRepository.update({
             id: Number(id),
-            path: `/uploads/products/${newFilename}`,
+            path: `${newFilename}`,
             product_id: product.id,
           });
         }
@@ -144,16 +143,15 @@ const add: RequestHandler = async (req, res, next) => {
 
     await Promise.all(
       files.map(async (file) => {
-        const extension = path.extname(file.originalname);
         const oldPath = path.join("public/uploads/products", file.filename);
-        const newFilename = file.filename + extension;
+        const newFilename = file.filename;
         const newPath = path.join("public/uploads/products", newFilename);
 
         await fs.promises.rename(oldPath, newPath);
 
         await imageRepository.add({
           product_id: insertId,
-          path: `/uploads/products/${newFilename}`,
+          path: `${newFilename}`,
         });
       }),
     );

@@ -5,13 +5,14 @@ import { useProductSearch } from "../../contexts/ProductSearchContext";
 import type { ProductType } from "../../types/product";
 import "./Admin.css";
 import ModifyOrDeleteProduct from "../../components/product/adminManagement/modifyOrDeleteProduct/ModifyOrDeleteProduct";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Admin() {
   const { productName, suggestions, fetchSuggestions } = useProductSearch();
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     null,
   );
-
+  const { token } = useAuth();
   const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     fetchSuggestions(value);
@@ -44,6 +45,7 @@ function Admin() {
   const deleteProduct = (id: number) => {
     fetch(`${import.meta.env.VITE_API_URL}/api/product/${id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
         toast.success("Produit supprimé !");
@@ -68,6 +70,7 @@ function Admin() {
           onSubmit={(formData, productId) => {
             fetch(`${import.meta.env.VITE_API_URL}/api/product/${productId}`, {
               method: "PUT",
+              headers: { Authorization: `Bearer ${token}` },
               body: formData,
             })
               .then(async (response) => {
@@ -106,6 +109,7 @@ function Admin() {
           onSubmit={(formData) => {
             return fetch(`${import.meta.env.VITE_API_URL}/api/products`, {
               method: "POST",
+              headers: { Authorization: `Bearer ${token}` },
               body: formData,
             })
               .then(async (response) => {

@@ -1,8 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
+import Logout from "./pages/auth/Logout.tsx";
+import Login from "./pages/auth/login/Login.tsx";
+import Register from "./pages/auth/register/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
 import Admin from "./pages/myAccount/Admin.tsx";
 import Product from "./pages/product/Product.tsx";
@@ -22,6 +26,18 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+      {
         path: "cart/:id",
         element: <CartList />,
       },
@@ -31,7 +47,11 @@ const router = createBrowserRouter([
       },
       {
         path: "myaccount/admin",
-        element: <Admin />,
+        element: (
+          <ProtectedAdminRoute>
+            <Admin />
+          </ProtectedAdminRoute>
+        ),
       },
     ],
   },

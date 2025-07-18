@@ -27,7 +27,7 @@ function ProductCard({ products }: ProductCardProps) {
             className="btn p-0 border-0 bg-transparent"
           >
             <img
-              src={`${import.meta.env.VITE_API_URL}${products.images[0]}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/products/${products.images[0]}`}
               alt={`Cliché du ${products.name}`}
               className="w-100 rounded-top-3 object-fit-cover card-card-img"
             />
@@ -46,7 +46,7 @@ function ProductCard({ products }: ProductCardProps) {
               <button
                 type="button"
                 className="btn p-0 border-0 bg-transparent cards-card-cart"
-                onClick={() => addToCart(products.id, products.name)}
+                onClick={() => addToCart(products.id, products.name, 1)}
               >
                 {isInCart ? (
                   <CartDash size={20} />

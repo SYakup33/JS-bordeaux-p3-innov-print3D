@@ -1,0 +1,38 @@
+.register {
+  width: 85%;
+}
+
+.register-form {
+  background-color: var(--tertiary-color);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 0.5rem;
+}
+
+.register-label {
+  font-size: medium;
+}
+
+.register-input {
+  font-size: small;
+  margin: 2px 0px 10px 0px;
+}
+
+.register-eye-btn {
+  height: 37px;
+  background-color: var(--tertiary-color);
+}
+
+.register-cta {
+  color: var(--font-secondary-color);
+  background-color: var(--btn-cta-primary-color);
+  margin: 28px auto 10px auto;
+}
+
+.register-cta:hover {
+  color: var(--btn-cta-primary-color);
+  background-color: var(--btn-cta-secondary-color);
+  border: 2px solid var(--btn-cta-primary-color);
+}
