@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Cart3, PersonFill } from "react-bootstrap-icons";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -38,7 +38,17 @@ function Header() {
   };
 
   return (
-    <header className="container mt-4 d-flex justify-content-end align-items-center mb-3">
+    <header className="container mt-4 mb-3 d-flex justify-content-between align-items-center position-relative">
+      <div className="mx-auto">
+        <h5 className="fw-medium mb-0 text-center">
+          <Link
+            to="/contact"
+            className="fw-bold text-decoration-none text-dark"
+          >
+            contactez-nous
+          </Link>
+        </h5>
+      </div>
       <nav className="d-flex align-items-center position-relative">
         <div className="d-flex align-items-center me-3">
           <button type="button" className="btn" onClick={onLogClick}>
