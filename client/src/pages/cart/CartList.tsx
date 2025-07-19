@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
@@ -12,9 +12,8 @@ function CartList() {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
   const navigate = useNavigate();
-  const { id } = useParams();
-  const userId = Number(id ?? 1);
-  const { token } = useAuth();
+  const { token, currentUser } = useAuth();
+  const userId = currentUser?.id;
 
   useEffect(() => {
     fetchCart();

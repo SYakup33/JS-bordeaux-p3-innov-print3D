@@ -19,37 +19,29 @@ type ProductsStyleProps = {
 };
 
 function ProductCardStyle({ product }: ProductsStyleProps) {
-  const { handleNavigate } = useCustomNavigat();
+  const { costomNavigate } = useCustomNavigat();
   const { addProduct, updateQuantity, cartProducts, deleteProduct } = useCart();
 
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
-  const [isHovering, setIsHovering] = useState(false);
+  const [hoverModal, setHoverModal] = useState(false);
 
   const isInnCart = cartProducts.find((p) => p.productId === product.id);
   const quantity = isInnCart?.quantity || 1;
 
-  const handleIncrease = () => {
-    if (isInnCart) {
-      updateQuantity(product.id, quantity + 1);
-    } else {
-      addProduct(product, 1);
-    }
-  };
-
   useEffect(() => {
-    if (activeProduct && !isHovering) {
+    if (activeProduct && !hoverModal) {
       const timer = setTimeout(() => {
         setActiveProduct(null);
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [activeProduct, isHovering]);
+  }, [activeProduct, hoverModal]);
 
   return (
     <article className="card shadow-sm border-0 rounded-4 product-card-style-height">
       <button
         type="button"
-        onClick={() => handleNavigate(`/product/${product.id}`)}
+        onClick={() => costomNavigate(`/product/${product.id}`)}
         className="btn p-0 border-0 bg-transparent"
       >
         <img
@@ -88,8 +80,8 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
             {activeProduct === product.id ? (
               <div
                 className="d-flex align-items-center gap-4 rounded-4 px-1 py-1 product-card-style-modal"
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
+                onMouseEnter={() => setHoverModal(true)}
+                onMouseLeave={() => setHoverModal(false)}
               >
                 {quantity > 1 ? (
                   <button
@@ -117,7 +109,13 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
                 <button
                   type="button"
                   className="btn btn-sm bg-white text-dark border-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm product-card-style-modal-btn "
-                  onClick={handleIncrease}
+                  onClick={() => {
+                    if (isInnCart) {
+                      updateQuantity(product.id, quantity + 1);
+                    } else {
+                      addProduct(product, 1);
+                    }
+                  }}
                 >
                   <PlusLg size={18} />
                 </button>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import "../components/product/productCardStyle/ProductCardStyle.css";
 
 type NavigateContextType = {
-  handleNavigate: (path: string) => void;
+  costomNavigate: (path: string) => void;
 };
 
 const NavigateContext = createContext<NavigateContextType | null>(null);
@@ -12,7 +12,7 @@ export function NavigateProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleNavigate = (path: string) => {
+  const costomNavigate = (path: string) => {
     setLoading(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
@@ -22,7 +22,7 @@ export function NavigateProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <NavigateContext.Provider value={{ handleNavigate }}>
+    <NavigateContext.Provider value={{ costomNavigate }}>
       {children}
 
       {loading && (
