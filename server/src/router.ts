@@ -26,7 +26,6 @@ router.post("/api/login", authActions.login);
 
 router.use(authActions.verifyToken);
 
-router.get("/api/admin/orders/:userId", orderActions.gestUsersOrders);
 router.get(
   "/api/admin/orders",
   authActions.isAdmin,

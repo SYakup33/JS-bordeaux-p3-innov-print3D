@@ -30,14 +30,6 @@ class OrderRepository {
 
     return orderId;
   }
-
-  async find(userId: number) {
-    const [rows] = await databaseClient.query<Rows>(
-      "select * from orders where user_id = ? order by created_at desc",
-      [userId],
-    );
-    return rows;
-  }
 }
 
 export default new OrderRepository();

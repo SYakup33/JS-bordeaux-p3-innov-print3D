@@ -13,7 +13,7 @@ export function ReadMore({
     showAll || !isLong ? text : `${text.slice(0, maxLength)}...`;
 
   return (
-    <p className="text-secondary fs-6">
+    <p className="text-secondary small">
       {textToShow}
       {isLong && (
         <button

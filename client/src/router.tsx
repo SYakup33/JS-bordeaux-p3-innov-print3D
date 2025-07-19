@@ -7,6 +7,7 @@ import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
 import Register from "./pages/auth/register/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import AdminOrders from "./pages/order/adminOrders/AdminOrders.tsx";
 import Product from "./pages/product/Product.tsx";
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "order/:id/confirmation",
         element: <ConfirmedOrder />,
+      },
+      {
+        path: "admin/orders",
+        element: <AdminOrders />,
       },
     ],
   },

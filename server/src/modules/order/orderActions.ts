@@ -16,22 +16,4 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-const gestUsersOrders: RequestHandler = async (req, res, next) => {
-  try {
-    const userId = Number(req.auth?.sub);
-
-    const [orders] = await orderRepository.find(userId);
-    if (!req.auth) {
-      res
-        .status(401)
-        .json({ message: "Non authentifié : token manquant ou invalide." });
-      return;
-    }
-
-    res.json(orders);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export default { add, gestUsersOrders };
+export default { add };

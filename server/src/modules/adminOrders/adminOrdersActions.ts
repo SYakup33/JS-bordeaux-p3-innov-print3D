@@ -4,8 +4,17 @@ import adminOrdersRepository from "./adminOrdersRepository";
 
 const readAll: RequestHandler = async (req, res, next) => {
   try {
-    const orders = await adminOrdersRepository.findAll();
-    res.json(orders);
+    const page = Number(req.query.page) || 1;
+    const limit = 4;
+    const offset = (page - 1) * limit;
+    const orders = await adminOrdersRepository.findAll(limit, offset);
+    const count = await adminOrdersRepository.count();
+    const totalPage = Math.ceil(count / limit);
+
+    res.json({
+      orders,
+      pagination: { count, currentPage: page, limit: limit, totalPage },
+    });
   } catch (err) {
     next(err);
   }
@@ -19,9 +28,7 @@ const updateStatus: RequestHandler = async (req, res, next) => {
     await adminOrdersRepository.updateStatus(orderId, status);
     res.status(StatusCodes.OK).json({ message: "status mis à jour" });
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Erreur serveur lors de la mise à jour" });
+    next(error);
   }
 };
 

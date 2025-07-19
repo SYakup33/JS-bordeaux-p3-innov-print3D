@@ -1,41 +1,55 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-class cartRepository {
-  async findAll() {
-    const [orders] = await databaseClient.query<Rows>(
-      `SELECT o.id AS orderId, o.created_at, o.status,
-       u.firstname, u.lastname, u.email, u.phone,
-       p.id AS productId, p.name AS productName,
-       op.quantity
+class adminOrdersRepository {
+  async findAll(limit: number, offset: number) {
+    const [adminOrders] = await databaseClient.query<Rows>(
+      `SELECT o.id AS orderId, o.created_at As createdAt, o.status,
+       u.firstname, u.lastname, u.email, u.phone, u.street, u.city, u.zip_code, u.country
        FROM orders o
        JOIN user u ON o.user_id = u.id
-       JOIN order_product op ON o.id = op.order_id
-       JOIN product p ON p.id = op.product_id
-       ORDER BY o.created_at DESC`,
+       ORDER BY o.created_at DESC
+       LIMIT ? OFFSET ?`,
+      [limit, offset],
     );
 
-    for (const order of orders) {
-      const [imgRows] = await databaseClient.query<Rows>(
-        `SELECT path
-         FROM image
-         WHERE product_id = ? LIMIT 1`,
-        [order.productId],
+    for (const order of adminOrders) {
+      const [productsOrders] = await databaseClient.query<Rows>(
+        `SELECT p.id AS productId, p.name AS productName,
+         op.quantity, op.unit_price AS unitPrice
+         FROM order_product op
+         JOIN product p ON op.product_id = p.id
+         WHERE op.order_id = ?`,
+        [order.orderId],
       );
 
-      order.images = imgRows.map((img) => img.path);
+      for (const product of productsOrders) {
+        const [imgRows] = await databaseClient.query<Rows>(
+          "select path from image WHERE product_id = ? LIMIT 1",
+          [product.productId],
+        );
+        product.image = imgRows.map((img) => img.path);
+      }
+      order.products = productsOrders;
     }
 
-    return orders;
+    return adminOrders;
+  }
+
+  async count() {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT COUNT(*) AS count FROM orders",
+    );
+    return rows[0].count;
   }
 
   async updateStatus(orderId: number, status: string) {
-    const [result] = await databaseClient.query(
-      "update orders SET status = ? WHERE id = ?",
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE  orders SET status = ? WHERE id = ?",
       [status, orderId],
     );
     return result;
   }
 }
 
-export default new cartRepository();
+export default new adminOrdersRepository();
