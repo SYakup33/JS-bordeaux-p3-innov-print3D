@@ -7,7 +7,7 @@ function Home() {
       <button
         type="button"
         onClick={() => navigate("/products")}
-        className="btn"
+        className="btn cart-header-title "
         style={{
           backgroundColor: "var(--btn-cta-home-color)",
           color: "var(--font-secondary-color)",

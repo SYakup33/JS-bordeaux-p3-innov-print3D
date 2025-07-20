@@ -32,4 +32,23 @@ const updateStatus: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { readAll, updateStatus };
+const unreadOrders: RequestHandler = async (req, res, next) => {
+  try {
+    const unreadOrders = await adminOrdersRepository.findunreadOrders();
+    res.status(StatusCodes.OK).json(unreadOrders);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const isRead: RequestHandler = async (req, res, next) => {
+  try {
+    const orderId = Number(req.params.orderId);
+    await adminOrdersRepository.findReadOrders(orderId);
+    res.status(StatusCodes.OK).json({ message: "commande lue" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { readAll, updateStatus, unreadOrders, isRead };

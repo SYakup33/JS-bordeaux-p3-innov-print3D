@@ -4,7 +4,7 @@ import "./Product.css";
 import { Dash, Plus, StarFill, StarHalf } from "react-bootstrap-icons";
 import { useParams } from "react-router";
 import SimilarProducts from "../../components/product/similarProducts/SimilarProducts.tsx";
-import { useCart } from "../../context/CartContext.tsx";
+import { useCart } from "../../contexts/CartContext.tsx";
 
 function Product() {
   const { id } = useParams();

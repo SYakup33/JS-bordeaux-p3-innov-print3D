@@ -88,7 +88,7 @@ function ProductList() {
 
   return (
     <>
-      <div className="d-flex align-items-center cards-title">
+      <div className="d-flex align-items-center cards-title cart-header-title ">
         <h1>TOUS LES PRODUITS</h1>
       </div>
       <section className="d-flex flex-column flex-md-row">
@@ -101,11 +101,11 @@ function ProductList() {
         >
           <ProductsFilter filters={filters} />
         </form>
-        <section className="container">
+        <section className="container ">
           <div className="row g-4">
             {currentProducts && currentProducts?.length > 0 ? (
               currentProducts?.map((product) => (
-                <div key={product.id} className="col-12 col-sm-6 col-lg-4">
+                <div key={product.id} className="col-12 col-sm-6 col-lg-4 ">
                   <ProductCard products={product} />
                 </div>
               ))

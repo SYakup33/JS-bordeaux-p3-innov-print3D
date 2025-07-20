@@ -50,6 +50,28 @@ class adminOrdersRepository {
     );
     return result;
   }
+
+  async findunreadOrders() {
+    const [ordersRows] = await databaseClient.query<Rows>(
+      "SELECT id fROM orders WHERE is_read = false",
+    );
+    const [ordersRowsCount] = await databaseClient.query<Rows>(
+      "SELECT COUNT(*) AS count FROM orders WHERE is_read = false ",
+    );
+
+    return {
+      unreadOrdersIds: ordersRows.map((orderIds) => orderIds.id),
+      unreadOrdersCount: ordersRowsCount[0].count,
+    };
+  }
+
+  async findReadOrders(orderId: number) {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE orders SET is_read = true where id = ?",
+      [orderId],
+    );
+    return result;
+  }
 }
 
 export default new adminOrdersRepository();

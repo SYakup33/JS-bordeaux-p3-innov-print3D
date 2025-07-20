@@ -1,6 +1,6 @@
 import { type FormEventHandler, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import "./Login.css";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import pokeball_ronflex_1 from "/img/products/pokeball_ronflex_1.jpg";

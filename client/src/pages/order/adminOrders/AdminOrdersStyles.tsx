@@ -5,7 +5,7 @@ import {
   XCircleFill,
 } from "react-bootstrap-icons";
 
-export const status = ["en préparation", "expédiée", "livrée", "annulée"];
+export const statuss = ["en préparation", "expédiée", "livrée", "annulée"];
 
 export const statusClass = (status: string) => {
   if (status.includes("en préparation")) return "status-en-preparation";
@@ -16,12 +16,8 @@ export const statusClass = (status: string) => {
 };
 
 export const StatusIcons = ({ status }: { status: string }) => {
-  const statusStyle = statusClass(status);
-
   return (
-    <div
-      className={`border ${statusStyle} rounded-pill fw-bold py-2 px-3 text-center d-flex align-items-center gap-1`}
-    >
+    <div className="border rounded-pill fw-bold py-2 px-3 text-center d-flex align-items-center gap-1">
       {status === "livrée" && <CheckCircleFill />}
       {status === "en préparation" && <HourglassSplit />}
       {status === "expédiée" && <Truck />}

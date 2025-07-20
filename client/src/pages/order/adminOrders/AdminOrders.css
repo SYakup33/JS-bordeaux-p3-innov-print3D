@@ -5,25 +5,30 @@
 }
 
 .status-en-preparation {
-  background-color: #f0f1f6;
   color: #555a7b;
   border-color: #a1a8c6;
 }
 
 .status-expediee {
-  background-color: #e6f4f1;
-  color: #3a7d74;
-  border-color: #70b4a1;
+  background-color: #bdb9941e;
+  color: #c4780d;
+  border-color: #c4780d;
 }
 
 .status-livree {
-  background-color: #f7faf6;
-  color: #5a6a56;
-  border-color: #a4b39e;
+  background-color: #f7faf653;
+  color: #385f2e;
+  border-color: #385f2e;
 }
 
 .status-annulee {
-  background-color: #fbeaea;
-  color: #a45a5a;
-  border-color: #d1a3a3;
+  background-color: #fbeaea3a;
+  color: #7d2d2d;
+  border-color: #7d2d2d;
+}
+
+.order-products-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

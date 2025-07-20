@@ -3,8 +3,9 @@ import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
 import { useNavigate } from "react-router";
 import { ReadMore } from "../../components/ReadMore";
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
+import { useOrdersNotifs } from "../../contexts/adminOrdersNotifications";
 import type { Message } from "../../types/cart";
 
 function CartList() {
@@ -14,6 +15,7 @@ function CartList() {
   const navigate = useNavigate();
   const { token, currentUser } = useAuth();
   const userId = currentUser?.id;
+  const { fetchUnreadOrders } = useOrdersNotifs();
 
   useEffect(() => {
     fetchCart();
@@ -65,6 +67,7 @@ function CartList() {
         },
       });
       fetchCart();
+      fetchUnreadOrders();
     } catch (error) {
       console.error("Erreur lors de la création de commande:", error);
       setMessage({
@@ -82,7 +85,7 @@ function CartList() {
 
   return (
     <section className="d-flex flex-column">
-      <div className="d-flex align-items-center justify-content-start p-5 cart-header-title">
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <CartFill size={28} />
           Mon Panier

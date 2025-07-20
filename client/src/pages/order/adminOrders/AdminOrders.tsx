@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  BellFill,
   Box,
   Building,
   GeoAltFill,
@@ -7,19 +8,20 @@ import {
   PersonFill,
   Receipt,
 } from "react-bootstrap-icons";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import type { AdminOrder } from "../../../types/order";
 import "./AdminOrders.css";
-import { StatusIcons, status, statusClass } from "./AdminOrdersStyles";
+import { useOrdersNotifs } from "../../../contexts/adminOrdersNotifications";
+import { StatusIcons, statusClass, statuss } from "./AdminOrdersStyles";
 
 const AdminOrders = () => {
   const [adminOrders, setAdimnOrders] = useState<AdminOrder[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showDetails, setShowDetails] = useState<number[]>([]);
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const { token, currentUser } = useAuth();
+  const { unreadOrdersIds, markOrderRead } = useOrdersNotifs();
 
   useEffect(() => {
     if (!token && currentUser?.role !== "admin") return;
@@ -64,59 +66,35 @@ const AdminOrders = () => {
 
   const btnShowDetails = (orderId: number) => {
     setShowDetails((orderIds) => {
-      if (orderIds.includes(orderId)) {
-        return orderIds.filter((id) => id !== orderId);
+      if (!orderIds.includes(orderId)) {
+        markOrderRead(orderId);
+        return [...orderIds, orderId];
       }
-      return [...orderIds, orderId];
+      orderIds.includes(orderId);
+      return orderIds.filter((id) => id !== orderId);
     });
   };
 
-  const filtereOrders = !selectedStatus
-    ? adminOrders
-    : adminOrders.filter((order) => order.status === selectedStatus);
-
-  const OrderRecapHeader = filtereOrders.map((order) => {
-    const statusStyle = statusClass(order.status);
-    const totalArticles = order.products.reduce(
-      (total, p) => total + p.quantity,
-      0,
-    );
-    const totalPrice = order.products.reduce(
+  const OrderRecapHeader = adminOrders.map((order) => ({
+    order,
+    statusStyle: statusClass(order.status),
+    totalArticles: order.products.reduce((acc, p) => acc + p.quantity, 0),
+    totalPrice: order.products.reduce(
       (acc, p) => acc + p.quantity * p.unitPrice,
       0,
-    );
-    return { order, statusStyle, totalArticles, totalPrice };
-  });
+    ),
+  }));
 
   return (
-    <>
-      <div className="d-flex align-items-center justify-content-start p-5 cart-header-title">
+    <section>
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-5">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <Receipt size={28} />
           Gestion des commandes
         </h2>
       </div>
-      <section className="container py-4 ">
-        <div className="my-4 d-flex flex-wrap justify-content-center gap-3">
-          <button
-            type="button"
-            className={`btn btn-outline-secondary rounded-pill px-4 py-2 ${selectedStatus === null ? " btn-secondary text-white shadow-sm" : ""}`}
-            onClick={() => setSelectedStatus(null)}
-          >
-            Tous
-          </button>
-          {status.map((status) => (
-            <button
-              key={status}
-              type="button"
-              className={`btn btn-outline-secondary rounded-pill px-4 py-2 ${selectedStatus === status ? " btn-secondary text-white shadow-sm" : ""}`}
-              onClick={() => setSelectedStatus(status)}
-            >
-              {status}
-            </button>
-          ))}
-        </div>
-        {filtereOrders.length === 0 ? (
+      <div className="container py-4 ">
+        {adminOrders.length === 0 ? (
           <p className="text-center fw-semibold">Aucune commande à afficher</p>
         ) : (
           <div className="d-flex flex-column gap-4">
@@ -131,12 +109,18 @@ const AdminOrders = () => {
                       <div className="col-12 col-md-5 d-flex flex-column">
                         <h4 className="text-dark mb-3 d-flex align-items-center">
                           <span>Commande #{order.orderId}</span>
+                          {unreadOrdersIds?.includes(order.orderId) && (
+                            <span className="rounded-pill bg-danger text-light fs-6 px-3 py-1 ms-3">
+                              <BellFill />
+                              <small className="ms-2">Non lue</small>
+                            </span>
+                          )}
                         </h4>
                         <div className="d-flex flex-wrap gap-3 small">
                           <span className="border rounded-pill bg-light text-dark d-flex align-items-center gap-1 px-4 py-2 shadow-sm fw-bold">
                             <Box />
                             {totalArticles}{" "}
-                            {totalArticles === 1 ? "produit" : "produits"}
+                            {totalArticles === 1 ? "article" : "articles"}
                           </span>
 
                           <span className="border rounded-pill bg-info text-dark fw-bold d-flex align-items-center gap-1 px-4 py-2 shadow-sm">
@@ -147,7 +131,7 @@ const AdminOrders = () => {
                             <span className="fw-semibold text-dark">
                               Statut :
                             </span>
-                            <span>
+                            <span className={`${statusStyle} rounded-4 `}>
                               <StatusIcons status={order.status} />
                             </span>
                           </div>
@@ -189,13 +173,13 @@ const AdminOrders = () => {
                         </label>
                         <select
                           id={`${order.orderId}`}
-                          className={`${statusStyle} form-select status-select form-select-sm custom-select-arrow`}
+                          className={`${statusStyle} form-select status-select form-select-sm`}
                           value={order.status}
                           onChange={(e) =>
                             updateStatus(order.orderId, e.target.value)
                           }
                         >
-                          {status.map((status) => (
+                          {statuss.map((status) => (
                             <option key={status} value={status}>
                               {status}
                             </option>
@@ -228,29 +212,33 @@ const AdminOrders = () => {
                   </button>
                   {showDetails.includes(order.orderId) && (
                     <div className="border-top mt-2">
-                      <ul className="row list-unstyled g-3 mt-1">
-                        {order.products.map((p) => (
-                          <li
-                            key={p.productId}
-                            className="col-6 col-md-4 col-lg-3 text-center"
-                          >
-                            <div className=" bg-white p-3 rounded shadow-sm h-100">
-                              <img
-                                src={p.image}
-                                alt={p.productName}
-                                className="img-fluid rounded mb-2 admin-order-product-img"
-                              />
-                              <div className="fw-medium small">
-                                <span className="text-dark">{p.quantity}</span>{" "}
-                                x{" "}
-                                <span className="text-dark">
-                                  {p.productName}
-                                </span>
+                      <div className="order-products-scroll">
+                        <ul className="row list-unstyled g-3 mt-1">
+                          {order.products.map((p) => (
+                            <li
+                              key={p.productId}
+                              className="col-6 col-md-4 col-lg-3 text-center"
+                            >
+                              <div className="bg-white p-3 rounded shadow-sm h-100">
+                                <img
+                                  src={p.image}
+                                  alt={p.productName}
+                                  className="img-fluid rounded mb-2 admin-order-product-img"
+                                />
+                                <div className="fw-medium small">
+                                  <span className="text-dark">
+                                    {p.quantity}
+                                  </span>{" "}
+                                  x{" "}
+                                  <span className="text-dark">
+                                    {p.productName}
+                                  </span>
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   )}
                 </article>
@@ -262,9 +250,7 @@ const AdminOrders = () => {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => {
-              if (page > 1) setPage(page - 1);
-            }}
+            onClick={() => (page > 1 ? setPage(page - 1) : null)}
             disabled={page === 1}
           >
             <span>&laquo;</span>
@@ -275,16 +261,14 @@ const AdminOrders = () => {
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => {
-              if (page < totalPages) setPage(page + 1);
-            }}
+            onClick={() => (page < totalPages ? setPage(page + 1) : null)}
             disabled={page === totalPages}
           >
             <span>&raquo;</span>
           </button>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

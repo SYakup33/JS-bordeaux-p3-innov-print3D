@@ -8,8 +8,8 @@ import {
   Trash,
   XLg,
 } from "react-bootstrap-icons";
-import { useCart } from "../../../context/CartContext";
-import { useCustomNavigat } from "../../../context/Navigatecontext";
+import { useCart } from "../../../contexts/CartContext";
+import { useCustomNavigat } from "../../../contexts/Navigatecontext";
 import type { ProductType } from "../../../types/product";
 import { ReadMore } from "../../ReadMore";
 import "./ProductCardStyle.css";
@@ -19,7 +19,7 @@ type ProductsStyleProps = {
 };
 
 function ProductCardStyle({ product }: ProductsStyleProps) {
-  const { costomNavigate } = useCustomNavigat();
+  const { customNavigate } = useCustomNavigat();
   const { addProduct, updateQuantity, cartProducts, deleteProduct } = useCart();
 
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
@@ -41,7 +41,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
     <article className="card shadow-sm border-0 rounded-4 product-card-style-height">
       <button
         type="button"
-        onClick={() => costomNavigate(`/product/${product.id}`)}
+        onClick={() => customNavigate(`/product/${product.id}`)}
         className="btn p-0 border-0 bg-transparent"
       >
         <img
@@ -67,16 +67,16 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
           </span>
         </div>
 
-        <div className="overflow-auto product-card-style-scrollbar ">
+        <div className="overflow-auto product-card-style-scrollbar w-100 product-card-style-readmore">
           <ReadMore text={product.description} maxLength={50} />
         </div>
 
-        <div className="d-flex justify-content-between align-items-center mt-2">
-          <span className="fw-semibold text-dark fs-5 mt-2 product-card-style-price">
+        <div className="d-flex justify-content-between align-items-center mt-2 product-card-style-price-modal">
+          <span className="fw-semibold text-dark fs-5 mt-3 product-card-style-price">
             {product.price} €
           </span>
 
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center rounded-4 product-card-style-modal ">
             {activeProduct === product.id ? (
               <div
                 className="d-flex align-items-center gap-4 rounded-4 px-1 py-1 product-card-style-modal"

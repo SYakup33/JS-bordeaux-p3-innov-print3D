@@ -36,6 +36,16 @@ router.put(
   authActions.isAdmin,
   adminOrdersActions.updateStatus,
 );
+router.get(
+  "/api/admin/orders/unread",
+  authActions.isAdmin,
+  adminOrdersActions.unreadOrders,
+);
+router.put(
+  "/api/admin/order/read/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.isRead,
+);
 
 router.get("/api/cart/:userId", cartActions.read);
 router.post("/api/order/", orderActions.add);
