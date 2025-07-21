@@ -2,12 +2,14 @@ import { type FormEventHandler, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../../context/AuthContext";
 import "./Login.css";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 import pokeball_ronflex_1 from "/img/products/pokeball_ronflex_1.jpg";
 
 const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -84,14 +86,24 @@ const Login = () => {
             <label htmlFor="password" className="form-label fw-semibold">
               Mot de passe
             </label>
-            <input
-              ref={passwordRef}
-              id="password"
-              type="password"
-              className="form-control form-control-lg rounded-3 shadow-sm"
-              required
-              placeholder="••••••••"
-            />
+            <div className="input-group">
+              <input
+                ref={passwordRef}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                className="form-control form-control-lg rounded-start-3 shadow-sm"
+                required
+                placeholder="••••••••"
+              />
+
+              <button
+                type="button"
+                className="btn btn-outline-secondary d-flex align-items-center justify-content-center rounded-end-3"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? <Eye /> : <EyeSlash />}
+              </button>
+            </div>
           </div>
 
           <button

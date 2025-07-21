@@ -1,0 +1,19 @@
+.confirmed-payment-message {
+  background: var(--tertiary-color);
+  font-size: 1.5rem;
+}
+
+.confirmed-order-consult {
+  max-width: 300px;
+}
+
+.confirmed-order-btn-animated {
+  background-color: var(--btn-cta-primary-color, #dc3545);
+  transition: all 0.3s ease;
+  color: var(--font-secondary-color);
+}
+
+.confirmed-order-btn-animated:hover {
+  background-color: var(--btn-cta-primary-color, #dc3545);
+  transform: translateY(-2px);
+}

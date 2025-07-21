@@ -2,12 +2,35 @@ import argon2 from "argon2";
 import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-import AuthRepository from "../user/userRepository";
+import userRepository from "../user/userRepository";
+
+const hashingOptions = {
+  type: argon2.argon2id,
+  memoryCost: 19 * 2 ** 10,
+  timeCost: 2,
+  parallelism: 1,
+};
+
+const hashPassword: RequestHandler = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+
+    const hashedPassword = await argon2.hash(password, hashingOptions);
+
+    req.body.hashed_password = hashedPassword;
+
+    req.body.password = undefined;
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
 
 const login: RequestHandler = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await AuthRepository.findByEmail(email);
+    const user = await userRepository.findByEmail(email);
 
     if (user == null) {
       res
@@ -16,10 +39,10 @@ const login: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const verified = await argon2.verify(user.password, password);
+    const verified = await argon2.verify(user.hashed_password, password);
 
     if (verified) {
-      const { password, ...userWithoutHashedPassword } = user;
+      const { hashed_password, ...userWithoutHashedPassword } = user;
 
       const myPayload: MyPayload = {
         sub: user.id.toString(),
@@ -71,4 +94,4 @@ const verifyToken: RequestHandler = (req, res, next) => {
   }
 };
 
-export default { login, verifyToken };
+export default { hashPassword, login, verifyToken };
