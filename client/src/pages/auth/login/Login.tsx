@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./Login.css";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
-import pokeball_ronflex_1 from "/img/products/pokeball_ronflex_1.jpg";
+import pokeball_ronflex_1 from "/img/pokeball_ronflex_1.jpg";
 
 const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);

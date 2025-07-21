@@ -1,6 +1,6 @@
 import databaseClient from "../../../database/client";
 
-import type { Rows } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 import type { Product } from "../../types/express/index";
 
 class ProductRepository {
@@ -68,11 +68,14 @@ class ProductRepository {
     const product = rows[0];
 
     const [imageRows] = await databaseClient.query<Rows>(
-      `SELECT path FROM image WHERE product_id = ${product.id}`,
+      "SELECT id, path FROM image WHERE product_id = ?",
       [product.id],
     );
 
-    product.images = imageRows.map((img) => img.path);
+    product.images = imageRows.map((img) => ({
+      id: img.id,
+      path: img.path,
+    }));
 
     const [suggestionProducts] = await databaseClient.query<Rows>(
       `SELECT p.*, c.name as category_name
@@ -95,6 +98,40 @@ class ProductRepository {
     product.suggestions = suggestionProducts;
 
     return product;
+  }
+
+  async add(product: Omit<ProductManagement, "id">) {
+    const [result] = await databaseClient.query<Result>(
+      `INSERT INTO product (name, description, price, category_id)
+        VALUES (?, ?, ?, ?)`,
+      [product.name, product.description, product.price, product.category_id],
+    );
+    return result.insertId;
+  }
+
+  async update(product: ProductManagement) {
+    const [result] = await databaseClient.query<Result>(
+      `UPDATE product
+        SET name = ?, description = ?, price = ?, category_id = ? 
+        WHERE id = ?`,
+      [
+        product.name,
+        product.description,
+        product.price,
+        product.category_id,
+        product.id,
+      ],
+    );
+
+    return result.affectedRows;
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM product where id = ?",
+      [id],
+    );
+    return result.affectedRows;
   }
 }
 export default new ProductRepository();

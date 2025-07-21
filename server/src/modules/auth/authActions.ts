@@ -74,6 +74,9 @@ const login: RequestHandler = async (req, res, next) => {
 const verifyToken: RequestHandler = (req, res, next) => {
   try {
     const authorizationHeader = req.get("Authorization");
+    console.log(authorizationHeader);
+
+    console.log("==> [verifyToken] PATH:", req.path);
 
     if (authorizationHeader == null) {
       throw new Error("Token manquant");
@@ -90,7 +93,9 @@ const verifyToken: RequestHandler = (req, res, next) => {
     next();
   } catch (err) {
     console.error(err);
-    res.status(StatusCodes.UNAUTHORIZED);
+    res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ error: "Token invalide ou manquant" });
   }
 };
 

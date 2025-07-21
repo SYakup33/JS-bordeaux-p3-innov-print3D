@@ -171,7 +171,7 @@ function CartList() {
                         checked={selectedProducts.includes(product.productId)}
                       />
                       <img
-                        src={product.images?.[0]}
+                        src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images?.[0]}`}
                         alt={product.productName}
                         className="object-fit-cover rounded-2 w-100  h-100"
                       />
