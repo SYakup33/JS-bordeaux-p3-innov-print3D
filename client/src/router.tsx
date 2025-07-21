@@ -8,6 +8,7 @@ import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
 import Register from "./pages/auth/register/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import UserOrders from "./pages/order/userOrders/userOrders.tsx";
 import Product from "./pages/product/Product.tsx";
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "order/:id/paymentfail",
         element: <PaymentFail />,
+      },
+      {
+        path: "myaccount/orders/:id",
+        element: <UserOrders />,
       },
     ],
   },
