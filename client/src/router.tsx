@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
-import ConfirmedOrder from "./pages/ConfirmedOrder.tsx";
 import Home from "./pages/Home.tsx";
+import PaymentFail from "./pages/Payment Issue/PaymentFail.tsx";
+import PaymentSuccess from "./pages/Payment Issue/PaymentSuccess.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
 import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
@@ -42,8 +43,12 @@ const router = createBrowserRouter([
         element: <CartList />,
       },
       {
-        path: "order/:id/confirmation",
-        element: <ConfirmedOrder />,
+        path: "order/:id/paymentsuccess",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "order/:id/paymentfail",
+        element: <PaymentFail />,
       },
       {
         path: "myaccount/admin",

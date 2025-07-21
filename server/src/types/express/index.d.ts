@@ -32,6 +32,7 @@ declare global {
     quantity: number;
     images: string[];
   };
+
   type OrderProduct = {
     product_id: number;
     quantity: number;

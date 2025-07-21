@@ -28,6 +28,9 @@ function Header() {
       toast.warning("Veuillez vous connecter pour accéder au panier", {
         position: "top-right",
       });
+      setTimeout(() => {
+        navigate("/login");
+      }, 500);
     }
   };
 

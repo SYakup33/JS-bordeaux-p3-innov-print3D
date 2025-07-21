@@ -59,8 +59,7 @@ const read: RequestHandler = async (req, res, next): Promise<void> => {
       res.sendStatus(StatusCodes.NOT_FOUND);
       return;
     }
-
-    res.json(product);
+    res.status(StatusCodes.OK).json(product);
   } catch (err) {
     next(err);
   }
