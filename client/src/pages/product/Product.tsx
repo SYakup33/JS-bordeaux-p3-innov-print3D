@@ -9,8 +9,11 @@ function Product() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductType | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const { cartProducts, addToCart, updateQuantity } = useCart();
+
+  const fullStars = ["full-1", "full-2", "full-3", "full-4"];
 
   const addProduct = async () => {
     if (!product?.id) return;
@@ -25,6 +28,33 @@ function Product() {
     setQuantity(1);
   };
 
+  const changeDescription = () => {
+    setShowFullDescription((prev) => !prev);
+  };
+
+  const renderDescription = (isMobile = false) => {
+    if (!product?.description) return null;
+
+    return (
+      <div className={`${isMobile ? "d-lg-none" : "d-none d-lg-block"} mt-4`}>
+        <p className="lh-lg">
+          {showFullDescription
+            ? product.description
+            : `${product.description.slice(0, 300)}...`}
+        </p>
+        {product.description.length > 300 && (
+          <button
+            type="button"
+            onClick={changeDescription}
+            className="btn btn-link p-0 text-primary text-decoration-underline"
+          >
+            {showFullDescription ? "Voir moins" : "Voir plus"}
+          </button>
+        )}
+      </div>
+    );
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -35,7 +65,9 @@ function Product() {
         if (!response.ok) {
           console.error("Erreur lors du chargement du produit");
           setProduct(null);
+          return;
         }
+
         const product: ProductType = await response.json();
         setProduct(product);
       } catch (error) {
@@ -91,16 +123,17 @@ function Product() {
             </button>
           </div>
         </article>
+
         <article className="col-md-6 d-flex flex-column justify-content-center pe-5">
           <h1 className="fs-1 fw-semibold">{product?.name}</h1>
           <h2 className="product-badge badge bg-secondary d-flex justify-content-center py-2">
             {product?.category_name}
           </h2>
           <div className="mb-5">
-            {[...Array(4)].map((i) => (
-              <StarFill key={i} color="gold" size={20} />
+            {fullStars.map((stars) => (
+              <StarFill key={stars} color="gold" size={20} />
             ))}
-            <StarHalf key="half" color="gold" size={20} />
+            <StarHalf color="gold" size={20} />
           </div>
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center gap-3">
@@ -127,30 +160,13 @@ function Product() {
           <button
             type="button"
             onClick={addProduct}
-            className="my-5 py-4 fs-4 fw-bold w-75 mx-auto product-cta-add-to-cart"
+            className="my-5 py-4 fs-4 fw-bold w-75 mx-auto rounded-4 product-cta-add-to-cart border-0"
           >
             Ajouter au panier
           </button>
-          <p className="mt-5 lh-lg d-none d-lg-block">
-            {(product?.description?.length || 0) > 300
-              ? `${product?.description.slice(0, 300)}... `
-              : product?.description}
-            {(product?.description?.length || 0) > 300 && (
-              <a
-                href={`#${product?.name}`}
-                className="ms-2 text-primary text-decoration-underline"
-              >
-                Voir plus
-              </a>
-            )}
-          </p>
+          {renderDescription(false)}
         </article>
-        <article className="mx-5">
-          <h3 id={product?.name} className="mx-auto my-5">
-            Description complète
-          </h3>
-          <p className="lh-lg w-75">{product?.description}</p>
-        </article>
+        <div className="col-12">{renderDescription(true)}</div>
       </div>
     </section>
   );
