@@ -27,6 +27,8 @@ router.post(
 
 router.post("/api/login", authActions.login);
 
+router.put("/api/product/:productId/trend", productActions.updateTrendProducts);
+
 router.use(authActions.verifyToken);
 
 router.get(
@@ -60,9 +62,4 @@ router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 
-router.put(
-  "/api/product/:productId/trend",
-  authActions.isAdmin,
-  productActions.updateTrendProducts,
-);
 export default router;

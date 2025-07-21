@@ -44,8 +44,12 @@ const updateTrendProducts: RequestHandler = async (req, res, next) => {
     const productId = Number(req.params.productId);
     const { trendProducts } = req.body;
 
+    console.log(productId, trendProducts);
+
     await productRepository.updateTrendProducts(trendProducts, productId);
-    res.status(200).json({ message: "mise à jour ok" });
+    res
+      .status(200)
+      .json({ trendProducts, productId, message: "mise à jour ok" });
   } catch (error) {
     next(error);
   }

@@ -6,6 +6,7 @@ export type ProductType = {
   category_id: number;
   images: string[];
   category_name?: string;
+  trend_products: string;
 };
 
 export type ProductsFilterProps = {
