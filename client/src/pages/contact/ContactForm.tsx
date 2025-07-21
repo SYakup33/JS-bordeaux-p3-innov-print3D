@@ -2,7 +2,12 @@ import { StatusCodes } from "http-status-codes";
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import "./ContactForm.css";
-import { Envelope, Instagram, TelephoneFill } from "react-bootstrap-icons";
+import {
+  Envelope,
+  InfoSquareFill,
+  Instagram,
+  TelephoneFill,
+} from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 import type { ContactError, ContactErrors } from "../../types/contact-errors";
 
@@ -92,7 +97,11 @@ function ContactForm() {
   };
 
   return (
-    <section className="contact m-auto py-4">
+    <section className="m-auto">
+      <h2 className="d-flex align-items-center gap-2 mb-1 form-header-title p-5">
+        <InfoSquareFill size={28} />
+        Formulaire de Contact
+      </h2>
       <article className="contact-form my-4 container">
         <h1 className="pb-3">Nous contacter</h1>
         <p>
@@ -108,7 +117,7 @@ function ContactForm() {
           <strong className="px-2">innovprint3-d</strong>
         </p>
       </article>
-      <form className="contact-form container" onSubmit={sendForm}>
+      <form className="contact-form container mb-5" onSubmit={sendForm}>
         <h1 className="pb-3">Demande personnalisée</h1>
         <div className="row">
           <div className="form-group col-12 col-md-6">
