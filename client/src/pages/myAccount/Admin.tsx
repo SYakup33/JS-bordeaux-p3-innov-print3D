@@ -40,6 +40,7 @@ function Admin() {
     price: 0,
     category_id: 0,
     images: [],
+    trend_product: "",
   };
 
   const deleteProduct = (id: number) => {
