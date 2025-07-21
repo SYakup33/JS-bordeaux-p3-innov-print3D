@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Cart3, PersonFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
-import { useCart } from "../context/CartContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../contexts/CartContext";
 
 function Header() {
   const navigate = useNavigate();
@@ -54,13 +54,27 @@ function Header() {
           </button>
         </div>
         {showLogout && isLogged && (
-          <button
-            type="button"
-            className="btn btn-outline-danger btn-sm position-absolute top-100 end-50"
-            onClick={onLogout}
-          >
-            Déconnexion
-          </button>
+          <div className="position-absolute top-100 end-50">
+            {currentUser?.role === "admin" && (
+              <button
+                type="button"
+                className="btn btn-outline-danger btn-sm mb-1"
+                onClick={() => {
+                  navigate("myaccount/admin");
+                  setShowLogout(false);
+                }}
+              >
+                Compte Admin
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn btn-outline-danger btn-sm "
+              onClick={onLogout}
+            >
+              Déconnexion
+            </button>{" "}
+          </div>
         )}
         <button
           type="button"

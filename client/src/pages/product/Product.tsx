@@ -4,7 +4,7 @@ import "./Product.css";
 import { Dash, Plus, StarFill, StarHalf } from "react-bootstrap-icons";
 import { useParams } from "react-router";
 import SimilarProducts from "../../components/product/similarProducts/SimilarProducts.tsx";
-import { useCart } from "../../context/CartContext.tsx";
+import { useCart } from "../../contexts/CartContext.tsx";
 
 function Product() {
   const { id } = useParams();
@@ -34,7 +34,6 @@ function Product() {
 
     fetchProduct();
   }, [id]);
-
   return (
     <>
       <section className="container mw-100">
@@ -47,13 +46,13 @@ function Product() {
               data-bs-ride="carousel"
             >
               <div className="carousel-inner">
-                {product?.images?.map((imgPath) => (
+                {product?.images?.map((image) => (
                   <div
-                    className={`carousel-item ${product.images[0] === imgPath ? "active" : ""}`}
-                    key={imgPath}
+                    className={`carousel-item ${product.images[0] === image ? "active" : ""}`}
+                    key={image.path}
                   >
                     <img
-                      src={imgPath}
+                      src={`${import.meta.env.VITE_API_URL}/uploads/products/${image.path}`}
                       alt={`Cliché du ${product?.name}`}
                       className="product-img d-block img-fluid rounded"
                     />
