@@ -34,7 +34,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
         className="btn p-0 border-0 bg-transparent"
       >
         <img
-          src={product.images?.[0]}
+          src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images[0]}`}
           className="card-img-top object-fit-cover rounded-bottom rounded-4 product-card-style-img"
           alt={product.name}
         />

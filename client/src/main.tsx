@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import { UserProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
+import { ProductSearchProvider } from "./contexts/ProductSearchContext";
 import { OrdersNotificationsProvider } from "./contexts/adminOrdersNotifications";
 import router from "./router";
 
@@ -17,7 +18,9 @@ createRoot(rootElement).render(
   <UserProvider>
     <OrdersNotificationsProvider>
       <CartProvider>
-        <RouterProvider router={router} />
+        <ProductSearchProvider>
+          <RouterProvider router={router} />
+        </ProductSearchProvider>
       </CartProvider>
     </OrdersNotificationsProvider>
   </UserProvider>,

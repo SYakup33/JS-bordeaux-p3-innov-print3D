@@ -112,6 +112,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({ productId, quantity }),
           });
@@ -147,6 +148,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(item),
           });
@@ -159,7 +161,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     localCartToServer();
-  }, [userId, fetchCart]);
+  }, [userId, fetchCart, token]);
 
   return (
     <CartContext.Provider

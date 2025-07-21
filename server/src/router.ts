@@ -1,7 +1,7 @@
 import express from "express";
 import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
-import authActions from "./modules/auth/authActions";
 import "dotenv/config";
+import authActions from "./modules/auth/authActions";
 import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";

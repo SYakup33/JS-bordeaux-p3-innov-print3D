@@ -100,7 +100,7 @@ const isAdmin: RequestHandler = (req, res, next) => {
   }
   res
     .status(StatusCodes.FORBIDDEN)
-    .json({ message: "Accès interdit, réservé uniquement à l'admin" });
+    .json("Accès interdit, réservé uniquement à l'Admin");
   return;
 };
 
