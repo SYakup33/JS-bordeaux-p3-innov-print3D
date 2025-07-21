@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import TrendProducts from "../components/product/MomentProducts/MomentProducts";
 
 function Home() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Home() {
       >
         Parcourir les créations
       </button>
+      <TrendProducts />
     </>
   );
 }

@@ -30,4 +30,25 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read };
+const readTrendProducts: RequestHandler = async (req, res, next) => {
+  try {
+    const trendProducts = await productRepository.trendProducts();
+    res.status(200).json(trendProducts);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateTrendProducts: RequestHandler = async (req, res, next) => {
+  try {
+    const productId = Number(req.params.productId);
+    const { trendProducts } = req.body;
+
+    await productRepository.updateTrendProducts(trendProducts, productId);
+    res.status(200).json({ message: "mise à jour ok" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { browse, read, readTrendProducts, updateTrendProducts };

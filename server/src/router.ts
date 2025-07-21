@@ -13,6 +13,8 @@ router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 
+router.get("/api/products/moments", productActions.readTrendProducts);
+
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 
 router.post(
@@ -53,4 +55,9 @@ router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 
+router.put(
+  "/api/product/:productId/trend",
+  authActions.isAdmin,
+  productActions.updateTrendProducts,
+);
 export default router;

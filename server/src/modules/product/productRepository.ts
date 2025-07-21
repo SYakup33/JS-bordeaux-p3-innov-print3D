@@ -1,6 +1,6 @@
 import databaseClient from "../../../database/client";
 
-import type { Rows } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 import type { Product } from "../../types/express/index";
 
 class ProductRepository {
@@ -95,6 +95,30 @@ class ProductRepository {
     product.suggestions = suggestionProducts;
 
     return product;
+  }
+
+  async trendProducts() {
+    const [rows] = await databaseClient.query<Rows>(
+      "select * from product where trend_products != 'Aucun'",
+    );
+
+    for (const product of rows) {
+      const [imgRows] = await databaseClient.query<Rows>(
+        "select * from image WHERE product_id = ? LIMIT 1",
+        [product.id],
+      );
+      product.images = imgRows.map((img) => img.path);
+    }
+
+    return rows;
+  }
+
+  async updateTrendProducts(trendProducts: string, productId: number) {
+    const [result] = await databaseClient.query<Result>(
+      "update product SET trend_products = ? WHERE id = ?",
+      [trendProducts, productId],
+    );
+    return result;
   }
 }
 export default new ProductRepository();
