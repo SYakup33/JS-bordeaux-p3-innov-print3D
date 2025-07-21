@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import type { ProductsFilterProps } from "../../../types/product";
 import "./ProductsFilter.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,13 +8,17 @@ import { ArrowDownSquare, ArrowUpSquare } from "react-bootstrap-icons";
 
 function ProductsFilter({ filters }: ProductsFilterProps) {
   const [showFilters, setShowFilters] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const resize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
   const {
-    productName,
-    productNameChange,
-    suggestions,
     minPrice,
     minPriceChange,
     maxPrice,
@@ -43,41 +46,19 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
 
   return (
     <>
-      <input
-        className="product-filter-search w-75 mx-auto mt-1"
-        type="text"
-        placeholder="Recherche par nom"
-        value={productName ?? ""}
-        onChange={productNameChange}
-      />
-      {suggestions.length > 0 && (
-        <ul className="d-flex flex-column p-0 align-items-start">
-          {suggestions.map((item) => (
-            <li
-              key={item.id}
-              className="product-filter-li border-bottom border-1 border-black ms-5 p-2 w-75"
-              onClick={() => navigate(`/product/${item.id}`)}
-              onKeyDown={() => navigate(`/product/${item.id}`)}
-            >
-              {item.name}
-            </li>
-          ))}
-        </ul>
-      )}
-
       <h3 className="mt-3 ms-2">Filtrer par :</h3>
-
-      <div className="text-center mb-3">
-        <button
-          className="show-filter-btn btn btn-outline-secondary btn-light w-25"
-          type="button"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          {showFilters ? <ArrowUpSquare /> : <ArrowDownSquare />}
-        </button>
-      </div>
-
-      {showFilters && (
+      {isMobile && (
+        <div className="text-center mb-3">
+          <button
+            className="show-filter-btn btn btn-outline-secondary btn-light w-25"
+            type="button"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            {showFilters ? <ArrowUpSquare /> : <ArrowDownSquare />}
+          </button>
+        </div>
+      )}
+      {(showFilters || !isMobile) && (
         <div className="d-flex ms-2 mb-4 flex-md-column">
           <div className="filter-prices d-flex flex-column me-4 mt-md-2">
             <h4 className="fw-bold">Prix</h4>
