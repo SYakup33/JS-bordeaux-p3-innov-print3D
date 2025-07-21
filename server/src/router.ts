@@ -1,6 +1,7 @@
 import express from "express";
 import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
 import authActions from "./modules/auth/authActions";
+import "dotenv/config";
 import cartActions from "./modules/cart/cartActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
@@ -48,7 +49,11 @@ router.put(
 );
 
 router.get("/api/cart/:userId", cartActions.read);
-router.post("/api/order/", orderActions.add);
+router.post(
+  "/api/order/create-checkout-session",
+  orderActions.createCheckoutSession,
+);
+router.post("/api/order/:userId", orderActions.add);
 router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
