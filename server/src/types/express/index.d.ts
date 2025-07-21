@@ -44,6 +44,18 @@ declare global {
     minPrice?: number;
     maxPrice?: number;
   };
+  type ProductManagement = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+  };
+  type ImageManagement = {
+    id: number;
+    path: string;
+    product_id: number;
+  };
 
   type MyPayload = JwtPayload & { sub: string; role: "client" | "admin" };
   namespace Express {

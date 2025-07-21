@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { CartFill, CartX, Dash, Plus, Trash } from "react-bootstrap-icons";
 import "./CartList.css";
 import { ReadMore } from "../../components/ReadMore";
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
 import type { Message } from "../../types/cart";
 
 function CartList() {
@@ -160,7 +160,7 @@ function CartList() {
                         checked={selectedProducts.includes(product.productId)}
                       />
                       <img
-                        src={product.images?.[0]}
+                        src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images?.[0]}`}
                         alt={product.productName}
                         className="object-fit-cover rounded-2 w-75 h-100"
                       />

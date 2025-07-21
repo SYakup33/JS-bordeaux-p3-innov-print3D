@@ -5,12 +5,12 @@ import cartActions from "./modules/cart/cartActions";
 import contactActions from "./modules/contact/contactActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
+import { productImagesUpload } from "./modules/uploadMulter/uploadMulter";
 import userActions from "./modules/user/userActions";
 
 const router = express.Router();
 
 router.get("/api/products", productActions.browse);
-
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 
@@ -29,6 +29,7 @@ router.post("/api/login", authActions.login);
 
 router.use(authActions.verifyToken);
 
+router.post("/api/order/", orderActions.add);
 router.get("/api/cart/:userId", cartActions.read);
 router.post(
   "/api/order/create-checkout-session",
@@ -38,5 +39,14 @@ router.post("/api/order/:userId", orderActions.add);
 router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
+
+router.post(
+  "/api/products",
+  productImagesUpload,
+  productActions.validate,
+  productActions.add,
+);
+router.put("/api/product/:id", productImagesUpload, productActions.edit);
+router.delete("/api/product/:id", productActions.destroy);
 
 export default router;
