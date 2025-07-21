@@ -28,7 +28,6 @@ function Product() {
     }
     setQuantity(1);
   };
-  // const { addProduct } = useCart();
 
   const changeDescription = () => {
     setShowFullDescription((prev) => !prev);
