@@ -35,7 +35,7 @@ class ProductRepository {
       : "";
 
     const query = `
-      SELECT p.id, p.name, p.description, p.price, c.name AS categoryName
+      SELECT p.id, p.name, p.description, p.price, c.name AS category_name
       FROM product p
       LEFT JOIN category c ON p.category_id = c.id
       ${whereClause}
@@ -53,6 +53,7 @@ class ProductRepository {
 
     return productRows as Product[];
   }
+
   async find(id: number) {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT p.*, c.name as category_name
@@ -72,6 +73,26 @@ class ProductRepository {
     );
 
     product.images = imageRows.map((img) => img.path);
+
+    const [suggestionProducts] = await databaseClient.query<Rows>(
+      `SELECT p.*, c.name as category_name
+       FROM product p
+       JOIN category c ON p.category_id = c.id
+       WHERE p.category_id = ?
+       AND p.id != ?
+       AND p.price BETWEEN (? * 0.6) AND (? * 1.4)`,
+      [product.category_id, product.id, product.price, product.price],
+    );
+
+    for (const product of suggestionProducts) {
+      const [imgRows] = await databaseClient.query<Rows>(
+        "select * from image WHERE product_id = ?",
+        [product.id],
+      );
+      product.images = imgRows.map((img) => img.path);
+    }
+
+    product.suggestions = suggestionProducts;
 
     return product;
   }
