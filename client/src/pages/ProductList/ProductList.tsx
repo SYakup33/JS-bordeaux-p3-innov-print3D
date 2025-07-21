@@ -105,7 +105,7 @@ function ProductList() {
           <div className="row g-4">
             {currentProducts && currentProducts?.length > 0 ? (
               currentProducts?.map((product) => (
-                <div key={product.id} className="col-6 col-md-4">
+                <div key={product.id} className="col-12 col-md-6 col-lg-4">
                   <ProductCard products={product} />
                 </div>
               ))

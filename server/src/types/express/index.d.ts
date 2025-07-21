@@ -1,6 +1,20 @@
 export type { Product };
 
 declare global {
+  type User = {
+    id: number;
+    firstname: string;
+    lastname: string;
+    street: string;
+    zip_code: string;
+    city: string;
+    country: string;
+    email: string;
+    phone: string;
+    hashed_password: req.body.hashed_password;
+    role: "client" | "admin";
+    created_at?: Date;
+  };
   type Product = {
     id: number;
     name: string;
@@ -18,6 +32,7 @@ declare global {
     quantity: number;
     images: string[];
   };
+
   type OrderProduct = {
     product_id: number;
     quantity: number;
@@ -28,20 +43,6 @@ declare global {
     category_id?: string;
     minPrice?: number;
     maxPrice?: number;
-  };
-
-  type User = {
-    id: number;
-    firstname: string;
-    lastname: string;
-    street?: string;
-    city?: string;
-    zip_code?: string;
-    email: string;
-    phone: string;
-    password: string;
-    role: "client" | "admin";
-    created_at: Date;
   };
 
   type MyPayload = JwtPayload & { sub: string; role: "client" | "admin" };
