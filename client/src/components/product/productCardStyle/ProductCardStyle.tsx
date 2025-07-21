@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   CartPlusFill,
   Dash,
@@ -6,7 +6,6 @@ import {
   StarFill,
   StarHalf,
   Trash,
-  XLg,
 } from "react-bootstrap-icons";
 import { useCart } from "../../../contexts/CartContext";
 import { useCustomNavigat } from "../../../contexts/Navigatecontext";
@@ -23,19 +22,9 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
   const { addProduct, updateQuantity, cartProducts, deleteProduct } = useCart();
 
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
-  const [hoverModal, setHoverModal] = useState(false);
 
   const isInnCart = cartProducts.find((p) => p.productId === product.id);
   const quantity = isInnCart?.quantity || 1;
-
-  useEffect(() => {
-    if (activeProduct && !hoverModal) {
-      const timer = setTimeout(() => {
-        setActiveProduct(null);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [activeProduct, hoverModal]);
 
   return (
     <article className="card shadow-sm border-0 rounded-4 product-card-style-height">
@@ -78,11 +67,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
 
           <div className="d-flex align-items-center rounded-4 product-card-style-modal ">
             {activeProduct === product.id ? (
-              <div
-                className="d-flex align-items-center gap-4 rounded-4 px-1 py-1 product-card-style-modal"
-                onMouseEnter={() => setHoverModal(true)}
-                onMouseLeave={() => setHoverModal(false)}
-              >
+              <div className="d-flex align-items-center gap-5 rounded-4 px-1 py-1 product-card-style-modal">
                 {quantity > 1 ? (
                   <button
                     type="button"
@@ -118,16 +103,6 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
                   }}
                 >
                   <PlusLg size={18} />
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-sm  text-danger "
-                  onClick={() => {
-                    setActiveProduct(null);
-                  }}
-                >
-                  <XLg size={18} />
                 </button>
               </div>
             ) : (

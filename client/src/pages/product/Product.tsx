@@ -38,7 +38,7 @@ function Product() {
   return (
     <>
       <section className="container mw-100">
-        <div className="w-100 product-top-bar" />
+        <div className="w-100 product-top-bar cart-header-title" />
         <div className="row">
           <article className="col-md-6 mb-4">
             <div
