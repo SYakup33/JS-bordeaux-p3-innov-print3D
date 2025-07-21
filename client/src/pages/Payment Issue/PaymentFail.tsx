@@ -1,9 +1,15 @@
-import { BagX } from "react-bootstrap-icons";
+import { BagX, Receipt } from "react-bootstrap-icons";
 import logo from "/img/icons/lnnovPrintLogo.png";
 
 function PaymentFail() {
   return (
     <>
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
+        <h2 className="d-flex align-items-center gap-2 mb-1">
+          <Receipt size={28} />
+          Commande
+        </h2>
+      </div>
       <section className="d-flex align-items-center justify-content-center">
         <article className="container d-flex flex-column border border-secondary rounded p-5 align-items-center text-center">
           <p className="p-md-5 mb-md-5 w-100 shadow-lg border-none rounded fw-semibold confirmed-payment-message ">
