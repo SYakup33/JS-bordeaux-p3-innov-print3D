@@ -32,7 +32,10 @@ function Header() {
         logoutRef.current &&
         !logoutRef.current.contains(event.target as Node)
       ) {
-        setShowLogout(false);
+        const button = document.getElementById("header-person-button");
+        if (button && !button.contains(event.target as Node)) {
+          setShowLogout(false);
+        }
       }
     };
 
@@ -113,6 +116,7 @@ function Header() {
             <nav className="d-flex align-items-center position-relative">
               <div className="position-relative me-3">
                 <button
+                  id="header-person-button"
                   type="button"
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}

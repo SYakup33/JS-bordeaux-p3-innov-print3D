@@ -14,8 +14,8 @@ type SliderProductsProps = {
 
 export function SliderProducts({ title, productsList }: SliderProductsProps) {
   return (
-    <section className="container my-5 py-4 px-4 rounded">
-      <h2 className="mb-4 text-center fw-semibold">{title}</h2>
+    <section className="container my-5 py-4 px-4 rounded mt-5">
+      <h2 className="mb-5 text-center fw-semibold">{title}</h2>
 
       {productsList.length === 0 ? (
         <div className="alert alert-info text-center" role="alert">
