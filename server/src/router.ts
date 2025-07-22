@@ -3,6 +3,7 @@ import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
 import authActions from "./modules/auth/authActions";
 import "dotenv/config";
 import cartActions from "./modules/cart/cartActions";
+import contactActions from "./modules/contact/contactActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
 import { productImagesUpload } from "./modules/uploadMulter/uploadMulter";
@@ -14,6 +15,8 @@ router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
 router.get("/api/products/moments", productActions.readTrendProducts);
+
+router.post("/api/contact", contactActions.validate, contactActions.send);
 
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 
