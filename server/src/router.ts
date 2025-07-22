@@ -1,7 +1,9 @@
 import express from "express";
+import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
 import authActions from "./modules/auth/authActions";
 import "dotenv/config";
 import cartActions from "./modules/cart/cartActions";
+import contactActions from "./modules/contact/contactActions";
 import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
 import { productImagesUpload } from "./modules/uploadMulter/uploadMulter";
@@ -12,6 +14,9 @@ const router = express.Router();
 router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
+router.get("/api/products/moments", productActions.readTrendProducts);
+
+router.post("/api/contact", contactActions.validate, contactActions.send);
 
 router.post("/api/cart/:userId", cartActions.validate, cartActions.add);
 
@@ -25,6 +30,27 @@ router.post(
 router.post("/api/login", authActions.login);
 
 router.use(authActions.verifyToken);
+
+router.get(
+  "/api/admin/orders",
+  authActions.isAdmin,
+  adminOrdersActions.readAll,
+);
+router.put(
+  "/api/admin/order/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.updateStatus,
+);
+router.get(
+  "/api/admin/orders/unread",
+  authActions.isAdmin,
+  adminOrdersActions.unreadOrders,
+);
+router.put(
+  "/api/admin/order/read/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.isRead,
+);
 
 router.post("/api/order/", orderActions.add);
 router.get("/api/cart/:userId", cartActions.read);

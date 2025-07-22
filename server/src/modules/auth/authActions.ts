@@ -90,7 +90,9 @@ const verifyToken: RequestHandler = (req, res, next) => {
     next();
   } catch (err) {
     console.error(err);
-    res.status(StatusCodes.UNAUTHORIZED);
+    res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ error: "Token invalide ou manquant" });
   }
 };
 
@@ -100,7 +102,7 @@ const isAdmin: RequestHandler = (req, res, next) => {
   }
   res
     .status(StatusCodes.FORBIDDEN)
-    .json("Accès interdit, réservé uniquement à l'Admin");
+    .json({ message: "Accès interdit, réservé uniquement à l'admin" });
   return;
 };
 

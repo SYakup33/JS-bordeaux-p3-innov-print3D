@@ -188,12 +188,11 @@ function ProductList() {
         >
           <ProductsFilter filters={filters} />
         </form>
-
-        <section className="col-md-9 px-3">
+        <section className="container ">
           <div className="row g-4">
-            {currentProducts && currentProducts.length > 0 ? (
-              currentProducts.map((product) => (
-                <div key={product.id} className="col-6 col-md-4">
+            {currentProducts && currentProducts?.length > 0 ? (
+              currentProducts?.map((product) => (
+                <div key={product.id} className="col-12 col-sm-6 col-lg-4 ">
                   <ProductCard products={product} />
                 </div>
               ))

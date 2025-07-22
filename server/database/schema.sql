@@ -23,7 +23,8 @@ CREATE TABLE product (
   name VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   price DECIMAL(10,2) NOT NULL,
-  category_id INT NOT NULL
+  category_id INT NOT NULL,
+  trend_product VARCHAR(100) DEFAULT 'Aucun'
 );
 
 CREATE TABLE image (
@@ -62,6 +63,7 @@ CREATE TABLE orders (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   status ENUM ('en préparation', 'expédiée', 'livrée', 'annulée') NOT NULL,
   user_id INT NOT NULL,
+  is_read BOOLEAN DEFAULT FALSE,
   CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id)
 );
 

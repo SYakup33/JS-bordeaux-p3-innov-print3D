@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { BoxArrowRight, Cart3, PersonFill, Tools } from "react-bootstrap-icons";
+import {
+  BoxArrowRight,
+  BoxSeam,
+  Cart3,
+  PersonFill,
+  Tools,
+} from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useAuth } from "../contexts/AuthContext";
-import { useCart } from "../contexts/CartContext";
-import { useOrdersNotifs } from "../contexts/adminOrdersNotifications";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
+import { useOrdersNotifs } from "../../contexts/adminOrdersNotifications";
 import "./Header.css";
 
 function Header() {
@@ -48,6 +54,11 @@ function Header() {
     setShowLogout(false);
   };
 
+  const onAdminproductClick = () => {
+    navigate("/admin/products");
+    setShowLogout(false);
+  };
+
   return (
     <header className="fixed-top bg-white shadow-sm py-3 px-4 d-flex justify-content-end align-items-center z-10 ">
       <div className="container d-flex justify-content-end align-items-center">
@@ -77,22 +88,39 @@ function Header() {
                   </div>
                 </div>
                 {currentUser?.role === "admin" && (
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
-                    onClick={() => {
-                      onAdminOrdersClick();
-                      fetchUnreadOrders();
-                    }}
-                  >
-                    <Tools />
-                    <span>Gérer les commandes</span>
-                    {unreadOrdersCount > 0 && (
-                      <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
-                        {unreadOrdersCount}
-                      </span>
-                    )}
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                      onClick={() => {
+                        onAdminOrdersClick();
+                        fetchUnreadOrders();
+                      }}
+                    >
+                      <Tools />
+                      <span>Gérer les commandes</span>
+                      {unreadOrdersCount > 0 && (
+                        <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                          {unreadOrdersCount}
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                      onClick={() => {
+                        onAdminproductClick();
+                      }}
+                    >
+                      <BoxSeam />
+                      <span>Gestion des produits</span>
+                      {unreadOrdersCount > 0 && (
+                        <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                          {unreadOrdersCount}
+                        </span>
+                      )}
+                    </button>
+                  </>
                 )}
                 <button
                   type="button"

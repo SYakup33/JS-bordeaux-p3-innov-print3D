@@ -1,7 +1,8 @@
 .product-top-bar {
-  background-color: var(--tertiary-color);
-  height: 50px;
   margin-bottom: 20px;
+  background-color: var(--tertiary-color);
+  height: 100px;
+  margin-top: 100px;
 }
 
 .product-img {
@@ -25,6 +26,7 @@
 .product-cta-add-to-cart {
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
+  box-shadow: none !important;
 }
 
 .product-cta-add-to-cart:hover {

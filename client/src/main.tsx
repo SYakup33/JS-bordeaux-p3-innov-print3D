@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -6,6 +7,7 @@ import { RouterProvider } from "react-router";
 import { UserProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { ProductSearchProvider } from "./contexts/ProductSearchContext";
+import { OrdersNotificationsProvider } from "./contexts/adminOrdersNotifications";
 import router from "./router";
 
 const rootElement = document.getElementById("root");
@@ -15,10 +17,12 @@ if (rootElement == null) {
 
 createRoot(rootElement).render(
   <UserProvider>
-    <CartProvider>
-      <ProductSearchProvider>
-        <RouterProvider router={router} />
-      </ProductSearchProvider>
-    </CartProvider>
+    <OrdersNotificationsProvider>
+      <CartProvider>
+        <ProductSearchProvider>
+          <RouterProvider router={router} />
+        </ProductSearchProvider>
+      </CartProvider>
+    </OrdersNotificationsProvider>
   </UserProvider>,
 );

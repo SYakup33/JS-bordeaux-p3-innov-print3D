@@ -23,6 +23,7 @@ function ModifyOrDeleteProduct({
   const [previewImages, setPreviewImages] = useState<Record<number, string>>(
     {},
   );
+  const [trendProduct, setTrendProduct] = useState("");
 
   const imageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -45,6 +46,7 @@ function ModifyOrDeleteProduct({
       setDescription(productDetails.description);
       setPrice(productDetails.price);
       setCategory(productDetails.category_id);
+      setTrendProduct(productDetails.trend_product);
     }
   }, [productDetails]);
 
@@ -214,6 +216,17 @@ function ModifyOrDeleteProduct({
                   </button>
                 </li>
               </ul>
+            </div>
+
+            <div className="d-flex flex-column fw-bold mt-2">
+              <label htmlFor="trend_product">Produit du moment</label>
+              <input
+                className="w-100 mt-1 border border-black border-2"
+                type="text"
+                name="trend_product"
+                value={trendProduct}
+                onChange={(e) => setTrendProduct(e.target.value)}
+              />
             </div>
           </div>
 

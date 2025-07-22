@@ -4,6 +4,7 @@ import "./CartList.css";
 import { ReadMore } from "../../components/ReadMore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
+import { useOrdersNotifs } from "../../contexts/adminOrdersNotifications";
 import type { Message } from "../../types/cart";
 
 function CartList() {
@@ -12,6 +13,7 @@ function CartList() {
   const [message, setMessage] = useState<Message | null>(null);
   const { currentUser, token } = useAuth();
   const userId = currentUser?.id;
+  const { fetchUnreadOrders } = useOrdersNotifs();
 
   let totalSelectedPrice = 0;
   for (const product of cartProducts) {
@@ -82,7 +84,8 @@ function CartList() {
           }),
         },
       );
-
+      fetchCart();
+      fetchUnreadOrders();
       const { url } = await checkoutSessionResponse.json();
       window.location.href = url;
     } catch (error) {
@@ -91,11 +94,19 @@ function CartList() {
         text: "Erreur lors de la création de la commande. Veuillez réessayer.",
       });
     }
-  }, [userId, token, cartProducts, selectedProducts, totalSelectedPrice]);
+  }, [
+    userId,
+    token,
+    cartProducts,
+    selectedProducts,
+    totalSelectedPrice,
+    fetchUnreadOrders,
+    fetchCart,
+  ]);
 
   return (
     <section className="d-flex flex-column">
-      <div className="d-flex align-items-center justify-content-start p-5 cart-header-title">
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <CartFill size={28} />
           Mon Panier
@@ -149,9 +160,9 @@ function CartList() {
                 {cartProducts.map((product) => (
                   <div
                     key={product.productId}
-                    className="flex-column list-group-item flex-md-row d-flex align-items-center gap-3 gap-md-0 p-3 "
+                    className="flex-column list-group-item flex-md-row d-flex align-items-stretch gap-3 gap-md-4 p-3 "
                   >
-                    <div className="w-75 d-flex justify-content-center align-items-center gap-4 cart-container">
+                    <div className="w-100 d-flex justify-content-center align-items-center gap-4 cart-container">
                       <input
                         type="checkbox"
                         role="button"
@@ -162,13 +173,13 @@ function CartList() {
                       <img
                         src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images?.[0]}`}
                         alt={product.productName}
-                        className="object-fit-cover rounded-2 w-75 h-100"
+                        className="object-fit-cover rounded-2 w-100  h-100"
                       />
                     </div>
                     <div className="flex-grow-1 w-100">
                       <h5 className="mb-1">{product.productName}</h5>
-                      <div className="mb-1">
-                        <small className="badge bg-secondary">
+                      <div className="my-2 ">
+                        <small className="badge bg-secondary py-1">
                           {product.categoryName}
                         </small>
                       </div>
@@ -231,13 +242,23 @@ function CartList() {
                           €
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        className="btn btn-link text-danger p-0 ms-3"
-                        onClick={() => deleteProduct(product.productId)}
-                      >
-                        <Trash size={24} />
-                      </button>
+                      {product.quantity > 1 ? (
+                        <button
+                          type="button"
+                          className="d-flex d-md-flex btn btn-link text-danger p-0 ms-3"
+                          onClick={() => deleteProduct(product.productId)}
+                        >
+                          <Trash size={24} />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="d-none d-md-flex btn btn-link text-danger p-0 ms-3"
+                          onClick={() => deleteProduct(product.productId)}
+                        >
+                          <Trash size={24} />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
