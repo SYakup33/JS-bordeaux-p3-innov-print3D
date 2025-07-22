@@ -102,9 +102,15 @@ class ProductRepository {
 
   async add(product: Omit<ProductManagement, "id">) {
     const [result] = await databaseClient.query<Result>(
-      `INSERT INTO product (name, description, price, category_id)
-        VALUES (?, ?, ?, ?)`,
-      [product.name, product.description, product.price, product.category_id],
+      `INSERT INTO product (name, description, price, category_id, trend_product)
+        VALUES (?, ?, ?, ?,?)`,
+      [
+        product.name,
+        product.description,
+        product.price,
+        product.category_id,
+        product.trend_product,
+      ],
     );
     return result.insertId;
   }
@@ -112,13 +118,14 @@ class ProductRepository {
   async update(product: ProductManagement) {
     const [result] = await databaseClient.query<Result>(
       `UPDATE product
-        SET name = ?, description = ?, price = ?, category_id = ? 
+        SET name = ?, description = ?, price = ?, category_id = ?, trend_product = ?
         WHERE id = ?`,
       [
         product.name,
         product.description,
         product.price,
         product.category_id,
+        product.trend_product,
         product.id,
       ],
     );
@@ -132,6 +139,21 @@ class ProductRepository {
       [id],
     );
     return result.affectedRows;
+  }
+
+  async findTrendProducts() {
+    const [rows] = await databaseClient.query<Rows>(
+      "select * from product where trend_product != 'Aucun'",
+    );
+
+    for (const product of rows) {
+      const [imgRows] = await databaseClient.query<Rows>(
+        "select * from image WHERE product_id = ? LIMIT 1",
+        [product.id],
+      );
+      product.images = imgRows.map((img) => img.path);
+    }
+    return rows;
   }
 }
 export default new ProductRepository();

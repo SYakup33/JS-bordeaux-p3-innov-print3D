@@ -14,6 +14,7 @@ const router = express.Router();
 router.get("/api/products", productActions.browse);
 router.get("/api/products/search", productActions.browse);
 router.get("/api/product/:id", productActions.read);
+router.get("/api/products/moments", productActions.readTrendProducts);
 
 router.post("/api/contact", contactActions.validate, contactActions.send);
 

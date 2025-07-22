@@ -50,6 +50,7 @@ declare global {
     description: string;
     price: number;
     category_id: number;
+    trend_product: string;
   };
   type ImageManagement = {
     id: number;

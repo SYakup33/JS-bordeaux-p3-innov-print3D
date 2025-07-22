@@ -6,6 +6,7 @@ export type ProductType = {
   category_id: number;
   images: Image[];
   category_name?: string;
+  trend_product: string;
 };
 
 export type Image = {
@@ -45,6 +46,7 @@ export type AddProductProps = {
     description: string;
     price: number;
     category_id: number;
+    trend_product: string;
   };
   onSubmit: (formData: FormData) => Promise<{ success: boolean }>;
   onSuccess?: () => void;
