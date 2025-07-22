@@ -37,6 +37,6 @@ router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 
-router.get("api/orders/:userId", userOrdersActions.read);
+router.get("/api/orders/:userId", userOrdersActions.read);
 
 export default router;

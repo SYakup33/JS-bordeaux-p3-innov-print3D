@@ -8,13 +8,13 @@ const read: RequestHandler = async (req, res, next) => {
     if (Number.isNaN(userId)) {
       res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Identifiant doit être un nombre" });
+        .json({ error: "l'identifiant doit être un nombre" });
       return;
     }
     const orders = await userOdersRepository.findByUserId(userId);
 
     if (orders == null) {
-      res.status(StatusCodes.NOT_FOUND);
+      res.sendStatus(StatusCodes.NOT_FOUND);
     } else {
       res.status(StatusCodes.OK).json(orders);
     }
