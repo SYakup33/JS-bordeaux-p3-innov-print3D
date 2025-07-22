@@ -51,7 +51,7 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
 
   return (
     <>
-      <h3 className="mt-3 ms-2">Filtrer par :</h3>
+      <h3 className="mt-3 ms-2 ms-md-3">Filtrer par :</h3>
       {isMobile && (
         <div className="text-center mb-3">
           <button
@@ -64,7 +64,7 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
         </div>
       )}
       {(showFilters || !isMobile) && (
-        <div className="d-flex ms-2 mb-4 flex-md-column w-100">
+        <div className="d-flex ms-2 ms-md-3 mb-4 flex-md-column w-100">
           <div className="filter-prices d-flex flex-column me-4 mt-md-2">
             <h4 className="fw-bold">Prix</h4>
             <div className="d-flex align-items-center w-100 mt-1 mt-md-2">
@@ -102,7 +102,10 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                 }}
               >
                 Prix croissant{" "}
-                <ArrowUpShort size={sortByPrice === "price-asc" ? 30 : 20} />
+                <ArrowUpShort
+                  size={sortByPrice === "price-asc" ? 30 : 25}
+                  className="product-filter-price-asc"
+                />
               </button>
 
               <button
@@ -117,12 +120,15 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                 }}
               >
                 Prix décroissant
-                <ArrowDownShort size={sortByPrice === "price-desc" ? 30 : 20} />
+                <ArrowDownShort
+                  size={sortByPrice === "price-desc" ? 30 : 25}
+                  className="product-filter-price-desc"
+                />
               </button>
             </div>
           </div>
           <div className="d-flex row border-start border-black mx-2" />
-          <div className="me-2 w-50">
+          <div className="me-2 w-75">
             <h4 className="fw-bold mb-md-2">Catégories</h4>
             <div className="dropdown mt-3">
               <button
