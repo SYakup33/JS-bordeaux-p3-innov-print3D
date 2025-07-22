@@ -153,7 +153,7 @@ function ProductList() {
         </h2>
       </div>
       <div className="d-flex justify-content-start w-100 mb-md-3 ">
-        <div className="w-100 d-flex flex-column align-items-end justify-content-md-end product-filter-searchbar">
+        <div className="w-100 d-flex flex-column align-items-center align-items-md-end justify-content-md-end product-filter-searchbar">
           <input
             className="w-50 mt-1"
             type="text"
