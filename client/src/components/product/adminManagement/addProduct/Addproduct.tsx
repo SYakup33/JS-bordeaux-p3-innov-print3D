@@ -7,6 +7,8 @@ import { Download, PlusCircle } from "react-bootstrap-icons";
 function AddProduct({ productDetails, onSubmit }: AddProductProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [category, setCategory] = useState(productDetails.category_id);
+  const [trendProduct, setTrendProduct] = useState("");
+
   const [files, setFiles] = useState<(File | undefined)[]>([
     undefined,
     undefined,
@@ -53,9 +55,21 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
                   onChange={handleOnChange(i)}
                 />
                 <label htmlFor={`file-${i}`}>
-                  <Download className="add-product-icon mb-3" size={50} />
+                  {!files[i] ? (
+                    <Download className="add-product-icon mb-3" size={50} />
+                  ) : (
+                    <img
+                      src={URL.createObjectURL(files[i])}
+                      alt={`Aperçu ${files[i]?.name}`}
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        objectFit: "contain",
+                      }}
+                      className="mb-2"
+                    />
+                  )}
                 </label>
-                {files[i] && <p>{files[i]?.name}</p>}
               </div>
             ))}
           </div>
@@ -135,6 +149,17 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
                 </button>
               </li>
             </ul>
+          </div>
+          <div className="d-flex flex-column fw-bold mt-3">
+            <label htmlFor="trend_product">Produit du moment</label>
+            <input
+              className="border border-black border-2"
+              type="text"
+              name="trend_product"
+              value={trendProduct}
+              onChange={(e) => setTrendProduct(e.target.value)}
+              placeholder="Ex: Noel"
+            />
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center flex-column w-25">

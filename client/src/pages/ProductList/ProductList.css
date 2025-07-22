@@ -6,6 +6,20 @@
   margin-bottom: 20px;
 }
 
+.product-filter-li {
+  transition: background-color 0.3s ease;
+  list-style: none;
+  background-color: var(--tertiary-color);
+  cursor: pointer;
+}
+
+.product-filter-li:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+  border-radius: 4px;
+  padding: 0.2em;
+}
+
 .cards-pagination-btn {
   padding: 5px 12px;
   border: 1px solid #ccc;
@@ -35,4 +49,11 @@
   border-color: transparent;
   box-shadow: none;
   margin: 0;
+}
+
+@media (min-width: 768px) {
+  .product-filter-searchbar {
+    margin-left: 3em;
+    max-width: 75%;
+  }
 }

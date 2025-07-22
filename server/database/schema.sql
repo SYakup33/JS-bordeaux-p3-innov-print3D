@@ -23,7 +23,8 @@ CREATE TABLE product (
   name VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   price DECIMAL(10,2) NOT NULL,
-  category_id INT NOT NULL
+  category_id INT NOT NULL,
+  trend_product VARCHAR(100) DEFAULT 'Aucun'
 );
 
 CREATE TABLE image (

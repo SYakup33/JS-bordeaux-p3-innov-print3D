@@ -28,8 +28,10 @@ const productSchema = joi
       "any.only":
         "Création du produit : La catégorie du produit est manquante.",
     }),
+    trend_product: joi.string(),
     imageIds: joi.array().items(joi.string().pattern(/^\d+$/)).default([]),
   })
+
   .options({ convert: true });
 
 const browse: RequestHandler = async (req, res, next) => {
@@ -91,6 +93,7 @@ const edit: RequestHandler = async (req, res, next) => {
         req.body.category_id !== undefined && req.body.category_id !== ""
           ? Number(req.body.category_id)
           : existingProduct.category_id,
+      trend_product: req.body.trend_product,
     };
 
     const affectedRows = await productRepository.update(product);
@@ -134,6 +137,7 @@ const add: RequestHandler = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
       category_id: req.body.category_id,
+      trend_product: req.body.trend_product,
     };
 
     const insertId = await productRepository.add(newProduct);
@@ -212,4 +216,21 @@ const validate: RequestHandler = (req, res, next) => {
   next();
 };
 
-export default { browse, read, edit, add, destroy, validate };
+const readTrendProducts: RequestHandler = async (req, res, next) => {
+  try {
+    const trendProducts = await productRepository.findTrendProducts();
+    res.status(StatusCodes.OK).json(trendProducts);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default {
+  browse,
+  read,
+  edit,
+  add,
+  destroy,
+  validate,
+  readTrendProducts,
+};
