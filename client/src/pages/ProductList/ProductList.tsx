@@ -150,20 +150,20 @@ function ProductList() {
         <h1>TOUS LES PRODUITS</h1>
       </div>
       <div className="d-flex justify-content-start w-100 mb-md-3 ">
-        <div className="w-100 d-flex justify-content-center justify-content-md-end product-filter-searchbar">
+        <div className="w-100 d-flex flex-column align-items-end justify-content-md-end product-filter-searchbar">
           <input
             className="w-50 mt-1"
             type="text"
             placeholder="Recherche par nom"
             value={productName ?? ""}
             onChange={filters.productNameChange}
-          />{" "}
+          />
           {suggestions.length > 0 && (
-            <ul className="d-flex flex-column p-0 align-items-center">
+            <ul className="d-flex flex-column p-0 align-items-center w-50">
               {suggestions.map((item) => (
                 <li
                   key={item.id}
-                  className="product-filter-li border-bottom border-1 border-black mx-auto p-2 w-50"
+                  className="product-filter-li border-bottom border-1 border-black mx-auto p-2 w-100"
                   onClick={() => navigate(`/product/${item.id}`)}
                   onKeyDown={() => navigate(`/product/${item.id}`)}
                 >
