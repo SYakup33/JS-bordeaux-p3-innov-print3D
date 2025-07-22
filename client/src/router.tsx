@@ -9,6 +9,7 @@ import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
 import Register from "./pages/auth/register/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import ContactForm from "./pages/contact/ContactForm.tsx";
 import Admin from "./pages/myAccount/Admin.tsx";
 import Product from "./pages/product/Product.tsx";
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             <Admin />
           </ProtectedAdminRoute>
         ),
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
       },
     ],
   },
