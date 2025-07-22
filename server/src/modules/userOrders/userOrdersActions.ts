@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
-import userOdersRepository from "./userOdersRepository";
+import userOrdersRepository from "./userOrdersRepository";
 
 const read: RequestHandler = async (req, res, next) => {
   try {
@@ -11,7 +11,7 @@ const read: RequestHandler = async (req, res, next) => {
         .json({ error: "l'identifiant doit être un nombre" });
       return;
     }
-    const orders = await userOdersRepository.findByUserId(userId);
+    const orders = await userOrdersRepository.findByUserId(userId);
 
     if (orders == null) {
       res.sendStatus(StatusCodes.NOT_FOUND);
