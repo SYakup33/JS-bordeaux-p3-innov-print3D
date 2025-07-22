@@ -1,6 +1,7 @@
 import Pagination from "rc-pagination";
 import { useCallback, useEffect, useState } from "react";
 import "rc-pagination/assets/index.css";
+import { BoxFill } from "react-bootstrap-icons";
 import ProductCard from "../../components/product/card/ProductCard.tsx";
 import ProductsFilter from "../../components/product/filter/ProductFilter.tsx";
 import { useProductSearch } from "../../contexts/ProductSearchContext.tsx";
@@ -147,7 +148,9 @@ function ProductList() {
   return (
     <>
       <div className="d-flex align-items-center cards-title">
-        <h1>TOUS LES PRODUITS</h1>
+        <h2>
+          <BoxFill size={28} /> Tous les produits
+        </h2>
       </div>
       <div className="d-flex justify-content-start w-100 mb-md-3 ">
         <div className="w-100 d-flex flex-column align-items-end justify-content-md-end product-filter-searchbar">
