@@ -2,9 +2,9 @@ import { useState } from "react";
 import { BoxArrowRight, Cart3, PersonFill, Tools } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useAuth } from "../contexts/AuthContext";
-import { useCart } from "../contexts/CartContext";
-import { useOrdersNotifs } from "../contexts/adminOrdersNotifications";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
+import { useOrdersNotifs } from "../../contexts/adminOrdersNotifications";
 import "./Header.css";
 
 function Header() {

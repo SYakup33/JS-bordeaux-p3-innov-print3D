@@ -62,6 +62,7 @@ CREATE TABLE orders (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   status ENUM ('en préparation', 'expédiée', 'livrée', 'annulée') NOT NULL,
   user_id INT NOT NULL,
+  is_read BOOLEAN DEFAULT FALSE,
   CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id)
 );
 

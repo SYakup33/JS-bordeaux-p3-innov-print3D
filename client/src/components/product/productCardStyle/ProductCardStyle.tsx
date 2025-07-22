@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   CartPlusFill,
   Dash,
@@ -6,7 +6,6 @@ import {
   StarFill,
   StarHalf,
   Trash,
-  XLg,
 } from "react-bootstrap-icons";
 import { useCart } from "../../../contexts/CartContext";
 import { useCustomNavigat } from "../../../contexts/Navigatecontext";
@@ -19,37 +18,19 @@ type ProductsStyleProps = {
 };
 
 function ProductCardStyle({ product }: ProductsStyleProps) {
-  const { handleNavigate } = useCustomNavigat();
+  const { customNavigate } = useCustomNavigat();
   const { addProduct, updateQuantity, cartProducts, deleteProduct } = useCart();
 
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
-  const [isHovering, setIsHovering] = useState(false);
 
   const isInnCart = cartProducts.find((p) => p.productId === product.id);
   const quantity = isInnCart?.quantity || 1;
-
-  const handleIncrease = () => {
-    if (isInnCart) {
-      updateQuantity(product.id, quantity + 1);
-    } else {
-      addProduct(product, 1);
-    }
-  };
-
-  useEffect(() => {
-    if (activeProduct && !isHovering) {
-      const timer = setTimeout(() => {
-        setActiveProduct(null);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [activeProduct, isHovering]);
 
   return (
     <article className="card shadow-sm border-0 rounded-4 product-card-style-height">
       <button
         type="button"
-        onClick={() => handleNavigate(`/product/${product.id}`)}
+        onClick={() => customNavigate(`/product/${product.id}`)}
         className="btn p-0 border-0 bg-transparent"
       >
         <img
@@ -75,22 +56,18 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
           </span>
         </div>
 
-        <div className="overflow-auto product-card-style-scrollbar ">
+        <div className="overflow-auto product-card-style-scrollbar w-100 product-card-style-readmore">
           <ReadMore text={product.description} maxLength={50} />
         </div>
 
-        <div className="d-flex justify-content-between align-items-center mt-2">
-          <span className="fw-semibold text-dark fs-5 mt-2 product-card-style-price">
+        <div className="d-flex justify-content-between align-items-center mt-2 product-card-style-price-modal">
+          <span className="fw-semibold text-dark fs-5 mt-3 product-card-style-price">
             {product.price} €
           </span>
 
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center rounded-4 product-card-style-modal ">
             {activeProduct === product.id ? (
-              <div
-                className="d-flex align-items-center gap-lg-3 gap-2 rounded-4 px-1 py-1 product-card-style-modal"
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-              >
+              <div className="d-flex align-items-center gap-5 rounded-4 px-1 py-1 product-card-style-modal">
                 {quantity > 1 ? (
                   <button
                     type="button"
@@ -117,19 +94,15 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
                 <button
                   type="button"
                   className="btn btn-sm bg-white text-dark border-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm product-card-style-modal-btn "
-                  onClick={handleIncrease}
-                >
-                  <PlusLg size={18} />
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-sm  text-danger "
                   onClick={() => {
-                    setActiveProduct(null);
+                    if (isInnCart) {
+                      updateQuantity(product.id, quantity + 1);
+                    } else {
+                      addProduct(product, 1);
+                    }
                   }}
                 >
-                  <XLg size={18} />
+                  <PlusLg size={18} />
                 </button>
               </div>
             ) : (

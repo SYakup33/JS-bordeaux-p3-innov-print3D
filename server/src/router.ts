@@ -1,4 +1,5 @@
 import express from "express";
+import adminOrdersActions from "./modules/adminOrders/adminOrdersActions";
 import authActions from "./modules/auth/authActions";
 import "dotenv/config";
 import cartActions from "./modules/cart/cartActions";
@@ -28,6 +29,27 @@ router.post(
 router.post("/api/login", authActions.login);
 
 router.use(authActions.verifyToken);
+
+router.get(
+  "/api/admin/orders",
+  authActions.isAdmin,
+  adminOrdersActions.readAll,
+);
+router.put(
+  "/api/admin/order/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.updateStatus,
+);
+router.get(
+  "/api/admin/orders/unread",
+  authActions.isAdmin,
+  adminOrdersActions.unreadOrders,
+);
+router.put(
+  "/api/admin/order/read/:orderId",
+  authActions.isAdmin,
+  adminOrdersActions.isRead,
+);
 
 router.post("/api/order/", orderActions.add);
 router.get("/api/cart/:userId", cartActions.read);
