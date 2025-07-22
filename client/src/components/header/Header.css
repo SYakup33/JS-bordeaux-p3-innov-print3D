@@ -1,3 +1,15 @@
+.header-logo {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo img {
+  height: 100%;
+  width: auto;
+}
+
 .header-person-modal {
   z-index: 1000;
   min-width: 280px;
