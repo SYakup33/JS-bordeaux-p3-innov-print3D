@@ -55,9 +55,21 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
                   onChange={handleOnChange(i)}
                 />
                 <label htmlFor={`file-${i}`}>
-                  <Download className="add-product-icon mb-3" size={50} />
+                  {!files[i] ? (
+                    <Download className="add-product-icon mb-3" size={50} />
+                  ) : (
+                    <img
+                      src={URL.createObjectURL(files[i])}
+                      alt={`Aperçu ${files[i]?.name}`}
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        objectFit: "contain",
+                      }}
+                      className="mb-2"
+                    />
+                  )}
                 </label>
-                {files[i] && <p>{files[i]?.name}</p>}
               </div>
             ))}
           </div>

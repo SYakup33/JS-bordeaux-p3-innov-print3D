@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import AddProduct from "../../components/product/adminManagement/addProduct/Addproduct";
-import { useProductSearch } from "../../contexts/ProductSearchContext";
-import type { ProductType } from "../../types/product";
-import "./Admin.css";
-import ModifyOrDeleteProduct from "../../components/product/adminManagement/modifyOrDeleteProduct/ModifyOrDeleteProduct";
-import { useAuth } from "../../contexts/AuthContext";
+import AddProduct from "../../../components/product/adminManagement/addProduct/Addproduct";
+import { useProductSearch } from "../../../contexts/ProductSearchContext";
+import type { ProductType } from "../../../types/product";
+import "./ProductsManagement.css";
+import ModifyOrDeleteProduct from "../../../components/product/adminManagement/modifyOrDeleteProduct/ModifyOrDeleteProduct";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Admin() {
   const { productName, suggestions, fetchSuggestions } = useProductSearch();
