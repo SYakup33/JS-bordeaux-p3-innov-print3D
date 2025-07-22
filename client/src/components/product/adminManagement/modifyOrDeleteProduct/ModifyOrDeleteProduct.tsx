@@ -23,7 +23,7 @@ function ModifyOrDeleteProduct({
   const [previewImages, setPreviewImages] = useState<Record<number, string>>(
     {},
   );
-  const [trendProduct, setTrendProduct] = useState("Aucun");
+  const [trendProduct, setTrendProduct] = useState("");
 
   const imageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
