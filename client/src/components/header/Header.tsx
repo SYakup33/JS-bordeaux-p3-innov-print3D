@@ -66,9 +66,9 @@ function Header() {
       <div className="container">
         <div className="row align-items-center">
           <div className="col-4 d-flex align-items-center">
-            <div className="header-logo">
+            <Link to="/" className="header-logo">
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
-            </div>
+            </Link>
           </div>
           <div className="col-4 text-center">
             <h5 className="mb-0 fw-medium">
@@ -143,11 +143,6 @@ function Header() {
                         >
                           <BoxSeam />
                           <span>Gestion des produits</span>
-                          {unreadOrdersCount > 0 && (
-                            <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
-                              {unreadOrdersCount}
-                            </span>
-                          )}
                         </button>
                       </>
                     )}
