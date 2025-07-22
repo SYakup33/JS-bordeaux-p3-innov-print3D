@@ -4,7 +4,12 @@ import "./ProductsFilter.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { ArrowDownSquare, ArrowUpSquare } from "react-bootstrap-icons";
+import {
+  ArrowDownShort,
+  ArrowDownSquare,
+  ArrowUpShort,
+  ArrowUpSquare,
+} from "react-bootstrap-icons";
 
 function ProductsFilter({ filters }: ProductsFilterProps) {
   const [showFilters, setShowFilters] = useState(false);
@@ -59,7 +64,7 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
         </div>
       )}
       {(showFilters || !isMobile) && (
-        <div className="d-flex ms-2 mb-4 flex-md-column">
+        <div className="d-flex ms-2 mb-4 flex-md-column w-100">
           <div className="filter-prices d-flex flex-column me-4 mt-md-2">
             <h4 className="fw-bold">Prix</h4>
             <div className="d-flex align-items-center w-100 mt-1 mt-md-2">
@@ -96,7 +101,8 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                   setSortByPrice("price-asc");
                 }}
               >
-                Prix croissant
+                Prix croissant{" "}
+                <ArrowUpShort size={sortByPrice === "price-asc" ? 30 : 20} />
               </button>
 
               <button
@@ -111,6 +117,7 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                 }}
               >
                 Prix décroissant
+                <ArrowDownShort size={sortByPrice === "price-desc" ? 30 : 20} />
               </button>
             </div>
           </div>
