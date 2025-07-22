@@ -3,10 +3,11 @@ import {
   BoxArrowRight,
   BoxSeam,
   Cart3,
+  Envelope,
   PersonFill,
   Tools,
 } from "react-bootstrap-icons";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
