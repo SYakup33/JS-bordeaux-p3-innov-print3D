@@ -1,16 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  BoxArrowRight,
-  Cart3,
-  PersonBadge,
-  PersonFill,
-  Tools,
-} from "react-bootstrap-icons";
+import { useState } from "react";
+import { BoxArrowRight, Cart3, PersonFill, Tools } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useAuth } from "../../contexts/AuthContext";
-import { useCart } from "../../contexts/CartContext";
-import { useOrdersNotifs } from "../../contexts/adminOrdersNotifications";
+import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../contexts/CartContext";
+import { useOrdersNotifs } from "../contexts/adminOrdersNotifications";
 import "./Header.css";
 
 function Header() {
@@ -19,26 +13,6 @@ function Header() {
   const [showLogout, setShowLogout] = useState(false);
   const { currentUser, isLogged, logout } = useAuth();
   const { unreadOrdersCount, fetchUnreadOrders } = useOrdersNotifs();
-  const logoutRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const clickOutside = (event: MouseEvent) => {
-      if (
-        logoutRef.current &&
-        !logoutRef.current.contains(event.target as Node)
-      ) {
-        setShowLogout(false);
-      }
-    };
-
-    if (showLogout) {
-      document.addEventListener("mousedown", clickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", clickOutside);
-    };
-  }, [showLogout]);
 
   const onLogClick = () => {
     if (isLogged) {
@@ -92,10 +66,7 @@ function Header() {
               )}
             </button>
             {showLogout && isLogged && (
-              <div
-                ref={logoutRef}
-                className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal"
-              >
+              <div className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal">
                 <div className="d-flex align-items-center mb-3">
                   <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
                     <strong>{currentUser?.firstname[0]}</strong>
@@ -115,28 +86,17 @@ function Header() {
                     }}
                   >
                     <Tools />
-                    <span>Gérer les commandes</span>{" "}
+                    <span>Gérer les commandes</span>
                     {unreadOrdersCount > 0 && (
-                      <small className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                      <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                         {unreadOrdersCount}
-                      </small>
+                      </span>
                     )}
                   </button>
                 )}
                 <button
                   type="button"
-                  className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
-                  onClick={() => {
-                    navigate(`${currentUser?.id}/me`);
-                    setShowLogout(false);
-                  }}
-                >
-                  <PersonBadge />
-                  <span>Mon profil</span>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-danger btn-sm w-100 d-flex gap-2 align-items-center justify-content-center"
+                  className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"
                   onClick={onLogout}
                 >
                   <BoxArrowRight />

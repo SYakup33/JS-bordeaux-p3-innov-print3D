@@ -33,30 +33,31 @@ class UserRepository {
 
   async findById(id: number) {
     const [rows] = await databaseClient.query<Rows>(
-      `SELECT id, firstname, lastname, street, city, zip_code, country, email, phone, role, created_at 
-       FROM user WHERE id = ?`,
+      "SELECT * FROM user WHERE id = ?",
       [id],
     );
-    return rows[0] as User | null;
+    return rows[0] as User;
   }
 
   async update(
-    id: number,
-    userData: Partial<
-      Omit<User, "id" | "role" | "created_at" | "hashed_password">
-    >,
+    userId: number,
+    user: Omit<User, "created_at" | "role" | "hashed_password">,
   ) {
-    // Construction dynamique des colonnes à mettre à jour
-    const fields = Object.keys(userData);
-    if (fields.length === 0) return;
-
-    const values = Object.values(userData);
-    const setString = fields.map((field) => `${field} = ?`).join(", ");
-
-    await databaseClient.query(`UPDATE user SET ${setString} WHERE id = ?`, [
-      ...values,
-      id,
-    ]);
+    const [result] = await databaseClient.query(
+      "   update user SET firstname = ?, lastname = ?, street = ?, city = ?, zip_code = ?, country = ?, email = ?, phone = ? WHERE id = ?",
+      [
+        user.firstname,
+        user.lastname,
+        user.street,
+        user.city,
+        user.zip_code,
+        user.country,
+        user.email,
+        user.phone,
+        userId,
+      ],
+    );
+    return result;
   }
 }
 

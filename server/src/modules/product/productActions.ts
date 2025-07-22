@@ -28,7 +28,7 @@ const productSchema = joi
       "any.only":
         "Création du produit : La catégorie du produit est manquante.",
     }),
-    trend_product: joi.string().optional(),
+    trend_product: joi.string(),
     imageIds: joi.array().items(joi.string().pattern(/^\d+$/)).default([]),
   })
 
@@ -93,7 +93,7 @@ const edit: RequestHandler = async (req, res, next) => {
         req.body.category_id !== undefined && req.body.category_id !== ""
           ? Number(req.body.category_id)
           : existingProduct.category_id,
-      trend_product: req.body.trend_product || existingProduct.trend_product,
+      trend_product: req.body.trend_product,
     };
 
     const affectedRows = await productRepository.update(product);

@@ -5,6 +5,7 @@ export type User = {
   street?: string;
   city?: string;
   zip_code?: string;
+  country: string;
   email: string;
   phone: string;
   password: string;

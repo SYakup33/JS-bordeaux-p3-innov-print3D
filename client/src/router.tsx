@@ -9,10 +9,11 @@ import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
 import Register from "./pages/auth/register/Register.tsx";
 import CartList from "./pages/cart/CartList.tsx";
+import ContactForm from "./pages/contact/ContactForm.tsx";
 import Admin from "./pages/myAccount/Admin.tsx";
 import AdminOrders from "./pages/order/adminOrders/AdminOrders.tsx";
 import Product from "./pages/product/Product.tsx";
-import UserProfile from "./pages/user/UserProfile.tsx";
+import UserProfil from "./pages/userProfile/UserProfil.tsx";
 
 const router = createBrowserRouter([
   {
@@ -65,8 +66,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "user/me",
-        element: <UserProfile />,
+        path: ":userId/me",
+        element: <UserProfil />,
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
       },
     ],
   },

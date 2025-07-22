@@ -7,7 +7,7 @@ import { Download, PlusCircle } from "react-bootstrap-icons";
 function AddProduct({ productDetails, onSubmit }: AddProductProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [category, setCategory] = useState(productDetails.category_id);
-  const [trendProduct, setTrendProduct] = useState("Aucun");
+  const [trendProduct, setTrendProduct] = useState("");
 
   const [files, setFiles] = useState<(File | undefined)[]>([
     undefined,
@@ -139,14 +139,14 @@ function AddProduct({ productDetails, onSubmit }: AddProductProps) {
             </ul>
           </div>
           <div className="d-flex flex-column fw-bold mt-3">
-            <label htmlFor="trend_product">Produit tendance</label>
+            <label htmlFor="trend_product">Produit du moment</label>
             <input
               className="border border-black border-2"
               type="text"
               name="trend_product"
               value={trendProduct}
               onChange={(e) => setTrendProduct(e.target.value)}
-              placeholder="Ex: coucou"
+              placeholder="Ex: Noel"
             />
           </div>
         </div>
