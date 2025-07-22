@@ -12,6 +12,7 @@ import CartList from "./pages/cart/CartList.tsx";
 import Admin from "./pages/myAccount/Admin.tsx";
 import AdminOrders from "./pages/order/adminOrders/AdminOrders.tsx";
 import Product from "./pages/product/Product.tsx";
+import UserProfile from "./pages/user/UserProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             <Admin />
           </ProtectedAdminRoute>
         ),
+      },
+      {
+        path: "user/me",
+        element: <UserProfile />,
       },
     ],
   },

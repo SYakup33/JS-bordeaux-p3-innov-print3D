@@ -118,4 +118,65 @@ const validate: RequestHandler = (req, res, next) => {
   });
 };
 
-export default { validate, add };
+const getProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.auth?.sub);
+
+    const user = await userRepository.findById(userId);
+
+    if (!user) {
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "Utilisateur non trouvé" });
+      return;
+    }
+
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.auth?.sub);
+
+    const allowedFields = [
+      "firstname",
+      "lastname",
+      "street",
+      "city",
+      "zip_code",
+      "country",
+      "email",
+      "phone",
+    ];
+    const updates: Partial<
+      Omit<User, "id" | "role" | "created_at" | "hashed_password">
+    > = {};
+
+    for (const field of allowedFields) {
+      const key = field as keyof typeof updates;
+      if (req.body[key]) {
+        updates[key] = req.body[key];
+      }
+    }
+
+    if (Object.keys(updates).length === 0) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Aucune donnée à mettre à jour" });
+      return;
+    }
+
+    await userRepository.update(userId, updates);
+
+    const updatedUser = await userRepository.findById(userId);
+
+    res.json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { validate, add, getProfile, updateProfile };

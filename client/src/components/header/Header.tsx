@@ -97,6 +97,14 @@ function Header() {
                 <button
                   type="button"
                   className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"
+                  onClick={() => navigate("/user/me")}
+                >
+                  <BoxArrowRight />
+                  <span>Mon profils</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"
                   onClick={onLogout}
                 >
                   <BoxArrowRight />
