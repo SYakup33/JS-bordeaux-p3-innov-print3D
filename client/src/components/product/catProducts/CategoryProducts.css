@@ -1,0 +1,12 @@
+.category-modern-section {
+  background: var(--linear-gradient);
+}
+
+.category-modern-card {
+  min-height: 180px;
+  cursor: pointer;
+}
+
+.category-modern-icon {
+  background-color: #f1f3f5;
+}

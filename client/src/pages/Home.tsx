@@ -1,21 +1,25 @@
 import { useNavigate } from "react-router";
+import CategoryProducts from "../components/product/catProducts/CategoryProducts";
 import TrendProducts from "../components/product/trendProducts/TrendProducts";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <>
-      <button
-        type="button"
-        onClick={() => navigate("/products")}
-        className="btn cart-header-title "
-        style={{
-          backgroundColor: "var(--btn-cta-home-color)",
-          color: "var(--font-secondary-color)",
-        }}
-      >
-        Parcourir les créations
-      </button>
+      <div>
+        <button
+          type="button"
+          onClick={() => navigate("/products")}
+          className="btn cart-header-title "
+          style={{
+            backgroundColor: "var(--btn-cta-home-color)",
+            color: "var(--font-secondary-color)",
+          }}
+        >
+          Parcourir les créations
+        </button>
+        <CategoryProducts />
+      </div>
       <TrendProducts />
     </>
   );
