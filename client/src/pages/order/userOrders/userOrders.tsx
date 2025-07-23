@@ -117,7 +117,7 @@ const UserOrders = () => {
                                 <img
                                   src={p.image}
                                   alt={p.productName}
-                                  className="img-fluid rounded mb-2 admin-order-product-img"
+                                  className="img-fluid rounded mb-2 user-order-product-img"
                                 />
                                 <div className="fw-medium small">
                                   <span className="text-dark">
