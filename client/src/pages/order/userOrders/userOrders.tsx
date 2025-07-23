@@ -11,7 +11,6 @@ const UserOrders = () => {
   const userId = currentUser?.id;
 
   useEffect(() => {
-    console.log(`userId = ${userId}`);
     if (!userId) {
       return;
     }
@@ -22,7 +21,6 @@ const UserOrders = () => {
       );
       const orders = await response.json();
       setUserOrders(orders);
-      console.log(orders);
     };
     fetchUserOrders();
   }, [token, userId]);
