@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   BoxArrowRight,
   BoxSeam,
   Cart3,
@@ -147,6 +148,18 @@ function Header() {
                         </button>
                       </>
                     )}
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
+                      onClick={() => {
+                        navigate(`/myaccount/orders/${currentUser?.id}`);
+                        setShowLogout(false);
+                      }}
+                    >
+                      <Box />
+                      <span>Mes commandes</span>
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
