@@ -8,6 +8,7 @@ import orderActions from "./modules/order/orderActions";
 import productActions from "./modules/product/productActions";
 import { productImagesUpload } from "./modules/uploadMulter/uploadMulter";
 import userActions from "./modules/user/userActions";
+import userOrdersActions from "./modules/userOrders/userOrdersActions";
 
 const router = express.Router();
 
@@ -65,6 +66,8 @@ router.post("/api/order/:userId", orderActions.add);
 router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
+
+router.get("/api/orders/:userId", userOrdersActions.read);
 
 router.post(
   "/api/products",

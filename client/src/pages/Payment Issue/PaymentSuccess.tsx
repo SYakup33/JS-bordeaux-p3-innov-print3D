@@ -1,8 +1,13 @@
 import { BagCheck, Receipt } from "react-bootstrap-icons";
 import logo from "/img/icons/lnnovPrintLogo.png";
 import "./Payment.css";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 
 function PaymentSuccess() {
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const userId = currentUser?.id;
   return (
     <>
       <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
@@ -11,8 +16,8 @@ function PaymentSuccess() {
           Commande
         </h2>
       </div>
-      <section className="d-flex align-items-center justify-content-center ">
-        <article className="container d-flex flex-column border border-secondary rounded p-5 align-items-center text-center ">
+      <section className="d-flex align-items-center justify-content-center">
+        <article className="container d-flex flex-column border border-secondary rounded p-5 align-items-center text-center">
           <p className="p-md-5 mb-md-5 w-100 shadow-lg border-none rounded fw-semibold confirmed-payment-message ">
             Votre paiement est bien validé
             <BagCheck size={90} color="green" className="ms-2 img-fluid" />
@@ -24,6 +29,7 @@ function PaymentSuccess() {
             <button
               type="button"
               className=" btn w-100 btn-lg fw-semibold confirmed-order-btn-animated"
+              onClick={() => navigate(`/myaccount/orders/${userId}`)}
             >
               Consulter mes commandes
             </button>

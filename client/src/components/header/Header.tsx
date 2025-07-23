@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   BoxArrowRight,
   BoxSeam,
@@ -8,9 +8,7 @@ import {
   PersonFill,
   Tools,
 } from "react-bootstrap-icons";
-
 import { Link, useNavigate } from "react-router";
-
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
@@ -24,29 +22,6 @@ function Header() {
   const [showLogout, setShowLogout] = useState(false);
   const { currentUser, isLogged, logout } = useAuth();
   const { unreadOrdersCount, fetchUnreadOrders } = useOrdersNotifs();
-  const logoutRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const clickOutside = (event: MouseEvent) => {
-      if (
-        logoutRef.current &&
-        !logoutRef.current.contains(event.target as Node)
-      ) {
-        const button = document.getElementById("header-person-button");
-        if (button && !button.contains(event.target as Node)) {
-          setShowLogout(false);
-        }
-      }
-    };
-
-    if (showLogout) {
-      document.addEventListener("mousedown", clickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", clickOutside);
-    };
-  }, [showLogout]);
 
   const onLogClick = () => {
     if (isLogged) {
@@ -123,16 +98,13 @@ function Header() {
                 >
                   <PersonFill size={28} className="text-dark" />
                   {isLogged && (
-                    <span className="ms-2 fw-medium text-muted">
+                    <span className="ms-2 fw-medium text-muted d-none d-md-inline">
                       Bonjour, {currentUser?.firstname}
                     </span>
                   )}
                 </button>
                 {showLogout && isLogged && (
-                  <div
-                    ref={logoutRef}
-                    className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal"
-                  >
+                  <div className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal">
                     <div className="d-flex align-items-center mb-3">
                       <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
                         <strong>{currentUser?.firstname[0]}</strong>
@@ -157,11 +129,11 @@ function Header() {
                           }}
                         >
                           <Tools />
-                          <span>Gérer les commandes</span>{" "}
+                          <span>Gérer les commandes</span>
                           {unreadOrdersCount > 0 && (
-                            <small className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                            <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
-                            </small>
+                            </span>
                           )}
                         </button>
                         <button
