@@ -16,6 +16,5 @@ export type UserOrder = {
   orderId: number;
   createdAt: Date;
   status: "en préparation" | "expédiée" | "livrée" | "annulée" | string;
-  firstname: string;
   products: UserOrderProduct[];
 };
