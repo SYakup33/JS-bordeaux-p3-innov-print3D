@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./userOrders.css";
 import { Box, Receipt } from "react-bootstrap-icons";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import type { UserOrder } from "../../../types/order";
 
 const UserOrders = () => {
