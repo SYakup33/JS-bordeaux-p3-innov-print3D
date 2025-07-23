@@ -91,6 +91,7 @@ function Header() {
             <nav className="d-flex align-items-center position-relative">
               <div className="position-relative me-3">
                 <button
+                  id="header-person-button"
                   type="button"
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}
