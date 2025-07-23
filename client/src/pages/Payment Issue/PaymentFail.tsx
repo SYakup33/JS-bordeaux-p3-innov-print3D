@@ -1,7 +1,9 @@
 import { BagX, Receipt } from "react-bootstrap-icons";
+import { useNavigate } from "react-router";
 import logo from "/img/icons/lnnovPrintLogo.png";
 
 function PaymentFail() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
@@ -23,8 +25,9 @@ function PaymentFail() {
             <button
               type="button"
               className=" btn w-100 btn-lg fw-semibold confirmed-order-btn-animated"
+              onClick={() => navigate("/products")}
             >
-              Retourner à mon panier
+              Retourner à la liste des produits
             </button>
           </div>
         </article>
