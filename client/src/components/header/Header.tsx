@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   BoxArrowRight,
   BoxSeam,
@@ -25,25 +25,6 @@ function Header() {
   const { currentUser, isLogged, logout } = useAuth();
   const { unreadOrdersCount, fetchUnreadOrders } = useOrdersNotifs();
   const logoutRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const clickOutside = (event: MouseEvent) => {
-      if (
-        logoutRef.current &&
-        !logoutRef.current.contains(event.target as Node)
-      ) {
-        setShowLogout(false);
-      }
-    };
-
-    if (showLogout) {
-      document.addEventListener("mousedown", clickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", clickOutside);
-    };
-  }, [showLogout]);
 
   const onLogClick = () => {
     if (isLogged) {
