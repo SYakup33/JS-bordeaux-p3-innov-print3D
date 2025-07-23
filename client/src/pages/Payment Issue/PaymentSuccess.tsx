@@ -1,8 +1,11 @@
 import { BagCheck, Receipt } from "react-bootstrap-icons";
 import logo from "/img/icons/lnnovPrintLogo.png";
 import "./Payment.css";
+import { useNavigate, useParams } from "react-router";
 
 function PaymentSuccess() {
+  const navigate = useNavigate();
+  const userId = useParams();
   return (
     <>
       <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
@@ -24,6 +27,7 @@ function PaymentSuccess() {
             <button
               type="button"
               className=" btn w-100 btn-lg fw-semibold confirmed-order-btn-animated"
+              onClick={() => navigate(`/myaccount/orders/${userId}`)}
             >
               Consulter mes commandes
             </button>
