@@ -129,7 +129,7 @@ function Header() {
                           }}
                         >
                           <Tools />
-                          <span>Gérer les commandes</span>
+                          <span>Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
                             <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
