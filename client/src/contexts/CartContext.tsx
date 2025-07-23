@@ -28,7 +28,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           },
         );
 
+        if (response.status === 401) {
+          toast.error("Session expirée. Veuillez vous reconnecter.");
+          setCartProducts([]);
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
         const cart = await response.json();
+        if (!Array.isArray(cart)) {
+          setCartProducts([]);
+          return;
+        }
 
         setCartProducts(cart);
       } else {
@@ -36,6 +48,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (err) {
       toast.error("Erreur lors du chargement du panier.");
+      setCartProducts([]);
     }
   }, [userId, token]);
 

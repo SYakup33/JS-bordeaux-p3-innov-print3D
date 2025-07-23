@@ -4,6 +4,7 @@ import {
   BoxSeam,
   Cart3,
   Envelope,
+  PersonBadge,
   PersonFill,
   Tools,
 } from "react-bootstrap-icons";
@@ -146,6 +147,18 @@ function Header() {
                         </button>
                       </>
                     )}
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
+                      onClick={() => {
+                        navigate(`${currentUser?.id}/me`);
+                        setShowLogout(false);
+                      }}
+                    >
+                      <PersonBadge />
+                      <span>Mon profil</span>
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"

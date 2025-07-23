@@ -30,6 +30,35 @@ class UserRepository {
     );
     return rows[0] as User;
   }
+
+  async findById(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM user WHERE id = ?",
+      [id],
+    );
+    return rows[0] as User;
+  }
+
+  async update(
+    userId: number,
+    user: Omit<User, "created_at" | "role" | "hashed_password">,
+  ) {
+    const [result] = await databaseClient.query(
+      "   update user SET firstname = ?, lastname = ?, street = ?, city = ?, zip_code = ?, country = ?, email = ?, phone = ? WHERE id = ?",
+      [
+        user.firstname,
+        user.lastname,
+        user.street,
+        user.city,
+        user.zip_code,
+        user.country,
+        user.email,
+        user.phone,
+        userId,
+      ],
+    );
+    return result;
+  }
 }
 
 export default new UserRepository();
