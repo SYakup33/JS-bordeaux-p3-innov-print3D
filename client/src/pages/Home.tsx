@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import CategoryProducts from "../components/product/filter/CategoryProducts";
+import CategoryProducts from "../components/product/catProducts/CategoryProducts";
 import TrendProducts from "../components/product/trendProducts/TrendProducts";
 
 function Home() {

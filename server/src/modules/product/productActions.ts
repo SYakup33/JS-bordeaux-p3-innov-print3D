@@ -24,7 +24,7 @@ const productSchema = joi
         "Création du produit : Le prix doit être strictement supérieur à 0.",
       "any.required": "Création du produit : Le prix est requis.",
     }),
-    category_id: joi.number().integer().valid(1, 2, 3).required().messages({
+    category_id: joi.number().integer().valid(1, 2, 3, 4).required().messages({
       "any.only":
         "Création du produit : La catégorie du produit est manquante.",
     }),

@@ -184,7 +184,9 @@ function ModifyOrDeleteProduct({
                     ? "Objets pratiques"
                     : category === 3
                       ? "Jeux"
-                      : "Catégorie"}
+                      : category === 4
+                        ? "Divers"
+                        : "Catégorie"}
               </button>
 
               <ul className="dropdown-menu w-25">
@@ -213,6 +215,15 @@ function ModifyOrDeleteProduct({
                     onClick={() => setCategory(3)}
                   >
                     Jeux
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    className="dropdown-item"
+                    onClick={() => setCategory(4)}
+                  >
+                    Divers
                   </button>
                 </li>
               </ul>
