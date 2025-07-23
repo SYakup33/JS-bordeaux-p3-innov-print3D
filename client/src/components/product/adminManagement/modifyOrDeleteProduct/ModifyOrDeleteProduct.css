@@ -1,0 +1,13 @@
+.modify-delete-product-icon,
+.modify-delete-product-images {
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .modify-delete-product-images {
+    max-width: 100px;
+  }
+  .modify-delete-product-btn {
+    color: var(--btn-cta-secondary-color);
+  }
+}

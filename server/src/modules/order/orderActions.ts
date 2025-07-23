@@ -8,7 +8,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
 const add: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
-    console.log(req.params);
     const { products } = req.body;
 
     await orderRepository.create(userId, products);

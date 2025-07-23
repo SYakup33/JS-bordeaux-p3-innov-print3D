@@ -13,13 +13,13 @@ if (process.env.CLIENT_URL != null) {
 
 app.use(express.json());
 
-app.use(router);
-
 const publicFolderPath = path.join(__dirname, "../../server/public");
 
 if (fs.existsSync(publicFolderPath)) {
   app.use(express.static(publicFolderPath));
 }
+
+app.use(router);
 
 const clientBuildPath = path.join(__dirname, "../../client/dist");
 

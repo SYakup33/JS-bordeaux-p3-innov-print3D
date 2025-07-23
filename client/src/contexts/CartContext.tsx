@@ -8,6 +8,7 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import type { CartContextType, CartProduct } from "../types/cart";
+import type { ProductType } from "../types/product";
 import { useAuth } from "./AuthContext";
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -27,7 +28,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           },
         );
 
+        if (response.status === 401) {
+          toast.error("Session expirée. Veuillez vous reconnecter.");
+          setCartProducts([]);
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
         const cart = await response.json();
+        if (!Array.isArray(cart)) {
+          setCartProducts([]);
+          return;
+        }
 
         setCartProducts(cart);
       } else {
@@ -35,6 +48,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (err) {
       toast.error("Erreur lors du chargement du panier.");
+      setCartProducts([]);
     }
   }, [userId, token]);
 
@@ -84,6 +98,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addProduct = async (product: ProductType, quantity: number) => {
+    if (!product) return;
+    const isInCart = cartProducts.find((p) => p.productId === product.id);
+    if (isInCart) {
+      await updateQuantity(product.id, isInCart.quantity + quantity);
+    } else {
+      addToCart(product.id, product.name, quantity);
+    }
+  };
+
   const addToCart = async (
     productId: number,
     productName: string,
@@ -91,12 +115,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     try {
       if (userId) {
-        const isInCart = cartProducts
-          .map((p) => p.productId)
-          .includes(productId);
+        const isInCart = cartProducts.find((p) => p.productId === productId);
         if (isInCart) {
-          await deleteProduct(productId);
-          toast.info(`${productName} retiré du panier.`);
+          const newQuantity = isInCart.quantity + quantity;
+          await updateQuantity(productId, newQuantity);
+          toast.success(`${productName} quantité mise à jour : ${newQuantity}`);
         } else {
           await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${userId}`, {
             method: "POST",
@@ -159,6 +182,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         addToCart,
         updateQuantity,
         deleteProduct,
+        addProduct,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import databaseClient from "../../../database/client";
-import type { Result } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 
 class OrderRepository {
   static readonly STATUS_PREPARATION = "en préparation";

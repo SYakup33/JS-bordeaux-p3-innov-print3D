@@ -32,6 +32,7 @@ declare global {
     quantity: number;
     images: string[];
   };
+
   type OrderProduct = {
     product_id: number;
     quantity: number;
@@ -42,6 +43,19 @@ declare global {
     category_id?: string;
     minPrice?: number;
     maxPrice?: number;
+  };
+  type ProductManagement = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    category_id: number;
+    trend_product: string;
+  };
+  type ImageManagement = {
+    id: number;
+    path: string;
+    product_id: number;
   };
 
   type MyPayload = JwtPayload & { sub: string; role: "client" | "admin" };
