@@ -97,8 +97,8 @@ function ContactForm() {
   };
 
   return (
-    <section className="m-auto">
-      <h2 className="d-flex align-items-center gap-2 mb-1 form-header-title p-5">
+    <section className="m-auto ">
+      <h2 className="d-flex align-items-center gap-2 mb-1 form-header-title p-5 ">
         <InfoSquareFill size={28} />
         Formulaire de Contact
       </h2>

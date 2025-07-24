@@ -105,9 +105,9 @@ function Header() {
                   )}
                 </button>
                 {showLogout && isLogged && (
-                  <div className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
+                  <div className="position-absolute bg-white border rounded-3 shadow p-3 border border-2 header-person-modal">
+                    <div className="d-flex align-items-center mb-4">
+                      <div className="rounded-circle text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
                         <strong>{currentUser?.firstname[0]}</strong>
                       </div>
                       <div>
@@ -120,10 +120,10 @@ function Header() {
                       </div>
                     </div>
                     {currentUser?.role === "admin" && (
-                      <>
+                      <div className="">
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                          className="btn header-items-hover border w-100 mb-2 d-flex gap-2 align-items-center justify-content-start position-relative "
                           onClick={() => {
                             onAdminOrdersClick();
                             fetchUnreadOrders();
@@ -132,14 +132,14 @@ function Header() {
                           <Tools />
                           <span>Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
-                            <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                            <span className="d-flex header-items-hover align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
                             </span>
                           )}
                         </button>
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                          className="btn border header-items-hover w-100 mb-2 d-flex gap-2 align-items-center justify-content-start position-relative"
                           onClick={() => {
                             onAdminproductClick();
                           }}
@@ -147,40 +147,40 @@ function Header() {
                           <BoxSeam />
                           <span>Gestion des produits</span>
                         </button>
-                      </>
+                      </div>
                     )}
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
-                      onClick={() => {
-                        navigate(`/myaccount/orders/${currentUser?.id}`);
-                        setShowLogout(false);
-                      }}
-                    >
-                      <Box />
-                      <span>Mes commandes</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
-                      onClick={() => {
-                        navigate(`${currentUser?.id}/me`);
-                        setShowLogout(false);
-                      }}
-                    >
-                      <PersonBadge />
-                      <span>Mon profil</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"
-                      onClick={onLogout}
-                    >
-                      <BoxArrowRight />
-                      <span>Déconnexion</span>
-                    </button>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
+                        onClick={() => {
+                          navigate(`/myaccount/orders/${currentUser?.id}`);
+                          setShowLogout(false);
+                        }}
+                      >
+                        <Box />
+                        <span>Mes commandes</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
+                        onClick={() => {
+                          navigate(`${currentUser?.id}/me`);
+                          setShowLogout(false);
+                        }}
+                      >
+                        <PersonBadge />
+                        <span>Mon profil</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger text-light w-100 d-flex gap-1 align-items-center justify-content-start"
+                        onClick={onLogout}
+                      >
+                        <BoxArrowRight />
+                        <span>Déconnexion</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
