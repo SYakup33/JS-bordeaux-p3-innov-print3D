@@ -8,6 +8,8 @@ import pokeball_arcanin_1 from "../../../img/pokeball_arcanin_1.jpg";
 import CategoryProducts from "../../components/product/catProducts/CategoryProducts";
 import TrendProducts from "../../components/product/trendProducts/TrendProducts";
 import "./Home.css";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const reviews = [
   {
@@ -144,7 +146,38 @@ function Home() {
       </section>
 
       <h2 className="text-center fw-semibold mt-5">Les avis de nos clients</h2>
-      <section className="d-flex justify-content-center">
+
+      <section className="d-md-none">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 7000 }}
+        >
+          {reviews.map((review) => (
+            <SwiperSlide key={review.id} className="mb-3">
+              <div className="card mx-3 mb-4 w-50 text-center mx-auto mt-3">
+                <div className="p-2">
+                  <div className="d-flex align-items-center w-100 justify-content-end">
+                    <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
+                    <img
+                      src={GoogleLogo}
+                      className="review-google-img pt-1 ms-1"
+                      alt="Google"
+                    />
+                  </div>
+                  <p className="mb-1 fw-lighter">{review.date}</p>
+                  <div>{renderStars(review.rating)}</div>
+                  <p className="card-text fs-6">{review.comment}</p>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+
+      <section className="d-none d-md-flex justify-content-center">
         <div className="container row w-75 text-center mb-3">
           {reviews.map((review) => (
             <div key={review.id} className="col-md-4 mt-3 mt-md-2">
@@ -166,6 +199,21 @@ function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="home-create-account text-center text-white p-3 mx-auto mt-2">
+        <h5>Rejoins la communauté des passionnés de 3D !</h5>
+        <p>Crée ton compte et explore un univers unique de figurines 3D</p>
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/register");
+            window.scrollTo(0, 0);
+          }}
+          className="btn home-browse-creation-btn"
+        >
+          Créer un compte
+        </button>
       </section>
     </>
   );
