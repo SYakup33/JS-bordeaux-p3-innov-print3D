@@ -5,15 +5,21 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer border-top py-4 mt-5">
+    <footer className="footer border-top p-4 mt-3">
       <div className="container">
-        <div className="row align-items-center justify-content-between mb-3 px-2">
+        <div className="row align-items-center justify-content-between mb-3">
           <div className="col-6 col-md-4">
-            <Link to="/" className="header-logo">
+            <Link to="/" className="footer-logo">
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
             </Link>
           </div>
-          <div className="col-6 col-md-4 text-end">
+          <div className="col-6 col-md-4 d-flex flex-column align-items-end">
+            <Link
+              to="/about"
+              className="fw-bold text-decoration-none text-white mb-2"
+            >
+              À propos
+            </Link>
             <Link
               to="/contact"
               className="fw-bold text-decoration-none text-white"

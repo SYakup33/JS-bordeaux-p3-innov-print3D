@@ -4,6 +4,7 @@ import {
   BoxSeam,
   Cart3,
   Envelope,
+  InfoSquare,
   PersonFill,
   Tools,
 } from "react-bootstrap-icons";
@@ -70,21 +71,23 @@ function Header() {
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
             </Link>
           </div>
-          <div className="col-4 text-center">
-            <h5 className="mb-0 fw-medium">
+          <div className="col-4 d-flex justify-content-center">
+            <div className="d-flex align-items-center gap-3">
               <Link
-                to="/contact"
-                className="fw-bold text-decoration-none text-dark d-none d-md-inline"
+                to="/about"
+                className="fw-bold text-decoration-none text-dark"
               >
-                Nous contacter
+                <span className="d-none d-md-inline">À propos</span>
+                <InfoSquare size={24} className="d-inline d-md-none" />
               </Link>
               <Link
                 to="/contact"
-                className="fw-bold text-decoration-none text-dark d-inline d-md-none"
+                className="fw-bold text-decoration-none text-dark"
               >
-                <Envelope size={24} />
+                <span className="d-none d-md-inline">Nous contacter</span>
+                <Envelope size={24} className="d-inline d-md-none" />
               </Link>
-            </h5>
+            </div>
           </div>
           <div className="col-4 d-flex justify-content-end align-items-center">
             <nav className="d-flex align-items-center position-relative">
@@ -96,7 +99,7 @@ function Header() {
                 >
                   <PersonFill size={28} className="text-dark" />
                   {isLogged && (
-                    <span className="ms-2 fw-medium text-muted d-none d-md-inline">
+                    <span className="ms-2 fw-medium text-muted d-none d-lg-inline">
                       Bonjour, {currentUser?.firstname}
                     </span>
                   )}
