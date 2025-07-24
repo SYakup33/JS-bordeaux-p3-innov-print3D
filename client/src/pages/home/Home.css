@@ -25,6 +25,14 @@
   font-size: 14px;
 }
 
+.review-google-img {
+  width: 15%;
+}
+
+.home-stars {
+  color: var(--primary-color);
+}
+
 @media (max-width: 768px) {
   .home-browse-creation-content {
     width: 90%;
