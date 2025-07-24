@@ -108,7 +108,7 @@ function Home() {
       <h2 className="text-center fw-semibold mt-5">Les avis de nos clients</h2>
       <section className="home-choose-us d-flex justify-content-center">
         <div className="container row w-75 text-center">
-          <div className="col-md-4 mt-2">
+          <div className="col-md-4 mt-3 mt-md-2">
             <div className="card">
               <div className="p-2">
                 <div className="d-flex align-items-center w-75 justify-content-end ms-4">
@@ -128,7 +128,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mt-2">
+          <div className="col-md-4 mt-3 mt-md-2">
             <div className="card">
               <div className="p-2">
                 <div className="d-flex align-items-center w-75 justify-content-end ms-4">
@@ -148,7 +148,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mt-2">
+          <div className="col-md-4 mt-3 mt-md-2">
             <div className="card">
               <div className="p-2">
                 <div className="d-flex align-items-center w-75 justify-content-end ms-4">
