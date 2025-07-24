@@ -5,6 +5,7 @@ import Home from "./pages/Home.tsx";
 import PaymentFail from "./pages/Payment Issue/PaymentFail.tsx";
 import PaymentSuccess from "./pages/Payment Issue/PaymentSuccess.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
+import About from "./pages/about/About.tsx";
 import Admin from "./pages/admin/products/ProductsManagement.tsx";
 import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactForm />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
     ],
   },
