@@ -145,7 +145,9 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                       ? "Objets pratiques"
                       : category === "3"
                         ? "Jeux"
-                        : "Tous les produits"}
+                        : category === "4"
+                          ? "Divers"
+                          : "Tous les produits"}
               </button>
               <ul className="dropdown-menu">
                 <li>
@@ -185,6 +187,15 @@ function ProductsFilter({ filters }: ProductsFilterProps) {
                     onClick={() => categoryChange("3")}
                   >
                     Jeux
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    type="button"
+                    onClick={() => categoryChange("4")}
+                  >
+                    Divers
                   </button>
                 </li>
               </ul>

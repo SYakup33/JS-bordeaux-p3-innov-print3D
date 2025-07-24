@@ -4,6 +4,7 @@ import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import PaymentFail from "./pages/Payment Issue/PaymentFail.tsx";
 import PaymentSuccess from "./pages/Payment Issue/PaymentSuccess.tsx";
 import ProductList from "./pages/ProductList/ProductList.tsx";
+import About from "./pages/about/About.tsx";
 import Admin from "./pages/admin/products/ProductsManagement.tsx";
 import Logout from "./pages/auth/Logout.tsx";
 import Login from "./pages/auth/login/Login.tsx";
@@ -12,6 +13,7 @@ import CartList from "./pages/cart/CartList.tsx";
 import ContactForm from "./pages/contact/ContactForm.tsx";
 import Home from "./pages/home/Home.tsx";
 import AdminOrders from "./pages/order/adminOrders/AdminOrders.tsx";
+import UserOrders from "./pages/order/userOrders/userOrders.tsx";
 import Product from "./pages/product/Product.tsx";
 import UserProfil from "./pages/userProfile/UserProfil.tsx";
 
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactForm />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "myaccount/orders/:id",
+        element: <UserOrders />,
       },
     ],
   },

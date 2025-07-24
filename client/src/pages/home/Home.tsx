@@ -1,15 +1,44 @@
 import { Star, StarFill, StarHalf } from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
+import CustomDesign from "../../../img/icons/CustomDesign.jpg";
+import FastTruck from "../../../img/icons/FastTruck.jpg";
+import GoogleLogo from "../../../img/icons/GoogleLogo.png";
+import ResponsiblePurchase from "../../../img/icons/ResponsiblePurchase.jpg";
 import pokeball_arcanin_1 from "../../../img/pokeball_arcanin_1.jpg";
-import CustomDesign from "../../../public/img/icons/CustomDesign.jpg";
-import FastTruck from "../../../public/img/icons/FastTruck.jpg";
-import GoogleLogo from "../../../public/img/icons/GoogleLogo.png";
-import ResponsiblePurchase from "../../../public/img/icons/ResponsiblePurchase.jpg";
+import CategoryProducts from "../../components/product/catProducts/CategoryProducts";
 import TrendProducts from "../../components/product/trendProducts/TrendProducts";
 import "./Home.css";
 
+const reviews = [
+  {
+    id: 1,
+    name: "Eric Dupont",
+    date: "18/02/2025",
+    rating: 5,
+    comment:
+      "Génial ! Merci, produits top, vendeur top, efficace et prix correct !",
+  },
+  {
+    id: 2,
+    name: "Camille Duret",
+    date: "07/03/2025",
+    rating: 3,
+    comment:
+      "La qualité est correct. En attente de nouveaux produits. Pour le reste parfait.",
+  },
+  {
+    id: 3,
+    name: "Sylvie Durand",
+    date: "11/05/2025",
+    rating: 4.5,
+    comment:
+      "Produit correspondant à la photo. Rapide et efficace, je recommande vivement",
+  },
+];
+
 function Home() {
   const navigate = useNavigate();
+
   const renderStars = (note: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -24,6 +53,7 @@ function Home() {
     }
     return stars;
   };
+
   return (
     <>
       <section className="home-browse-creation text-black d-md-flex">
@@ -51,10 +81,17 @@ function Home() {
           />
         </div>
       </section>
+
+      <CategoryProducts />
       <TrendProducts />
-      <h2 className="text-center fw-semibold">Pourquoi nous choisir</h2>
-      <section className="home-choose-us d-flex justify-content-center">
-        <div className="container row w-75">
+
+      <section className="home-choose-us d-flex flex-column justify-content-center align-items-center">
+        <div>
+          <h2 className="text-center fw-semibold text-light mt-3">
+            Pourquoi nous choisir
+          </h2>
+        </div>
+        <div className="container row w-75 mb-3">
           <div className="col-md-4 mt-3">
             <div className="card">
               <img
@@ -105,69 +142,29 @@ function Home() {
           </div>
         </div>
       </section>
+
       <h2 className="text-center fw-semibold mt-5">Les avis de nos clients</h2>
-      <section className="home-choose-us d-flex justify-content-center">
-        <div className="container row w-75 text-center">
-          <div className="col-md-4 mt-3 mt-md-2">
-            <div className="card">
-              <div className="p-2">
-                <div className="d-flex align-items-center w-75 justify-content-end ms-4">
-                  <h3 className="fw-bold fs-6 mt-3 w-75">Eric Dupont</h3>
-                  <img
-                    src={GoogleLogo}
-                    className="review-google-img pt-1 ms-1"
-                    alt="Google"
-                  />
+      <section className="d-flex justify-content-center">
+        <div className="container row w-75 text-center mb-3">
+          {reviews.map((review) => (
+            <div key={review.id} className="col-md-4 mt-3 mt-md-2">
+              <div className="card">
+                <div className="p-2">
+                  <div className="d-flex align-items-center w-75 justify-content-end ms-4">
+                    <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
+                    <img
+                      src={GoogleLogo}
+                      className="review-google-img pt-1 ms-1"
+                      alt="Google"
+                    />
+                  </div>
+                  <p className="mb-1 fw-lighter">{review.date}</p>
+                  <div>{renderStars(review.rating)}</div>
+                  <p className="card-text fs-6">{review.comment}</p>
                 </div>
-                <p className="mb-1 fw-lighter">18/02/2025</p>
-                <div className="">{renderStars(5)}</div>
-                <p className="card-text fs-6">
-                  Génial ! Merci, produits top, vendeur top, efficace et prix
-                  correct !
-                </p>
               </div>
             </div>
-          </div>
-          <div className="col-md-4 mt-3 mt-md-2">
-            <div className="card">
-              <div className="p-2">
-                <div className="d-flex align-items-center w-75 justify-content-end ms-4">
-                  <h3 className="fw-bold fs-6 mt-3 w-75">Camille Duret</h3>
-                  <img
-                    src={GoogleLogo}
-                    className="review-google-img pt-1 ms-1"
-                    alt="Google"
-                  />
-                </div>
-                <p className="mb-1 fw-lighter">07/03/2025</p>
-                <div className="">{renderStars(3)}</div>
-                <p className="card-text fs-6">
-                  La qualité est correct. En attente de nouveaux produits. Pour
-                  le reste parfait.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4 mt-3 mt-md-2">
-            <div className="card">
-              <div className="p-2">
-                <div className="d-flex align-items-center w-75 justify-content-end ms-4">
-                  <h3 className="fw-bold fs-6 mt-3 w-75">Sylvie Durand</h3>
-                  <img
-                    src={GoogleLogo}
-                    className="review-google-img pt-1 ms-1"
-                    alt="Google"
-                  />
-                </div>
-                <p className="mb-1 fw-lighter">11/05/2025</p>
-                <div className="">{renderStars(4.5)}</div>
-                <p className="card-text fs-6">
-                  Produit correspondant à la photo. Rapide et efficace, je
-                  recommande vivement
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </>

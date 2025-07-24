@@ -1,9 +1,11 @@
 import { useState } from "react";
 import {
+  Box,
   BoxArrowRight,
   BoxSeam,
   Cart3,
   Envelope,
+  InfoSquare,
   PersonBadge,
   PersonFill,
   Tools,
@@ -71,33 +73,36 @@ function Header() {
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
             </Link>
           </div>
-          <div className="col-4 text-center">
-            <h5 className="mb-0 fw-medium">
+          <div className="col-4 d-flex justify-content-center">
+            <div className="d-flex align-items-center gap-3">
               <Link
-                to="/contact"
-                className="fw-bold text-decoration-none text-dark d-none d-md-inline"
+                to="/about"
+                className="fw-bold text-decoration-none text-dark"
               >
-                Nous contacter
+                <span className="d-none d-md-inline">À propos</span>
+                <InfoSquare size={24} className="d-inline d-md-none" />
               </Link>
               <Link
                 to="/contact"
-                className="fw-bold text-decoration-none text-dark d-inline d-md-none"
+                className="fw-bold text-decoration-none text-dark"
               >
-                <Envelope size={24} />
+                <span className="d-none d-md-inline">Nous contacter</span>
+                <Envelope size={24} className="d-inline d-md-none" />
               </Link>
-            </h5>
+            </div>
           </div>
           <div className="col-4 d-flex justify-content-end align-items-center">
             <nav className="d-flex align-items-center position-relative">
               <div className="position-relative me-3">
                 <button
+                  id="header-person-button"
                   type="button"
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}
                 >
                   <PersonFill size={28} className="text-dark" />
                   {isLogged && (
-                    <span className="ms-2 fw-medium text-muted d-none d-md-inline">
+                    <span className="ms-2 fw-medium text-muted d-none d-lg-inline">
                       Bonjour, {currentUser?.firstname}
                     </span>
                   )}
@@ -128,7 +133,7 @@ function Header() {
                           }}
                         >
                           <Tools />
-                          <span>Gérer les commandes</span>
+                          <span>Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
                             <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
@@ -147,6 +152,18 @@ function Header() {
                         </button>
                       </>
                     )}
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
+                      onClick={() => {
+                        navigate(`/myaccount/orders/${currentUser?.id}`);
+                        setShowLogout(false);
+                      }}
+                    >
+                      <Box />
+                      <span>Mes commandes</span>
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"

@@ -25,6 +25,10 @@
   font-size: 14px;
 }
 
+.home-choose-us {
+  background: var(--linear-gradient);
+}
+
 .review-google-img {
   width: 15%;
 }

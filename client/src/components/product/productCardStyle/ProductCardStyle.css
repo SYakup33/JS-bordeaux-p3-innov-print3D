@@ -3,7 +3,7 @@
 }
 
 .product-card-style-height {
-  min-height: 500px;
+  min-height: 460px;
 }
 
 .product-card-style-cursor {
@@ -48,6 +48,9 @@
   min-height: 45px;
 }
 @media (max-width: 1024px) {
+  .product-card-style-height {
+    min-height: 500px;
+  }
   .product-card-style-price-modal {
     flex-direction: column !important;
     align-items: flex-start !important;
