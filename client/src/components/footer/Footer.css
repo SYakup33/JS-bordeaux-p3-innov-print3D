@@ -1,3 +1,14 @@
 .footer {
   background-color: var(--primary-color);
 }
+
+.footer-logo {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo img {
+  height: 100%;
+  width: auto;
+}
