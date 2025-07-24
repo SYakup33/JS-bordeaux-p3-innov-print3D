@@ -24,3 +24,12 @@
   width: 25px;
   height: 25px;
 }
+
+@media (max-width: 576px) {
+  .header-person-modal {
+    min-width: 100px;
+  }
+  .header-person-modal span {
+    display: none;
+  }
+}

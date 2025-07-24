@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {
+  Box,
   BoxArrowRight,
   BoxSeam,
   Cart3,
   Envelope,
   InfoSquare,
+  PersonBadge,
   PersonFill,
   Tools,
 } from "react-bootstrap-icons";
@@ -93,6 +95,7 @@ function Header() {
             <nav className="d-flex align-items-center position-relative">
               <div className="position-relative me-3">
                 <button
+                  id="header-person-button"
                   type="button"
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}
@@ -130,7 +133,7 @@ function Header() {
                           }}
                         >
                           <Tools />
-                          <span>Gérer les commandes</span>
+                          <span>Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
                             <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
@@ -149,6 +152,30 @@ function Header() {
                         </button>
                       </>
                     )}
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
+                      onClick={() => {
+                        navigate(`/myaccount/orders/${currentUser?.id}`);
+                        setShowLogout(false);
+                      }}
+                    >
+                      <Box />
+                      <span>Mes commandes</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
+                      onClick={() => {
+                        navigate(`${currentUser?.id}/me`);
+                        setShowLogout(false);
+                      }}
+                    >
+                      <PersonBadge />
+                      <span>Mon profil</span>
+                    </button>
+
                     <button
                       type="button"
                       className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"

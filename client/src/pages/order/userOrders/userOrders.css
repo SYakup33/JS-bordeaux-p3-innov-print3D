@@ -1,0 +1,11 @@
+.user-order-product-img {
+  max-height: 100px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.order-products-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

@@ -118,4 +118,49 @@ const validate: RequestHandler = (req, res, next) => {
   });
 };
 
-export default { validate, add };
+const getProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.auth?.sub);
+
+    const user = await userRepository.findById(userId);
+
+    if (!user) {
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "Utilisateur non trouvé" });
+      return;
+    }
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.auth?.sub);
+
+    const updates = {
+      id: userId,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      street: req.body.street,
+      city: req.body.city,
+      zip_code: req.body.zip_code,
+      country: req.body.country,
+      email: req.body.email,
+      phone: req.body.phone,
+    };
+
+    await userRepository.update(userId, updates);
+    const updatedUser = await userRepository.findById(userId);
+    res.status(StatusCodes.OK).json({
+      updatedUser,
+      message: "les informations ont bien été mises à jour",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { validate, add, getProfile, updateProfile };
