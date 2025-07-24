@@ -2,8 +2,9 @@
   margin-top: 150px;
 }
 
-.home-browse-creation-content {
-  background-color: var(--tertiary-color);
+.home-browse-creation-content,
+.home-create-account {
+  background-color: var(--secondary-color);
 }
 
 .home-browse-creation-btn,
@@ -35,6 +36,10 @@
 
 .home-stars {
   color: var(--primary-color);
+}
+
+.home-create-account {
+  width: 95%;
 }
 
 @media (max-width: 768px) {
