@@ -27,3 +27,11 @@
   background-color: var(--btn-cta-primary-color);
   color: var(--font-cta-btn-primary);
 }
+
+@media (max-width: 840px) {
+  .sticky-bottom {
+    position: sticky;
+    bottom: 80px;
+    z-index: 1000;
+  }
+}

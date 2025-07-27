@@ -147,7 +147,7 @@ function ProductList() {
 
   return (
     <>
-      <div className="d-flex align-items-center cards-title">
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-5">
         <h2>
           <BoxFill size={28} /> Tous les produits
         </h2>
@@ -155,7 +155,7 @@ function ProductList() {
       <div className="d-flex justify-content-start w-100 mb-md-3 ">
         <div className="w-100 d-flex flex-column align-items-center align-items-md-end justify-content-md-end product-filter-searchbar">
           <input
-            className="w-50 mt-1"
+            className="w-50 mt-1 mb-4"
             type="text"
             placeholder="Recherche par nom"
             value={productName ?? ""}

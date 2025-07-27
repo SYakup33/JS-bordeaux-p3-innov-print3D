@@ -4,6 +4,7 @@ import AddProduct from "../../../components/product/adminManagement/addProduct/A
 import { useProductSearch } from "../../../contexts/ProductSearchContext";
 import type { ProductType } from "../../../types/product";
 import "./ProductsManagement.css";
+import { ShieldLockFill } from "react-bootstrap-icons";
 import ModifyOrDeleteProduct from "../../../components/product/adminManagement/modifyOrDeleteProduct/ModifyOrDeleteProduct";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -59,8 +60,11 @@ function Admin() {
 
   return (
     <>
-      <div className="d-flex align-items-center admin-title">
-        <h1>Administrateur</h1>
+      <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
+        <h2 className="d-flex align-items-center gap-2 mb-1">
+          <ShieldLockFill size={28} />
+          Administrateur
+        </h2>
       </div>
       <section className="admin-modify-product d-flex flex-column">
         <h2 className="fw-bold ps-2 pt-2">Modifier/Supprimer un produit</h2>

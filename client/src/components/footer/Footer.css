@@ -12,3 +12,9 @@
   height: 100%;
   width: auto;
 }
+
+@media (max-width: 840px) {
+  footer {
+    margin-bottom: 80px;
+  }
+}

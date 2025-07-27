@@ -12,7 +12,7 @@
 
 .header-person-modal {
   z-index: 1000;
-  min-width: 300px;
+  min-width: 290px;
 }
 
 .header-person-circle {
@@ -30,11 +30,46 @@
   background-color: #c1c1c134;
 }
 
-@media (max-width: 1024px) {
-  .header-person-modal {
-    min-width: 100px;
+.show-under-840 {
+  display: none !important;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+button.position-relative:hover .hover-label {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.header-initials-circle {
+  width: 30px;
+  height: 30px;
+  font-size: 0.75rem;
+  background: var(--linear-gradient);
+  border-radius: 50%;
+}
+
+.header-icon-mobile-height {
+  width: 45px;
+  height: 45px;
+}
+
+@media (max-width: 768px) {
+  .icon-wrapper {
+    color: #ffffff;
+    transition: color 0.3s ease;
   }
-  .header-person-modal span {
-    display: none;
+}
+
+@media (max-width: 840px) {
+  .show-under-840 {
+    display: flex !important;
+  }
+
+  .show-more-840 {
+    display: none !important;
   }
 }
