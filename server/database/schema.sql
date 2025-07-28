@@ -61,10 +61,12 @@ CREATE TABLE favorite (
 CREATE TABLE orders (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  status ENUM ('en préparation', 'expédiée', 'livrée', 'annulée') NOT NULL,
+  status ENUM ('en attente de paiement','en préparation', 'expédiée', 'livrée', 'annulée') NOT NULL,
   user_id INT NOT NULL,
   is_read BOOLEAN DEFAULT FALSE,
-  CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id)
+  stripe_session_id VARCHAR(255) NULL,
+  CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES user (id),
+  INDEX idx_stripe_session_id (stripe_session_id)
 );
 
 CREATE TABLE order_product (

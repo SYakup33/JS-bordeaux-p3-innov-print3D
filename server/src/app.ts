@@ -11,7 +11,13 @@ if (process.env.CLIENT_URL != null) {
   app.use(cors({ origin: [process.env.CLIENT_URL] }));
 }
 
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.path === "/api/orders/webhook") {
+    express.raw({ type: "application/json" })(req, res, next);
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 const publicFolderPath = path.join(__dirname, "../../server/public");
 

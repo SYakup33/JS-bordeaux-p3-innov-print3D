@@ -43,31 +43,8 @@ function CartList() {
         selectedProducts.includes(p.productId),
       );
 
-      const orderCreationResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/order/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            products: productToOrder.map((p) => ({
-              product_id: p.productId,
-              unit_price: p.price,
-              quantity: p.quantity,
-            })),
-          }),
-        },
-      );
-
-      if (!orderCreationResponse.ok) {
-        throw new Error(`HTTP error! status: ${orderCreationResponse.status}`);
-      }
-      const order = await orderCreationResponse.json();
-
       const checkoutSessionResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/order/create-checkout-session`,
+        `${import.meta.env.VITE_API_URL}/api/orders/users/${userId}/checkout`,
         {
           method: "POST",
           headers: {
@@ -78,8 +55,6 @@ function CartList() {
             totalAmount: totalSelectedPrice,
             successUrl: `http://localhost:3000/order/${userId}/paymentsuccess`,
             cancelUrl: `http://localhost:3000/order/${userId}/paymentfail`,
-            orderId: order.orderId || order,
-            userId: userId,
             products: productToOrder,
           }),
         },
