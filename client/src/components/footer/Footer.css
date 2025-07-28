@@ -1,3 +1,20 @@
 .footer {
   background-color: var(--primary-color);
 }
+
+.footer-logo {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo img {
+  height: 100%;
+  width: auto;
+}
+
+@media (max-width: 840px) {
+  footer {
+    margin-bottom: 80px;
+  }
+}

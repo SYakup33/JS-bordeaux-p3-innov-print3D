@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   BoxArrowRight,
   BoxSeam,
   Cart3,
   Envelope,
+  House,
+  InfoSquare,
   PersonBadge,
   PersonFill,
+  Receipt,
   Tools,
 } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router";
@@ -23,6 +26,21 @@ function Header() {
   const [showLogout, setShowLogout] = useState(false);
   const { currentUser, isLogged, logout } = useAuth();
   const { unreadOrdersCount, fetchUnreadOrders } = useOrdersNotifs();
+  const personRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (personRef.current && !personRef.current.contains(e.target as Node)) {
+        setShowLogout(false);
+      }
+    };
+    if (showLogout) {
+      document.addEventListener("mousedown", onClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+    };
+  }, [showLogout]);
 
   const onLogClick = () => {
     if (isLogged) {
@@ -63,6 +81,10 @@ function Header() {
     setShowLogout(false);
   };
 
+  const getInitials = (firstname: string, lastname: string) => {
+    return `${firstname[0] ?? ""}${lastname?.[0] ?? ""}`.toUpperCase();
+  };
+
   return (
     <header className="fixed-top bg-white shadow-sm py-3 px-4 z-10">
       <div className="container">
@@ -72,42 +94,64 @@ function Header() {
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
             </Link>
           </div>
-          <div className="col-4 text-center">
-            <h5 className="mb-0 fw-medium">
+          <div className="col-4 d-flex justify-content-center">
+            <div className="d-flex align-items-center gap-3">
               <Link
-                to="/contact"
-                className="fw-bold text-decoration-none text-dark d-none d-md-inline"
+                to="/about"
+                className="fw-bold text-decoration-none text-dark"
               >
-                Nous contacter
+                <span className="d-none d-md-inline">À propos</span>
+                <InfoSquare size={24} className="d-inline d-md-none" />
               </Link>
               <Link
                 to="/contact"
-                className="fw-bold text-decoration-none text-dark d-inline d-md-none"
+                className="fw-bold text-decoration-none text-dark"
               >
-                <Envelope size={24} />
+                <span className="d-none d-md-inline">Nous contacter</span>
+                <Envelope size={24} className="d-inline d-md-none" />
               </Link>
-            </h5>
+            </div>
           </div>
           <div className="col-4 d-flex justify-content-end align-items-center">
             <nav className="d-flex align-items-center position-relative">
-              <div className="position-relative me-3">
+              <div ref={personRef} className="position-relative me-3">
                 <button
                   id="header-person-button"
                   type="button"
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}
                 >
-                  <PersonFill size={28} className="text-dark" />
+                  {(!isLogged || window.innerWidth >= 768) && (
+                    <PersonFill size={28} className="text-dark" />
+                  )}
                   {isLogged && (
-                    <span className="ms-2 fw-medium text-muted d-none d-md-inline">
-                      Bonjour, {currentUser?.firstname}
-                    </span>
+                    <>
+                      <span className="ms-2 fw-medium text-muted d-none d-md-inline nowrap">
+                        Bonjour, {currentUser?.firstname}
+                      </span>
+
+                      <span className="d-inline d-md-none">
+                        <button
+                          type="button"
+                          className="header-initials-circle d-flex align-items-center justify-content-center text-light"
+                          onClick={() => {
+                            navigate(`${currentUser?.id}/me`);
+                            setShowLogout(false);
+                          }}
+                        >
+                          {getInitials(
+                            currentUser?.firstname || "",
+                            currentUser?.lastname || "",
+                          )}
+                        </button>
+                      </span>
+                    </>
                   )}
                 </button>
                 {showLogout && isLogged && (
-                  <div className="position-absolute bg-white border rounded-4 shadow p-3 border header-person-modal">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
+                  <div className="show-more-840 d-md-flex flex-column position-absolute bg-white border rounded-3 shadow p-3 border border-2 header-person-modal ">
+                    <div className="d-flex align-items-center mb-4">
+                      <div className="rounded-circle text-white d-flex align-items-center justify-content-center me-2 header-person-circle ">
                         <strong>{currentUser?.firstname[0]}</strong>
                       </div>
                       <div>
@@ -120,17 +164,17 @@ function Header() {
                       </div>
                     </div>
                     {currentUser?.role === "admin" && (
-                      <>
+                      <div className="">
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                          className="btn header-items-hover border w-100 mb-2 d-flex gap-2 align-items-center justify-content-start position-relative "
                           onClick={() => {
                             onAdminOrdersClick();
                             fetchUnreadOrders();
                           }}
                         >
                           <Tools />
-                          <span>Gérer les commandes</span>
+                          <span className="nowrap">Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
                             <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
                               {unreadOrdersCount}
@@ -139,7 +183,7 @@ function Header() {
                         </button>
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm w-100 mb-2 d-flex gap-2 align-items-center justify-content-center position-relative"
+                          className="btn border header-items-hover w-100 mb-2 d-flex gap-2 align-items-center justify-content-start position-relative"
                           onClick={() => {
                             onAdminproductClick();
                           }}
@@ -147,42 +191,134 @@ function Header() {
                           <BoxSeam />
                           <span>Gestion des produits</span>
                         </button>
-                      </>
+                      </div>
                     )}
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
-                      onClick={() => {
-                        navigate(`/myaccount/orders/${currentUser?.id}`);
-                        setShowLogout(false);
-                      }}
-                    >
-                      <Box />
-                      <span>Mes commandes</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm w-100 d-flex gap-2 mb-2 align-items-center justify-content-center"
-                      onClick={() => {
-                        navigate(`${currentUser?.id}/me`);
-                        setShowLogout(false);
-                      }}
-                    >
-                      <PersonBadge />
-                      <span>Mon profil</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger btn-sm w-100 d-flex gap-1 align-items-center justify-content-center"
-                      onClick={onLogout}
-                    >
-                      <BoxArrowRight />
-                      <span>Déconnexion</span>
-                    </button>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
+                        onClick={() => {
+                          navigate(`/myaccount/orders/${currentUser?.id}`);
+                          setShowLogout(false);
+                        }}
+                      >
+                        <Box />
+                        <span>Mes commandes</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
+                        onClick={() => {
+                          navigate(`${currentUser?.id}/me`);
+                          setShowLogout(false);
+                        }}
+                      >
+                        <PersonBadge />
+                        <span>Mon profil</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger text-light w-100 d-flex gap-1 align-items-center justify-content-start"
+                        onClick={onLogout}
+                      >
+                        <BoxArrowRight />
+                        <span className="hover-label">Déconnexion</span>
+                      </button>
+                    </div>
                   </div>
                 )}
+
+                <div className="show-under-840 position-fixed bottom-0 start-0 w-100 d-flex justify-content-around align-items-center bg-white px-3 py-3 shadow-lg border-top z-3">
+                  {isLogged && currentUser?.role === "admin" && (
+                    <>
+                      <button
+                        type="button"
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center position-relative shadow-sm header-icon-mobile-height"
+                        onClick={() => {
+                          onAdminOrdersClick();
+                          fetchUnreadOrders();
+                        }}
+                      >
+                        <Tools size={24} />
+                        {unreadOrdersCount > 0 && (
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {unreadOrdersCount}
+                          </span>
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => navigate("/admin/products")}
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                      >
+                        <BoxSeam size={24} />
+                      </button>
+                    </>
+                  )}
+
+                  {isLogged ? (
+                    <>
+                      {isLogged && currentUser?.role === "client" && (
+                        <button
+                          type="button"
+                          onClick={() => navigate("/")}
+                          className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                        >
+                          <House size={24} />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                        onClick={() => {
+                          navigate(`/myaccount/orders/${currentUser?.id}`);
+                          setShowLogout(false);
+                        }}
+                      >
+                        <Receipt size={24} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/${currentUser?.id}/me`)}
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                      >
+                        <PersonBadge size={24} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={onLogout}
+                        className="btn bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-sm text-white header-icon-mobile-height"
+                      >
+                        <BoxArrowRight size={24} />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => navigate("/")}
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                      >
+                        <House size={24} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => navigate("/products")}
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                      >
+                        <Box size={24} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => navigate("/login")}
+                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                      >
+                        <PersonBadge size={24} />
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
               <button
                 type="button"

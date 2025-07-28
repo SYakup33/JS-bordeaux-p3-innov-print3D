@@ -131,11 +131,11 @@ function CartList() {
                 <h4>Votre panier est vide</h4>
               </div>
             ) : (
-              <div className="list-group border-5 rounded w-100">
+              <div className="list-group border-5 rounded">
                 {cartProducts.map((product) => (
                   <div
                     key={product.productId}
-                    className="flex-column list-group-item flex-md-row d-flex align-items-stretch gap-3 gap-md-4 p-3 "
+                    className="flex-column list-group-item flex-md-row d-flex align-items-stretch gap-3 gap-md-2 p-3 "
                   >
                     <div className="w-100 d-flex justify-content-center align-items-center gap-4 cart-container">
                       <input
@@ -148,7 +148,7 @@ function CartList() {
                       <img
                         src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images?.[0]}`}
                         alt={product.productName}
-                        className="object-fit-cover rounded-2 w-100  h-100"
+                        className="object-fit-cover rounded-2 w-75 h-100"
                       />
                     </div>
                     <div className="flex-grow-1 w-100">
@@ -200,7 +200,7 @@ function CartList() {
                         </button>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between justify-content-md-end w-100">
+                    <div className="d-flex justify-content-between align-items-center justify-content-md-end w-100">
                       <div className="text-end">
                         <div className="fw-bold fs-5">
                           <h5 className="mb-1">

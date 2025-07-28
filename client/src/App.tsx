@@ -9,16 +9,16 @@ import Header from "./components/header/Header";
 
 function App() {
   return (
-    <>
+    <div className="app-container">
       <NavigateProvider>
         <Header />
-        <main>
+        <main className="main-container ">
           <Outlet />
         </main>
         <Footer />
         <ToastContainer position="bottom-left" autoClose={1000} closeOnClick />
       </NavigateProvider>
-    </>
+    </div>
   );
 }
 

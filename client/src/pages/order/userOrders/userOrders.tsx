@@ -113,7 +113,7 @@ const UserOrders = () => {
                             >
                               <div className="bg-white p-3 rounded shadow-sm h-100">
                                 <img
-                                  src={p.image}
+                                  src={`${import.meta.env.VITE_API_URL}/uploads/products/${p.image}`}
                                   alt={p.productName}
                                   className="img-fluid rounded mb-2 user-order-product-img"
                                 />

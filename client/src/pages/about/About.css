@@ -1,0 +1,10 @@
+.about-header-title {
+  background-color: var(--tertiary-color);
+  height: 100px;
+  margin-top: 130px;
+}
+
+.about-img {
+  height: 200px;
+  width: auto;
+}
