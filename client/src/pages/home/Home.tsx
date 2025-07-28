@@ -74,42 +74,44 @@ function Home() {
 
   return (
     <>
-      <section className="home-browse-creation text-black d-md-flex">
-        <div className="home-browse-creation-content d-flex flex-column justify-content-evenly p-3 p-md-2 w-100">
-          <h2 className="pb-3 fw-semibold">Création & Impression 3D</h2>
-          <p className="home-browse-creation-p fs-md-7">
-            Explore un univers de figurines imprimées en 3D, pensées et créées
-            avec passion. Chaque modèle est conçu avec soin pour capturer
-            l’imaginaire et l’originalité. Que tu sois collectionneur ou
-            curieux, laisse-toi surprendre par des créations uniques.
-          </p>
-          <button
-            type="button"
-            onClick={() => navigate("/products")}
-            className="btn home-browse-creation-btn"
-          >
-            Parcourir les créations
-          </button>
-        </div>
-        <div className="home-browse-creation-img-div d-flex justify-content-center mt-md-0 mt-3 w-100">
-          <img
-            src={pokeball_arcanin_1}
-            alt="Illustration"
-            className="home-browse-creation-img rounded-4 w-75"
-          />
+      <section className="home-browse-creation text-black d-sm-flex">
+        <div className="home-browse-creation-content d-flex flex-column flex-md-row justify-content-evenly p-3 p-md-2 w-100">
+          <div className="d-flex flex-column align-items-start justify-content-center gap-4 my-4">
+            <h2 className="pb-3 fw-semibold ms-5">Création & Impression 3D</h2>
+            <p className="home-browse-creation-p fs-md-7 ms-5 w-75 lh-3">
+              Explore un univers de figurines imprimées en 3D, pensées et créées
+              avec passion. Chaque modèle est conçu avec soin pour capturer
+              l’imaginaire et l’originalité. Que tu sois collectionneur ou
+              curieux, laisse-toi surprendre par des créations uniques.
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate("/products")}
+              className="btn home-browse-creation-btn ms-5"
+            >
+              Parcourir les créations
+            </button>
+          </div>
+          <div className="home-browse-creation-img-div d-flex justify-content-center align-items-center mt-md-0 mt-3 w-100">
+            <img
+              src={pokeball_arcanin_1}
+              alt="Illustration"
+              className="home-browse-creation-img rounded-4 w-75 object-fit-cover my-5"
+            />
+          </div>
         </div>
       </section>
 
       <CategoryProducts />
       <TrendProducts />
 
-      <section className="home-choose-us d-flex flex-column justify-content-center align-items-center">
+      <section className="home-choose-us d-flex flex-column mb-5 justify-content-center align-items-center home-margin-top">
         <div>
-          <h2 className="text-center fw-semibold text-light mt-3">
+          <h2 className="text-center fw-semibold text-light mt-3 py-4 px-2">
             Pourquoi nous choisir
           </h2>
         </div>
-        <div className="row w-100 mb-3">
+        <div className="row w-100 mb-5">
           <div className="col-md-4 mt-3">
             <div className="card">
               <img
@@ -146,7 +148,7 @@ function Home() {
             <div className="card">
               <img
                 src={ResponsiblePurchase}
-                className="card-img-top w-25 mx-auto pt-1"
+                className="card-img-top w-25 mx-auto pt-1 "
                 alt="Achat responsable"
               />
               <div className="card-body">
@@ -161,39 +163,42 @@ function Home() {
         </div>
       </section>
 
-      <h2 className="text-center fw-semibold mt-5">Les avis de nos clients</h2>
-
-      <section className="d-md-none">
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          spaceBetween={20}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 7000 }}
-        >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id} className="mb-3">
-              <div className="card mx-3 mb-4 w-50 text-center mx-auto mt-3">
-                <div className="p-2">
-                  <div className="d-flex align-items-center w-100 justify-content-end">
-                    <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
-                    <img
-                      src={GoogleLogo}
-                      className="review-google-img pt-1 ms-1"
-                      alt="Google"
-                    />
+      <div className="home-margin-top reviews-top">
+        <h2 className="text-center fw-semibold  mb-5 mt-5">
+          Les avis de nos clients
+        </h2>
+        <section className="d-md-none">
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={20}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 7000 }}
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id} className="mb-3">
+                <div className="card mx-3 mb-4 w-50 text-center mx-auto mt-3">
+                  <div className="p-2">
+                    <div className="d-flex align-items-center w-100 justify-content-end">
+                      <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
+                      <img
+                        src={GoogleLogo}
+                        className="review-google-img pt-1 ms-1"
+                        alt="Google"
+                      />
+                    </div>
+                    <p className="mb-1 fw-lighter">{review.date}</p>
+                    <div>{renderStars(review.rating)}</div>
+                    <p className="card-text fs-6">{review.comment}</p>
                   </div>
-                  <p className="mb-1 fw-lighter">{review.date}</p>
-                  <div>{renderStars(review.rating)}</div>
-                  <p className="card-text fs-6">{review.comment}</p>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </section>
+      </div>
 
-      <section className="d-none d-md-flex justify-content-center">
+      <section className="d-none d-md-flex justify-content-center ">
         <Swiper
           modules={[Pagination, Autoplay]}
           spaceBetween={20}
@@ -231,8 +236,8 @@ function Home() {
         </Swiper>
       </section>
 
-      <section className="home-create-account text-center text-black p-3 mx-auto mt-2">
-        <h5>Rejoins la communauté des passionnés de 3D !</h5>
+      <section className="home-create-account text-center text-black p-4 mt-5 mx-auto home-margin-top mb-5 d-flex gap-4 align-items-center flex-column">
+        <h2 className="mt-5">Rejoins la communauté des passionnés de 3D !</h2>
         <p>Crée ton compte et explore un univers unique de figurines 3D</p>
         <button
           type="button"
@@ -240,7 +245,7 @@ function Home() {
             navigate("/register");
             window.scrollTo(0, 0);
           }}
-          className="btn home-browse-creation-btn"
+          className="btn home-browse-creation-btn mb-5"
         >
           Créer un compte
         </button>

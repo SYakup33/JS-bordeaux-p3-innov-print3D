@@ -5,18 +5,18 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer border-top p-4 mt-3">
-      <div className="container">
+    <footer className="footer border-top p-4 mt-3 ">
+      <div className="container ">
         <div className="row align-items-center justify-content-between mb-3">
           <div className="col-6 col-md-4">
             <Link to="/" className="footer-logo">
               <img src={logo} alt="logo InnovPrint3D" className="img-fluid" />
             </Link>
           </div>
-          <div className="col-6 col-md-4 d-flex flex-column align-items-end">
+          <div className="col-6 col-md-4 d-flex flex-column align-items-end gap-4 ">
             <Link
               to="/about"
-              className="fw-bold text-decoration-none text-white mb-2"
+              className="fw-bold text-decoration-none text-white"
             >
               À propos
             </Link>
@@ -25,6 +25,12 @@ function Footer() {
               className="fw-bold text-decoration-none text-white"
             >
               Nous contacter
+            </Link>
+            <Link
+              to="/mentions-legales"
+              className="fw-bold text-decoration-none text-white"
+            >
+              Mentions légales
             </Link>
           </div>
         </div>

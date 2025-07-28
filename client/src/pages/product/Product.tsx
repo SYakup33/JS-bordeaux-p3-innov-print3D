@@ -167,7 +167,7 @@ function Product() {
             <button
               type="button"
               onClick={addProduct}
-              className="my-5 py-4 fs-4 fw-bold w-75 mx-auto rounded-4 product-cta-add-to-cart border-0"
+              className="my-5 py-4 fs-4 fw-bold w-75 mx-auto rounded-4 product-cta-add-to-cart"
             >
               Ajouter au panier
             </button>

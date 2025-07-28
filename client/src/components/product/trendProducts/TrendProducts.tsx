@@ -22,7 +22,7 @@ function TrendProducts() {
   }, []);
 
   return (
-    <section className="container">
+    <section className="container home-margin-top">
       <SliderProducts
         title="Les produits du moment"
         productsList={trendProducts}

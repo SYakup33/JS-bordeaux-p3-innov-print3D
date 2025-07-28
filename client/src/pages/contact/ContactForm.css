@@ -26,6 +26,7 @@
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
   margin: 28px auto 10px auto;
+  border: 2px solid transparent;
 }
 
 .contact-form-cta:hover {

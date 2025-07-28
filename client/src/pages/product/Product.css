@@ -27,6 +27,7 @@
   color: var(--font-secondary-color);
   background-color: var(--btn-cta-primary-color);
   box-shadow: none !important;
+  border: 2px solid transparent;
 }
 
 .product-cta-add-to-cart:hover {

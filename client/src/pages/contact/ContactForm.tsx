@@ -221,7 +221,7 @@ function ContactForm() {
           {errors.message && <p className="text-danger">{errors.message}</p>}
         </div>
         <button
-          className="contact-form-cta d-block py-2 fs-6 fw-bold w-50 rounded-4"
+          className="contact-form-cta d-block py-2 fs-6 fw-bold w-50 rounded-4 "
           type="submit"
         >
           Envoyer ma demande

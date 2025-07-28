@@ -22,11 +22,15 @@ import logo from "/img/icons/lnnovPrintLogo.png";
 
 function Header() {
   const navigate = useNavigate();
-  const { cartProducts } = useCart();
+  const { cartProducts, fetchCart } = useCart();
   const [showLogout, setShowLogout] = useState(false);
   const { currentUser, isLogged, logout } = useAuth();
   const { unreadOrdersCount, fetchUnreadOrders } = useOrdersNotifs();
   const personRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
 
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
@@ -95,19 +99,21 @@ function Header() {
             </Link>
           </div>
           <div className="col-4 d-flex justify-content-center">
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center gap-md-5 gap-3">
               <Link
                 to="/about"
                 className="fw-bold text-decoration-none text-dark"
               >
-                <span className="d-none d-md-inline">À propos</span>
+                <span className="d-none d-md-inline nowrap">À propos</span>
                 <InfoSquare size={24} className="d-inline d-md-none" />
               </Link>
               <Link
                 to="/contact"
                 className="fw-bold text-decoration-none text-dark"
               >
-                <span className="d-none d-md-inline">Nous contacter</span>
+                <span className="d-none d-md-inline nowrap">
+                  Nous contacter
+                </span>
                 <Envelope size={24} className="d-inline d-md-none" />
               </Link>
             </div>
@@ -121,7 +127,7 @@ function Header() {
                   className="btn d-flex align-items-center"
                   onClick={onLogClick}
                 >
-                  {(!isLogged || window.innerWidth >= 768) && (
+                  {(!isLogged || window.innerWidth > 768) && (
                     <PersonFill size={28} className="text-dark" />
                   )}
                   {isLogged && (
@@ -176,7 +182,7 @@ function Header() {
                           <Tools />
                           <span className="nowrap">Gestion des commandes</span>
                           {unreadOrdersCount > 0 && (
-                            <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light">
+                            <span className="d-flex align-items-center justify-content-center rounded-pill bg-danger header-new-order text-light small">
                               {unreadOrdersCount}
                             </span>
                           )}
