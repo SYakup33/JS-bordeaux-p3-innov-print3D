@@ -34,9 +34,9 @@ declare global {
   };
 
   type OrderProduct = {
-    product_id: number;
+    productId: number;
     quantity: number;
-    unit_price: number;
+    price: number;
   };
   type ProductFilters = {
     name?: string;
