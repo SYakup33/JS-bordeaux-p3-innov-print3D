@@ -117,7 +117,7 @@ function Home() {
               <img
                 src={FastTruck}
                 className="card-img-top w-25 mx-auto pt-1"
-                alt="Camion rapide"
+                alt="Icône livraison rapide"
               />
               <div className="card-body">
                 <h5 className="fw-bold">Livraison rapide</h5>
@@ -133,7 +133,7 @@ function Home() {
               <img
                 src={CustomDesign}
                 className="card-img-top w-25 mx-auto pt-1"
-                alt="Création sur mesure"
+                alt="Icône création sur mesure"
               />
               <div className="card-body">
                 <h5 className="fw-bold">Création sur mesure</h5>
@@ -149,7 +149,7 @@ function Home() {
               <img
                 src={ResponsiblePurchase}
                 className="card-img-top w-25 mx-auto pt-1 "
-                alt="Achat responsable"
+                alt="Icône achat responsable"
               />
               <div className="card-body">
                 <h5 className="fw-bold">Achat responsable</h5>
