@@ -98,7 +98,7 @@ const handleStripeWebhook: RequestHandler = async (req, res, next) => {
       }
 
       default:
-        console.log(`Événement non géré: ${event.type}`);
+      // console.log(`Événement non géré: ${event.type}`);
     }
 
     res.status(200).json({ received: true });
