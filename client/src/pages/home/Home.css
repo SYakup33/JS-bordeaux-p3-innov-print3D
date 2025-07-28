@@ -38,16 +38,7 @@
   color: var(--primary-color);
 }
 
-.home-create-account {
-  width: 95%;
-}
-
 @media (max-width: 768px) {
-  .home-browse-creation-content {
-    width: 90%;
-    margin: auto;
-  }
-
   .home-browse-creation-p {
     font-size: 13px;
   }
