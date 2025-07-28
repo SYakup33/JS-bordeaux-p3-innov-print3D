@@ -30,6 +30,8 @@ router.post(
 
 router.post("/api/login", authActions.login);
 
+router.post("/api/orders/webhook", orderActions.handleStripeWebhook);
+
 router.use(authActions.verifyToken);
 
 router.put("/api/:userId/me", userActions.updateProfile);
@@ -56,15 +58,15 @@ router.put(
   adminOrdersActions.isRead,
 );
 
-router.post("/api/order/", orderActions.add);
-router.get("/api/cart/:userId", cartActions.read);
 router.post(
-  "/api/order/create-checkout-session",
+  "/api/orders/users/:userId/checkout",
   orderActions.createCheckoutSession,
 );
-router.post("/api/order/:userId", orderActions.add);
-router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 
+router.post("/api/order/:userId", orderActions.add);
+
+router.get("/api/cart/:userId", cartActions.read);
+router.put("/api/cart/:userId", cartActions.validate, cartActions.edit);
 router.delete("/api/cart/:userId/:productId", cartActions.destroy);
 
 router.get("/api/orders/:userId", userOrdersActions.read);
