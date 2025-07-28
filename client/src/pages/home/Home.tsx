@@ -34,7 +34,23 @@ const reviews = [
     date: "11/05/2025",
     rating: 4.5,
     comment:
-      "Produit correspondant à la photo. Rapide et efficace, je recommande vivement",
+      "Produit correspondant à la photo. Rapide et efficace, je recommande vivement.",
+  },
+  {
+    id: 4,
+    name: "Lucas Lefèvre",
+    date: "20/06/2025",
+    rating: 4,
+    comment:
+      "Très satisfait de ma commande ! Figurine bien emballée et conforme aux attentes.",
+  },
+  {
+    id: 5,
+    name: "Thomas Garnier",
+    date: "15/07/2025",
+    rating: 4.5,
+    comment:
+      "Super expérience ! Envoi rapide, bonne qualité, et le design est top.",
   },
 ];
 
@@ -93,7 +109,7 @@ function Home() {
             Pourquoi nous choisir
           </h2>
         </div>
-        <div className="container row w-75 mb-3">
+        <div className="row w-100 mb-3">
           <div className="col-md-4 mt-3">
             <div className="card">
               <img
@@ -178,30 +194,44 @@ function Home() {
       </section>
 
       <section className="d-none d-md-flex justify-content-center">
-        <div className="container row w-75 text-center mb-3">
-          {reviews.map((review) => (
-            <div key={review.id} className="col-md-4 mt-3 mt-md-2">
-              <div className="card">
-                <div className="p-2">
-                  <div className="d-flex align-items-center w-75 justify-content-end ms-4">
-                    <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
-                    <img
-                      src={GoogleLogo}
-                      className="review-google-img pt-1 ms-1"
-                      alt="Google"
-                    />
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={3}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+        >
+          <div className="container row w-75 text-center mb-3">
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id} className="mb-3">
+                <div key={review.id} className="mt-3 mt-md-2 w-75 mb-3 mx-auto">
+                  <div className="card home-review-card text-center">
+                    <div className="">
+                      <div className="d-flex align-items-center w-75 justify-content-end ms-4">
+                        <h3 className="fw-bold fs-6 pt-3 w-75">
+                          {review.name}
+                        </h3>
+                        <img
+                          src={GoogleLogo}
+                          className="review-google-img pt-1 ms-1"
+                          alt="Google"
+                        />
+                      </div>
+                      <p className="mb-1 fw-lighter">{review.date}</p>
+                      <div className="">{renderStars(review.rating)}</div>
+                      <p className="card-text home-review-comment mt-2">
+                        {review.comment}
+                      </p>
+                    </div>
                   </div>
-                  <p className="mb-1 fw-lighter">{review.date}</p>
-                  <div>{renderStars(review.rating)}</div>
-                  <p className="card-text fs-6">{review.comment}</p>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </SwiperSlide>
+            ))}
+          </div>
+        </Swiper>
       </section>
 
-      <section className="home-create-account text-center text-white p-3 mx-auto mt-2">
+      <section className="home-create-account text-center text-black p-3 mx-auto mt-2">
         <h5>Rejoins la communauté des passionnés de 3D !</h5>
         <p>Crée ton compte et explore un univers unique de figurines 3D</p>
         <button

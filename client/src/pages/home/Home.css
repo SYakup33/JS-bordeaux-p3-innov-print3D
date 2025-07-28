@@ -4,7 +4,7 @@
 
 .home-browse-creation-content,
 .home-create-account {
-  background-color: var(--secondary-color);
+  background-color: var(--tertiary-color);
 }
 
 .home-browse-creation-btn,
@@ -46,10 +46,19 @@
   .home-browse-creation-img-div {
     max-height: 300px;
   }
+  .home-review-card {
+    width: 150px;
+  }
 }
 
 @media (min-width: 768px) {
   .home-browse-creation-img-div {
     max-width: 400px;
+  }
+  .home-review-card {
+    height: 210px;
+  }
+  .home-review-comment {
+    font-size: 16px;
   }
 }
