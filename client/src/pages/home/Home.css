@@ -1,6 +1,7 @@
 .home-browse-creation {
   margin-top: 200px;
   margin-bottom: 100px;
+  box-shadow: rgb(98, 98, 98) 0px 10px 30px 0px;
 }
 
 .home-browse-creation-content,
@@ -12,7 +13,7 @@
 .home-browse-creation-btn:hover {
   background-color: var(--btn-cta-home-color);
   color: var(--font-secondary-color);
-  width: 200px;
+  width: 260px;
 }
 
 .home-browse-creation-btn:hover {
@@ -21,7 +22,7 @@
 
 .home-browse-creation-img {
   box-shadow: 10px 0 10px 0 rgba(0, 0, 0, 0.15);
-  height: 300px;
+  height: 370px;
 }
 
 .home-choose-us .home-choose-us-p {
@@ -30,10 +31,15 @@
 
 .home-choose-us {
   background: var(--linear-gradient);
+  box-shadow: rgb(98, 98, 98) 0px 10px 30px 0px;
+}
+
+.home-create-account {
+  box-shadow: rgb(98, 98, 98) 0px 10px 30px 0px;
 }
 
 .review-google-img {
-  width: 15%;
+  width: 30px;
 }
 
 .home-stars {
@@ -49,8 +55,12 @@
     font-size: 13px;
   }
 
+  .home-browse-creation-img {
+    height: 250px;
+  }
+
   .home-browse-creation-img-div {
-    max-height: 300px;
+    max-height: 400px;
   }
   .home-review-card {
     width: 150px;
@@ -59,7 +69,7 @@
 
 @media (min-width: 768px) {
   .home-browse-creation-img-div {
-    max-width: 400px;
+    max-width: 700px;
   }
   .home-review-card {
     height: 210px;

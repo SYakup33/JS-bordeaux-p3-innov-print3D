@@ -7,12 +7,6 @@
 }
 
 .admin-modify-product {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: var(--font-secondary-color);
-}
-
-@media (min-width: 768px) {
-  .admin-modify-product {
-    background-color: var(--primary-color);
-  }
 }

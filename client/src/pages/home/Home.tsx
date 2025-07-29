@@ -1,9 +1,13 @@
-import { Star, StarFill, StarHalf } from "react-bootstrap-icons";
+import {
+  CurrencyExchange,
+  DatabaseFillAdd,
+  Star,
+  StarFill,
+  StarHalf,
+  Truck,
+} from "react-bootstrap-icons";
 import { useNavigate } from "react-router";
-import CustomDesign from "../../../img/icons/CustomDesign.jpg";
-import FastTruck from "../../../img/icons/FastTruck.jpg";
 import GoogleLogo from "../../../img/icons/GoogleLogo.png";
-import ResponsiblePurchase from "../../../img/icons/ResponsiblePurchase.jpg";
 import pokeball_arcanin_1 from "../../../img/pokeball_arcanin_1.jpg";
 import CategoryProducts from "../../components/product/catProducts/CategoryProducts";
 import TrendProducts from "../../components/product/trendProducts/TrendProducts";
@@ -75,30 +79,31 @@ function Home() {
   return (
     <>
       <section className="home-browse-creation text-black d-sm-flex">
-        <div className="home-browse-creation-content d-flex flex-column flex-md-row justify-content-evenly p-3 p-md-2 w-100">
-          <div className="d-flex flex-column align-items-start justify-content-center gap-4 my-4">
-            <h2 className="pb-3 fw-semibold ms-5">Création & Impression 3D</h2>
-            <p className="home-browse-creation-p fs-md-7 ms-5 w-75 lh-3">
-              Explore un univers de figurines imprimées en 3D, pensées et créées
-              avec passion. Chaque modèle est conçu avec soin pour capturer
-              l’imaginaire et l’originalité. Que tu sois collectionneur ou
-              curieux, laisse-toi surprendre par des créations uniques.
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate("/products")}
-              className="btn home-browse-creation-btn ms-5"
-            >
-              Parcourir les créations
-            </button>
-          </div>
-          <div className="home-browse-creation-img-div d-flex justify-content-center align-items-center mt-md-0 mt-3 w-100">
-            <img
-              src={pokeball_arcanin_1}
-              alt="Illustration"
-              className="home-browse-creation-img rounded-4 w-75 object-fit-cover my-5"
-            />
-          </div>
+        <div className="home-browse-creation-content  border d-flex flex-column w-100 align-items-center align-items-md-start justify-content-center gap-4">
+          <h2 className="pb-2 fw-semibold mt-4 ms-md-5">
+            Création & Impression 3D
+          </h2>
+          <p className="home-browse-creation-p fs-md-7 ms-md-5 lh-lg text-center text-md-start w-75">
+            Explore un univers de figurines imprimées en 3D, pensées et créées
+            avec passion. Chaque modèle est conçu avec soin pour capturer
+            l’imaginaire et l’originalité. Que tu sois collectionneur ou
+            curieux, laisse-toi surprendre par des créations uniques.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate("/products")}
+            className="btn home-browse-creation-btn p-3 ms-md-5 mb-5"
+          >
+            Parcourir les créations
+          </button>
+        </div>
+
+        <div className="home-choose-us border home-browse-creation-img-div w-100 d-flex justify-content-center align-items-center mt-md-0 w-100">
+          <img
+            src={pokeball_arcanin_1}
+            alt="Illustration"
+            className="home-browse-creation-img w-75 rounded-2 object-fit-cover my-5"
+          />
         </div>
       </section>
 
@@ -111,16 +116,15 @@ function Home() {
             Pourquoi nous choisir
           </h2>
         </div>
-        <div className="row w-100 mb-5">
-          <div className="col-md-4 mt-3">
-            <div className="card">
-              <img
-                src={FastTruck}
-                className="card-img-top w-25 mx-auto pt-1"
-                alt="Camion rapide"
+        <div className="row w-75 mb-5 gap-2 gap-md-0 px-2 ">
+          <div className="col-md-4 mt-3 ">
+            <div className="card text-center">
+              <Truck
+                size={100}
+                className="card-img-top w-25 mx-auto mt-2 mb-md-2"
               />
               <div className="card-body">
-                <h5 className="fw-bold">Livraison rapide</h5>
+                <h5 className="fw-bold mb-3">Livraison rapide</h5>
                 <p className="card-text home-choose-us-p">
                   Recevez vos figurines en un temps record grâce à notre service
                   d’expédition express.
@@ -129,14 +133,13 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card">
-              <img
-                src={CustomDesign}
-                className="card-img-top w-25 mx-auto pt-1"
-                alt="Création sur mesure"
+            <div className="card text-center">
+              <DatabaseFillAdd
+                size={100}
+                className="card-img-top w-25 mx-auto mt-2 mb-md-2"
               />
               <div className="card-body">
-                <h5 className="fw-bold">Création sur mesure</h5>
+                <h5 className="fw-bold mb-3">Création sur mesure</h5>
                 <p className="card-text home-choose-us-p">
                   Donnez vie à vos idées avec des figurines personnalisées à
                   votre image.
@@ -145,14 +148,13 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card">
-              <img
-                src={ResponsiblePurchase}
-                className="card-img-top w-25 mx-auto pt-1 "
-                alt="Achat responsable"
+            <div className="card text-center">
+              <CurrencyExchange
+                size={100}
+                className="card-img-top w-25 mx-auto mt-2 mb-md-2"
               />
               <div className="card-body">
-                <h5 className="fw-bold">Achat responsable</h5>
+                <h5 className="fw-bold mb-3">Achat responsable</h5>
                 <p className="card-text home-choose-us-p">
                   Fabriqué à base de filament PLA composé de polymère et
                   d'amidon de maïs.
@@ -245,7 +247,7 @@ function Home() {
             navigate("/register");
             window.scrollTo(0, 0);
           }}
-          className="btn home-browse-creation-btn mb-5"
+          className="btn home-browse-creation-btn mb-5 p-3"
         >
           Créer un compte
         </button>

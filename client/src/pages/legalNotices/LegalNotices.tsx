@@ -17,7 +17,7 @@ function LegalNotices() {
         <div className="row mb-3">
           <h3>1. Éditeur du site </h3>
           <p className="mb-2 mt-2 mt-md-0">
-            Le site internet <strong>InnovProint3D</strong> est un projet
+            Le site internet <strong>InnovPrint3D</strong> est un projet
             développé dans le cadre d’un apprentissage par quatre personnes :
             <br />
             <br />
@@ -63,7 +63,7 @@ function LegalNotices() {
         <p>
           Pour toute question, information sur les produits présentés sur le
           site, ou concernant le site lui-même, vous pouvez laisser un message à
-          l'adresse suivante :
+          l'adresse suivante :{" "}
           <span className="fw-bold">innovprint3d@outlook.fr</span>.
         </p>
       </article>

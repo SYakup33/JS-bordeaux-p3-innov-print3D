@@ -1,5 +1,6 @@
 .category-modern-section {
   background: var(--linear-gradient);
+  box-shadow: rgb(98, 98, 98) 0px 10px 30px 0px;
 }
 
 .category-modern-card {

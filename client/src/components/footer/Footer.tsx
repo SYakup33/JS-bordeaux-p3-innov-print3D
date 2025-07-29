@@ -2,8 +2,10 @@ import { Instagram } from "react-bootstrap-icons";
 import { Link } from "react-router";
 import logo from "/img/icons/lnnovPrintLogo.png";
 import "./Footer.css";
+import { useCustomNavigat } from "../../contexts/Navigatecontext";
 
 function Footer() {
+  const { customNavigate } = useCustomNavigat();
   return (
     <footer className="footer border-top p-4 mt-3 ">
       <div className="container ">
@@ -14,24 +16,26 @@ function Footer() {
             </Link>
           </div>
           <div className="col-6 col-md-4 d-flex flex-column align-items-end gap-4 ">
-            <Link
-              to="/about"
-              className="fw-bold text-decoration-none text-white"
+            <div
+              onClick={() => customNavigate("/about")}
+              onKeyDown={() => customNavigate("/about")}
+              className="fw-bold text-decoration-none text-white footer-cursor-pointer"
             >
               À propos
-            </Link>
+            </div>
             <Link
               to="/contact"
-              className="fw-bold text-decoration-none text-white"
+              className="fw-bold text-decoration-none text-white nowrap"
             >
               Nous contacter
             </Link>
-            <Link
-              to="/mentions-legales"
-              className="fw-bold text-decoration-none text-white"
+            <div
+              onClick={() => customNavigate("/mentions-legales")}
+              onKeyDown={() => customNavigate("/about")}
+              className="fw-bold text-decoration-none text-white nowrap footer-cursor-pointer"
             >
               Mentions légales
-            </Link>
+            </div>
           </div>
         </div>
         <div className="text-center text-white mt-4">

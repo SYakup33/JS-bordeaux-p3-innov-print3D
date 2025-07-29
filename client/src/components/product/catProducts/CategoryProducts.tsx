@@ -17,7 +17,7 @@ const catTest = [
 function CategoryProducts() {
   const navigate = useNavigate();
   return (
-    <section className="category-modern-section py-5 px-2 home-margin-top mt-5">
+    <section className="category-modern-section py-5 px-2 home-margin-top mt-5 ">
       <div className="container mb-3">
         <h2 className="text-center text-light fw-bold mb-5 display-6">
           Choisis ton univers
@@ -30,7 +30,7 @@ function CategoryProducts() {
               onClick={() => navigate(`/products?category_id=${cat.id}`)}
               onKeyDown={() => navigate(`/products?category_id=${cat.id}`)}
             >
-              <div className="card h-100 text-center">
+              <div className="card h-100 text-center rounded-4">
                 <div className="card-body d-flex flex-column justify-content-center align-items-center ">
                   <div className=" mb-3">{cat.icon}</div>
                   <h5 className="fw-semibold">{cat.name}</h5>
