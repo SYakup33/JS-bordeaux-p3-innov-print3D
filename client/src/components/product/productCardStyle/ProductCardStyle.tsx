@@ -36,7 +36,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
         <img
           src={`${import.meta.env.VITE_API_URL}/uploads/products/${product.images[0]}`}
           className="card-img-top object-fit-cover rounded-bottom rounded-4 product-card-style-img"
-          alt={product.name}
+          alt={`cliché du ${product.name}`}
         />
       </button>
 
@@ -108,6 +108,7 @@ function ProductCardStyle({ product }: ProductsStyleProps) {
             ) : (
               <button
                 type="button"
+                aria-label="Ajouter au panier"
                 className="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center product-card-style-cart-btn"
                 onClick={() => {
                   addProduct(product, 1);

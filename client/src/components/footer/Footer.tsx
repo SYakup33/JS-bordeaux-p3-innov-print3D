@@ -48,6 +48,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-white py-4"
+              aria-label="Lien vers notre compte Instagram"
             >
               <Instagram size={34} />
             </a>
