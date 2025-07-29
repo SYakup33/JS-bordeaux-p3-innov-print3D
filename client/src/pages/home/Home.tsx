@@ -98,7 +98,7 @@ function Home() {
           </button>
         </div>
 
-        <div className="home-choose-us border home-browse-creation-img-div w-100 d-flex justify-content-center align-items-center mt-md-0 w-100">
+        <div className="home-choose-us  home-browse-creation-img-div w-100 d-flex justify-content-center align-items-center mt-md-0 w-100">
           <img
             src={pokeball_arcanin_1}
             alt="Illustration"
