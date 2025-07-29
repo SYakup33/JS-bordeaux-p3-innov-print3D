@@ -86,7 +86,7 @@ function Home() {
           <p className="home-browse-creation-p fs-md-7 ms-md-5 lh-lg text-center text-md-start w-75">
             Explore un univers de figurines imprimées en 3D, pensées et créées
             avec passion. Chaque modèle est conçu avec soin pour capturer
-            l’imaginaire et l’originalité. Que tu sois collectionneur ou
+            l’imaginaire et l’originalité. <br /> Que tu sois collectionneur ou
             curieux, laisse-toi surprendre par des créations uniques.
           </p>
           <button
@@ -178,7 +178,7 @@ function Home() {
             autoplay={{ delay: 7000 }}
           >
             {reviews.map((review) => (
-              <SwiperSlide key={review.id} className="mb-3">
+              <SwiperSlide key={review.id} className="mb-4">
                 <div className="card mx-3 mb-4 w-50 text-center mx-auto mt-3">
                   <div className="p-2">
                     <div className="d-flex align-items-center w-100 justify-content-end">
@@ -210,7 +210,7 @@ function Home() {
         >
           <div className="container row w-75 text-center mb-3">
             {reviews.map((review) => (
-              <SwiperSlide key={review.id} className="mb-3">
+              <SwiperSlide key={review.id} className="mb-5">
                 <div key={review.id} className="mt-3 mt-md-2 w-75 mb-3 mx-auto">
                   <div className="card home-review-card text-center">
                     <div className="">

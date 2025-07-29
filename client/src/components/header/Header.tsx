@@ -199,7 +199,8 @@ function Header() {
                         </button>
                       </div>
                     )}
-                    <div>
+
+                    {showLogout && currentUser?.role !== "admin" && (
                       <button
                         type="button"
                         className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
@@ -211,6 +212,8 @@ function Header() {
                         <Box />
                         <span>Mes commandes</span>
                       </button>
+                    )}
+                    <div>
                       <button
                         type="button"
                         className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
@@ -266,24 +269,26 @@ function Header() {
                   {isLogged ? (
                     <>
                       {isLogged && currentUser?.role === "client" && (
-                        <button
-                          type="button"
-                          onClick={() => navigate("/")}
-                          className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
-                        >
-                          <House size={24} />
-                        </button>
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                            className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                          >
+                            <House size={24} />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
+                            onClick={() => {
+                              navigate(`/myaccount/orders/${currentUser?.id}`);
+                              setShowLogout(false);
+                            }}
+                          >
+                            <Receipt size={24} />
+                          </button>
+                        </>
                       )}
-                      <button
-                        type="button"
-                        className="btn bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm header-icon-mobile-height"
-                        onClick={() => {
-                          navigate(`/myaccount/orders/${currentUser?.id}`);
-                          setShowLogout(false);
-                        }}
-                      >
-                        <Receipt size={24} />
-                      </button>
                       <button
                         type="button"
                         onClick={() => navigate(`/${currentUser?.id}/me`)}
