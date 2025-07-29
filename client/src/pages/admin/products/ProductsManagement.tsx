@@ -63,7 +63,7 @@ function Admin() {
       <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title mb-4">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <ShieldLockFill size={28} />
-          Administrateur
+          Gestion des produits
         </h2>
       </div>
       <section className="admin-modify-product d-flex flex-column">
@@ -108,7 +108,7 @@ function Admin() {
           onDelete={(productId) => deleteProduct(productId)}
         />
         <hr className="border border-white border-4 opacity-75" />
-        <h2 className="fw-bold">Ajouter un produit</h2>
+        <h2 className="fw-bold ps-2 pt-2">Ajouter un produit</h2>
         <AddProduct
           productDetails={newProduct}
           onSubmit={(formData) => {
