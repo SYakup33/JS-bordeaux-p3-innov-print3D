@@ -105,7 +105,7 @@ function Register() {
       <div className="d-flex align-items-center justify-content-start p-3 p-md-5 cart-header-title">
         <h2 className="d-flex align-items-center gap-2 mb-1">
           <PersonPlusFill size={28} />
-          S'incrire
+          S'inscrire
         </h2>
       </div>
       <section className="register m-auto">

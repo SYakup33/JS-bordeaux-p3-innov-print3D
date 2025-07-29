@@ -118,7 +118,7 @@ function Home() {
         </div>
         <div className="row w-75 mb-5 gap-2 gap-md-0 px-2 ">
           <div className="col-md-4 mt-3 ">
-            <div className="card text-center">
+            <div className="card text-center rounded-4">
               <Truck
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
@@ -133,7 +133,7 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card text-center">
+            <div className="card text-center rounded-4">
               <DatabaseFillAdd
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
@@ -148,7 +148,7 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card text-center">
+            <div className="card text-center rounded-4">
               <CurrencyExchange
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
