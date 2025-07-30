@@ -116,9 +116,9 @@ function Home() {
             Pourquoi nous choisir
           </h2>
         </div>
-        <div className="row w-75 mb-5 gap-2 gap-md-0 px-2 ">
+        <div className="container row w-100 mb-5 gap-2 gap-md-0  ">
           <div className="col-md-4 mt-3 ">
-            <div className="card text-center rounded-4">
+            <div className="card text-center rounded-4 home-choose-us-height">
               <Truck
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
@@ -133,7 +133,7 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card text-center rounded-4">
+            <div className="card text-center rounded-4 home-choose-us-height">
               <DatabaseFillAdd
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
@@ -148,7 +148,7 @@ function Home() {
             </div>
           </div>
           <div className="col-md-4 mt-3">
-            <div className="card text-center rounded-4">
+            <div className="card text-center rounded-4 home-choose-us-height">
               <CurrencyExchange
                 size={100}
                 className="card-img-top w-25 mx-auto mt-2 mb-md-2"
@@ -166,55 +166,60 @@ function Home() {
       </section>
 
       <div className="home-margin-top reviews-top">
-        <h2 className="text-center fw-semibold  mb-5 mt-5">
+        <h2 className="text-center fw-semibold  mb-4 mt-5">
           Les avis de nos clients
         </h2>
         <section className="d-md-none">
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            spaceBetween={20}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            autoplay={{ delay: 7000 }}
-          >
-            {reviews.map((review) => (
-              <SwiperSlide key={review.id} className="mb-4">
-                <div className="card mx-3 mb-4 w-50 text-center mx-auto mt-3">
-                  <div className="p-2">
-                    <div className="d-flex align-items-center w-100 justify-content-end">
-                      <h3 className="fw-bold fs-6 mt-3 w-75">{review.name}</h3>
-                      <img
-                        src={GoogleLogo}
-                        className="review-google-img pt-1 ms-1"
-                        alt="Google"
-                      />
+          <div className="container row px-3 mx-auto ">
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              spaceBetween={20}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 7000 }}
+            >
+              {reviews.map((review) => (
+                <SwiperSlide key={review.id} className="mb-4">
+                  <div className="card w-100 mb-4 text-center  mt-3 rounded-2 ">
+                    <div className="p-2 d-flex flex-column justify-content-center align-items-center gap-3 ">
+                      <div className="d-flex align-items-center w-100 justify-content-center gap-3">
+                        <h3 className="fw-bold fs-6 mt-3 ">{review.name}</h3>
+                        <img
+                          src={GoogleLogo}
+                          className="review-google-img pt-1 ms-1"
+                          alt="Google"
+                        />
+                      </div>
+                      <p className="mb-1 fw-lighter">{review.date}</p>
+                      <div>{renderStars(review.rating)}</div>
+                      <p className="card-text fs-6 mb-3">{review.comment}</p>
                     </div>
-                    <p className="mb-1 fw-lighter">{review.date}</p>
-                    <div>{renderStars(review.rating)}</div>
-                    <p className="card-text fs-6">{review.comment}</p>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </section>
       </div>
 
       <section className="d-none d-md-flex justify-content-center ">
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          spaceBetween={20}
-          slidesPerView={3}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
-        >
-          <div className="container row w-75 text-center mb-3">
+        <div className="container row w-75 text-center mb-3">
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={30}
+            slidesPerView={3}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000 }}
+          >
             {reviews.map((review) => (
               <SwiperSlide key={review.id} className="mb-5">
-                <div key={review.id} className="mt-3 mt-md-2 w-75 mb-3 mx-auto">
-                  <div className="card home-review-card text-center">
-                    <div className="">
-                      <div className="d-flex align-items-center w-75 justify-content-end ms-4">
+                <div
+                  key={review.id}
+                  className="mt-3 mt-md-2 w-100 mb-3 mx-auto"
+                >
+                  <div className="card home-review-card text-center d-flex flex-column justify-content-between">
+                    <div className="d-flex flex-column gap-2 justify-content-center align-items-center">
+                      <div className="d-flex align-items-center w-75 justify-content-center ms-4">
                         <h3 className="fw-bold fs-6 pt-3 w-75">
                           {review.name}
                         </h3>
@@ -226,7 +231,7 @@ function Home() {
                       </div>
                       <p className="mb-1 fw-lighter">{review.date}</p>
                       <div className="">{renderStars(review.rating)}</div>
-                      <p className="card-text home-review-comment mt-2">
+                      <p className="card-text home-review-comment mt-2 p-3">
                         {review.comment}
                       </p>
                     </div>
@@ -234,8 +239,8 @@ function Home() {
                 </div>
               </SwiperSlide>
             ))}
-          </div>
-        </Swiper>
+          </Swiper>
+        </div>
       </section>
 
       <section className="home-create-account text-center text-black p-4 mt-5 mx-auto home-margin-top mb-5 d-flex gap-4 align-items-center flex-column">

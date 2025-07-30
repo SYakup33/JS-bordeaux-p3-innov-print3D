@@ -142,6 +142,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           : [...storedCart, { productId, quantity }];
 
         localStorage.setItem("cart", JSON.stringify(updateCart));
+        toast.success("Produit ajouté au panier");
         await fetchCart();
       }
     } catch (err) {

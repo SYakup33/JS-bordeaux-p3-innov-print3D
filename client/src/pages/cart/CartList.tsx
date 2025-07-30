@@ -26,6 +26,12 @@ function CartList() {
     fetchCart();
   }, [fetchCart]);
 
+  useEffect(() => {
+    if (cartProducts.length > 0) {
+      setSelectedProducts(cartProducts.map((p) => p.productId));
+    }
+  }, [cartProducts]);
+
   const checkProduct = (productId: number) => {
     setSelectedProducts((prev) => {
       if (prev.includes(productId)) {
