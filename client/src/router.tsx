@@ -45,15 +45,15 @@ const router = createBrowserRouter([
         element: <Logout />,
       },
       {
-        path: "cart/:id",
+        path: "cart",
         element: <CartList />,
       },
       {
-        path: "order/:id/paymentsuccess",
+        path: "order/:id/paymentSuccess",
         element: <PaymentSuccess />,
       },
       {
-        path: "order/:id/paymentfail",
+        path: "order/:id/paymentFail",
         element: <PaymentFail />,
       },
       {
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "mentions-legales",
+        path: "legal-notice",
         element: <LegalNotices />,
       },
       {

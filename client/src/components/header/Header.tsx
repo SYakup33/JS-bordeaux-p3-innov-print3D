@@ -55,10 +55,8 @@ function Header() {
   };
 
   const onCartClick = () => {
-    const userId = currentUser?.id;
-
     if (isLogged) {
-      navigate(`/cart/${userId}`);
+      navigate("cart");
     } else {
       toast.warning("Veuillez vous connecter pour accéder au panier", {
         position: "top-right",
