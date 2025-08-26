@@ -50,7 +50,7 @@ router.put(
 router.get(
   "/api/admin/orders/unread",
   authActions.isAdmin,
-  adminOrdersActions.unreadOrders,
+  adminOrdersActions.unReadOrders,
 );
 router.put(
   "/api/admin/order/read/:orderId",
