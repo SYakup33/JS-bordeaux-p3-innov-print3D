@@ -216,7 +216,7 @@ function Header() {
                         type="button"
                         className="btn border header-items-hover w-100 d-flex gap-2 mb-2 align-items-center justify-content-start"
                         onClick={() => {
-                          navigate(`${currentUser?.id}/me`);
+                          navigate(`${currentUser?.id}/myProfil`);
                           setShowLogout(false);
                         }}
                       >
