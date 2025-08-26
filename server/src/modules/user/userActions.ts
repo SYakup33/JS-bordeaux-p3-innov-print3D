@@ -118,7 +118,7 @@ const validate: RequestHandler = (req, res, next) => {
   });
 };
 
-const getProfile: RequestHandler = async (req, res, next) => {
+const read: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.auth?.sub);
 
@@ -136,7 +136,7 @@ const getProfile: RequestHandler = async (req, res, next) => {
   }
 };
 
-const updateProfile: RequestHandler = async (req, res, next) => {
+const edit: RequestHandler = async (req, res, next) => {
   try {
     const userId = Number(req.auth?.sub);
 
@@ -163,4 +163,4 @@ const updateProfile: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { validate, add, getProfile, updateProfile };
+export default { validate, add, read, edit };
