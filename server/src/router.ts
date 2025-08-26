@@ -30,12 +30,12 @@ router.post(
 
 router.post("/api/login", authActions.login);
 
-router.post("/api/orders/webhook", orderActions.handleStripeWebhook);
+router.post("/api/orders/webhook", orderActions.processStripeWebhook);
 
 router.use(authActions.verifyToken);
 
-router.put("/api/:userId/me", userActions.updateProfile);
-router.get("/api/:userId/me", userActions.getProfile);
+router.put("/api/:userId/myProfile", userActions.edit);
+router.get("/api/:userId/myProfile", userActions.read);
 
 router.get(
   "/api/admin/orders",
@@ -50,7 +50,7 @@ router.put(
 router.get(
   "/api/admin/orders/unread",
   authActions.isAdmin,
-  adminOrdersActions.unreadOrders,
+  adminOrdersActions.unReadOrders,
 );
 router.put(
   "/api/admin/order/read/:orderId",

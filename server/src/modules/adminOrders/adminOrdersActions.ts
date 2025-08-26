@@ -32,7 +32,7 @@ const updateStatus: RequestHandler = async (req, res, next) => {
   }
 };
 
-const unreadOrders: RequestHandler = async (req, res, next) => {
+const unReadOrders: RequestHandler = async (req, res, next) => {
   try {
     const unreadOrders = await adminOrdersRepository.findunreadOrders();
     res.status(StatusCodes.OK).json(unreadOrders);
@@ -51,4 +51,4 @@ const isRead: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { readAll, updateStatus, unreadOrders, isRead };
+export default { readAll, updateStatus, unReadOrders, isRead };

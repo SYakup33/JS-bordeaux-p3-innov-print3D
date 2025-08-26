@@ -52,7 +52,7 @@ function UserProfile() {
     async function fetchUser() {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/user/me`,
+          `${import.meta.env.VITE_API_URL}/api/user/myProfile`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

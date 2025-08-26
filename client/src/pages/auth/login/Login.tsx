@@ -34,7 +34,7 @@ const Login = () => {
 
       const data = await response.json();
       login(data.user, data.token);
-      navigate(`/cart/${data.user.id}`);
+      navigate("/cart");
     } catch {
       setError("Email ou mot de passe incorrect");
     }

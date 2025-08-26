@@ -30,7 +30,7 @@ function Footer() {
               Nous contacter
             </Link>
             <div
-              onClick={() => customNavigate("/mentions-legales")}
+              onClick={() => customNavigate("/legal-notice")}
               onKeyDown={() => customNavigate("/about")}
               className="fw-bold text-decoration-none text-white nowrap footer-cursor-pointer"
             >

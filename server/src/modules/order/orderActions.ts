@@ -62,7 +62,7 @@ const createCheckoutSession: RequestHandler = async (req, res, next) => {
   }
 };
 
-const handleStripeWebhook: RequestHandler = async (req, res, next) => {
+const processStripeWebhook: RequestHandler = async (req, res, next) => {
   const payload = req.body;
   const sig = req.headers["stripe-signature"];
 
@@ -108,4 +108,4 @@ const handleStripeWebhook: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { add, createCheckoutSession, handleStripeWebhook };
+export default { add, createCheckoutSession, processStripeWebhook };
